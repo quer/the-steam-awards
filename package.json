@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "main": "main.js",
+  "author": "Lasse Pedersen",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quer/steamRunOnServer"
+  },
+  "dependencies": {
+    "steam": "*",
+    "steam-totp": "*",
+    "steam-weblogon": "*",
+    "cheerio": "*",
+    "request": "*"
+  }
+}
