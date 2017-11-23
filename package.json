@@ -1,5 +1,7 @@
 {
+  "name": "Steam Autumn Sale auto Nominations on multi account",
   "version": "1.0.0",
+  "description": "Steam Autumn Sale 2017 auto Nominations on multi account",
   "main": "main.js",
   "author": "Lasse Pedersen",
   "scripts": {
