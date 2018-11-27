@@ -7,7 +7,8 @@ const cheerio = require('cheerio');
 const request = require('request');
 Steam.servers = [{host:'155.133.242.8', port: 27019}];
 function loop(index) {
-	if(2 <= index ){
+	if(config.length <= index ){
+		console.log("all done!")
 		return;
 	}
 	var auth = config[index];
@@ -17,24 +18,22 @@ function loop(index) {
 		steamWebLogOn = new SteamWebLogOn(steamClient, steamUser);
 	steamClient.connect();
 	steamClient.on('servers', function(server) {
-		console.log(server);
+		//console.log(server);
 	});
 	steamClient.on('connected', function() {
-		var ss = SteamTotp.getAuthCode(auth.sharedSecret);
 		console.log("Connected to Steam.");
-		console.log(ss);
 		steamUser.logOn({
 			account_name: auth.steam_user,
 			password: auth.steam_pass,
 			//auth_code: "NBMD8"
-			two_factor_code: ss
+			two_factor_code: SteamTotp.getAuthCode(auth.sharedSecret);
 		});
-		console.log(auth.steam_user);
+		//console.log(auth.steam_user);
 	});
 	
 	steamClient.on('logOnResponse', function onSteamLogOn(logonResp) {
 		console.log("logOnResponse");
-		console.log("logOnResponse", logonResp.eresult);
+		//console.log("logOnResponse", logonResp.eresult);
 	    if (logonResp.eresult == Steam.EResult.OK) {
 	    	console.log("logOnResponse OK");
 	        steamFriends.setPersonaState(Steam.EPersonaState.Busy);
@@ -131,9 +130,9 @@ function vote(categoryid, appid, _request, sessionID, writein, callback) {
 
 		}
 	}, function (error, response, body) {
-		console.log(error);
+		//console.log(error);
 		//console.log(response);
-		console.log(body);
+		//console.log(body);
 		console.log("vote - " +categoryid + " - end");
 		setTimeout(function(){
 			callback();
@@ -159,8 +158,8 @@ function Make(_requestCommunity, _requestStore, sessionID, callback) {
 		url: url,
 		form: form
 	}, function (error, response, body) {
-		console.log(error);
-		console.log(body);
+		//console.log(error);
+		//console.log(body);
 		console.log("created");
 		setTimeout(function(){
 			_requestCommunity.post({
@@ -187,7 +186,7 @@ function removeMake(_requestCommunity, _requestStore, sessionID, callback) {
 		}
 	}, function (er, re,  bo) {
 		console.log("fjerenet");
-		console.log(bo);
+		//console.log(bo);
 		callback();
 	})
 }
