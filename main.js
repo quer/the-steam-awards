@@ -5,7 +5,7 @@ const SteamTotp = require('steam-totp');
 const SteamWebLogOn = require('steam-weblogon');
 const cheerio = require('cheerio');
 const request = require('request');
-
+Steam.servers = [{host:'155.133.242.8', port: 27019}];
 function loop(index) {
 	if(config.length <= index ){
 		return;
