@@ -1,4 +1,4 @@
-# Steam Autumn Sale 2017 auto Nominations on multi account
+# the steam awards auto Nominations on multi account
 
 Just add more account in the config.
 

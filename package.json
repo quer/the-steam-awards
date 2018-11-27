@@ -1,7 +1,7 @@
 {
-  "name": "Steam Autumn Sale auto Nominations on multi account",
+  "name": "the-steam-awards",
   "version": "1.0.0",
-  "description": "Steam Autumn Sale 2017 auto Nominations on multi account",
+  "description": "the steam awards auto Nominations on multi account",
   "main": "main.js",
   "author": "Lasse Pedersen",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/quer/steamRunOnServer"
+    "url": "https://github.com/quer/the-steam-awards"
   },
   "dependencies": {
     "cheerio": "*",

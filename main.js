@@ -7,7 +7,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 Steam.servers = [{host:'155.133.242.8', port: 27019}];
 function loop(index) {
-	if(config.length <= index ){
+	if(2 <= index ){
 		return;
 	}
 	var auth = config[index];
