@@ -12,10 +12,10 @@
     "url": "https://github.com/quer/steamRunOnServer"
   },
   "dependencies": {
-    "steam": "*",
-    "steam-totp": "*",
-    "steam-weblogon": "*",
     "cheerio": "*",
-    "request": "*"
+    "request": "*",
+    "steam": "^1.4.0",
+    "steam-totp": "*",
+    "steam-weblogon": "*"
   }
 }
