@@ -26,7 +26,7 @@ function loop(index) {
 			account_name: auth.steam_user,
 			password: auth.steam_pass,
 			//auth_code: "NBMD8"
-			two_factor_code: SteamTotp.getAuthCode(auth.sharedSecret);
+			two_factor_code: SteamTotp.getAuthCode(auth.sharedSecret)
 		});
 		//console.log(auth.steam_user);
 	});
