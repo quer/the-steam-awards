@@ -7,7 +7,7 @@ const cheerio = require('cheerio');
 const request = require('request');
 Steam.servers = [{host:'155.133.242.8', port: 27019}];
 function loop(index) {
-	if(config.length <= index  || index > 1){
+	if(config.length <= index){
 		console.log("all done!")
 		return;
 	}
@@ -39,7 +39,10 @@ function loop(index) {
 	        steamFriends.setPersonaState(Steam.EPersonaState.Busy);
 	        websession(steamWebLogOn, steamClient, steamUser, function (_requestCommunity, _requestStore, sessionID) {
 	        	openDoor(_requestCommunity, _requestStore, 0, sessionID, function(){
-
+                    setTimeout(function(){	
+                        steamClient.disconnect();
+                        loop(++index);
+                    }, 500);
                 });
 	        })
 	    }
@@ -61,7 +64,7 @@ function openDoor(_requestCommunity, _requestStore, door, sessionID, callback){
 		form:{
 			sessionid: sessionID,
 			door_index: door,
-			t: "2018-12-20T22:36:28",
+			t: new Date().toISOString(),
 			open_door: true
         }
 	}, function (error, response, body) {
