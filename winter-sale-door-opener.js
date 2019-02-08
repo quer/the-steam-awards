@@ -39,11 +39,33 @@ function loop(index) {
 	        steamFriends.setPersonaState(Steam.EPersonaState.Busy);
 	        websession(steamWebLogOn, steamClient, steamUser, function (_requestCommunity, _requestStore, sessionID) {
 	        	openDoor(_requestCommunity, _requestStore, 0, sessionID, function(){
-                    setTimeout(function(){	
-                        steamClient.disconnect();
-                        loop(++index);
-                    }, 500);
-                });
+					openDoor(_requestCommunity, _requestStore, 1, sessionID, function(){
+						openDoor(_requestCommunity, _requestStore, 2, sessionID, function(){
+							openDoor(_requestCommunity, _requestStore, 3, sessionID, function(){
+								openDoor(_requestCommunity, _requestStore, 4, sessionID, function(){
+									openDoor(_requestCommunity, _requestStore, 5, sessionID, function(){
+										openDoor(_requestCommunity, _requestStore, 6, sessionID, function(){
+											openDoor(_requestCommunity, _requestStore, 7, sessionID, function(){
+												openDoor(_requestCommunity, _requestStore, 8, sessionID, function(){
+													openDoor(_requestCommunity, _requestStore, 9, sessionID, function(){
+														openDoor(_requestCommunity, _requestStore, 10, sessionID, function(){
+															openDoor(_requestCommunity, _requestStore, 11, sessionID, function(){
+																setTimeout(function(){	
+																	steamClient.disconnect();
+																	loop(++index);
+																}, 500);
+															});
+														});
+													});
+												});
+											});
+										});
+									});
+								});
+							});
+						});
+					});
+				});
 	        })
 	    }
 	});
