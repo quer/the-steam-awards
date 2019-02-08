@@ -57,7 +57,7 @@ function loop(index) {
     // end 
 }
 
-loop(6);
+loop(0);
 function websession(steamWebLogOn, steamClient, steamUser, callback) {	
 	var _requestCommunity;
 	var _j1;
