@@ -2,7 +2,7 @@ var fs = require('fs');
 const path = require("path");
 var saveFile = "./lunarNewYearSaleItemResived.json";
 var poletter = 1000;
-module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, callback){
+module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     poletter = 1000;
     RequestStore.post({
 		url: 'https://store.steampowered.com/lny2019/ajaxopenenvelope/',

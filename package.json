@@ -1,7 +1,7 @@
 {
-  "name": "the-steam-awards",
+  "name": "the-steam-modules",
   "version": "1.0.0",
-  "description": "the steam awards auto Nominations on multi account",
+  "description": "Modules for steam, to run scripts for multi account at once",
   "main": "main.js",
   "author": "Lasse Pedersen",
   "scripts": {
