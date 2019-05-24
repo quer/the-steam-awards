@@ -10,6 +10,7 @@ Just add more account in the config.
 
 # Events
 Events modules are stored in ´modules/events´
+ * spring cleaning (set 'day' in js file. this will run for that day, it made to insure it only run once a day.)
  * winter-sale-door-opener
  * winter-sale-vote
  * steam Award Nominate Game
