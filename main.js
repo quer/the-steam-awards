@@ -3,7 +3,7 @@ const Steam = require('steam');
 const SteamTotp = require('steam-totp');
 const SteamWebLogOn = require('steam-weblogon');
 const request = require('request');
-Steam.servers = [{host:'162.254.197.40', port: 27017}];
+Steam.servers = [{host:'162.254.197.180', port: 27017}];
 var modules = [];
 //add moduels order
 //modules.push(require('./modules/chanceProfileImage'));
