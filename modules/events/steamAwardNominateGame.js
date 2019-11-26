@@ -1,14 +1,14 @@
 module.exports = function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
-	vote(1, 271590, _requestStore, sessionID, 3, function () {
-		vote(2, 570, _requestStore, sessionID, 3, function () {
-			vote(3, 578080, _requestStore, sessionID, 3, function () {
-				vote(4, 4, _requestStore, sessionID, 4, function () {
-					vote(5, 230410, _requestStore, sessionID, 3, function () {
-						vote(6, 440, _requestStore, sessionID, 3, function () {
-							vote(7, 359550, _requestStore, sessionID, 3, function () {
-								vote(8, 730, _requestStore, sessionID, 3, function () {
+	vote(1, 620980, _requestStore, sessionID, 3, function () {
+		vote(2, 954740, _requestStore, sessionID, 3, function () {
+			vote(3, 570, _requestStore, sessionID, 3, function () {
+				vote(4, 1165670, _requestStore, sessionID, 3, function () {
+					vote(5, 813780, _requestStore, sessionID, 3, function () {
+						vote(6, 985430, _requestStore, sessionID, 3, function () {
+							vote(7, 746110, _requestStore, sessionID, 3, function () {
+								vote(8, 1172380, _requestStore, sessionID, 3, function () {
 									options.steamUser.gamesPlayed({games_played:[{game_id:570}]});
-									Make(_requestCommunity, _requestStore, sessionID, function(){
+									Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, function(){
 										console.log("done!");
 										setTimeout(function(){	
 											callback();
@@ -52,7 +52,7 @@ function vote(categoryid, appid, _request, sessionID, writein, callback) {
 	});
 }
 
-function Make(_requestCommunity, _requestStore, sessionID, callback) {
+function Make(_requestCommunity, _requestStore, sessionID, steamID, callback) {
 	var url = 'https://store.steampowered.com/friends/recommendgame';
 	var form = {
 		appid: 570,
@@ -74,23 +74,13 @@ function Make(_requestCommunity, _requestStore, sessionID, callback) {
 		//console.log(body);
 		console.log("created");
 		setTimeout(function(){
-			_requestCommunity.post({
-				url: 'http://steamcommunity.com/my/recommended/',
-				form: {
-					action: "delete",
-					sessionid: sessionID,
-					appid: 570
-				}
-			}, function (er, re,  bo) {
-				console.log("fjerenet");
-				callback();				
-			})
+			removeMake(_requestCommunity, _requestStore, sessionID, steamID, callback)
 		}, 2000);
 	});
 }
-function removeMake(_requestCommunity, _requestStore, sessionID, callback) {
+function removeMake(_requestCommunity, _requestStore, sessionID, steamID, callback) {
 	_requestCommunity.post({
-		url: 'http://steamcommunity.com/my/recommended/',
+		url: 'https://steamcommunity.com/profiles/'+steamID+'/recommended/',
 		form: {
 			action: "delete",
 			sessionid: sessionID,
