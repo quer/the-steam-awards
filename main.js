@@ -2,14 +2,15 @@ const config = require('./config');
 const Steam = require('steam');
 const SteamTotp = require('steam-totp');
 const SteamWebLogOn = require('steam-weblogon');
-const request = require('request');
+const request = require('./request');
 Steam.servers = [{host:'162.254.197.180', port: 27017}];
 var modules = [];
 //add moduels order
 //modules.push(require('./modules/chanceProfileImage'));
 //modules.push(require('./modules/joinGroup'));
 //modules.push(require('./modules/chanceAccountSettings'));
-modules.push(require('./modules/guideVoteLikeShare'));
+//modules.push(require('./modules/gameRecommend'));
+modules.push(require('./modules/AddGameToWishlist'));
 function loop(index) {
 	runBot(index, loop);
     // end 
@@ -80,33 +81,14 @@ function runBot(index, callback) {
 }
 
 function websession(steamWebLogOn, steamClient, steamUser, callback) {	
-	var _requestCommunity;
-	var _j1;
-	var _requestStore;
-	var _j2;
-	var defaultTimeout = 30000;
-	var storeURL = 'https://store.steampowered.com';
-	var communityURL = 'https://steamcommunity.com';
 	console.log("websession start");
 	steamWebLogOn.webLogOn(function(sessionID, newCookie) {
-		//console.log(sessionID, newCookie);
-		//console.log(defaultTimeout);
-		var requestWrapper1 = request.defaults({
-			timeout: defaultTimeout
-		});
-		var requestWrapper2 = request.defaults({
-			timeout: defaultTimeout
-		});
-        _j1 = request.jar();
-        _j2 = request.jar();
-
-		_requestCommunity = requestWrapper1.defaults({jar: _j1});
-		_requestStore = requestWrapper2.defaults({jar: _j2});
+		var _requestCommunity = new request('https://steamcommunity.com');
+		var _requestStore = new request('https://store.steampowered.com');
 		newCookie.forEach(function(name) {
-			_j1.setCookie(request.cookie(name), communityURL);
-			_j2.setCookie(request.cookie(name), storeURL);
+			_requestCommunity.setCookie(name);
+			_requestStore.setCookie(name);
 		});
-		//console.log("websession done");
 		callback(_requestCommunity, _requestStore, sessionID);
 	});
 }

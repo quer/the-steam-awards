@@ -7,6 +7,9 @@ Just add more account in the config.
  * chance profile image (will select a radom from ´http://steamcommunity.com/actions/GameAvatars/´)
  * vote and like a guide (just add id and appid in file)
  * join group (will join must have groups and random from a list, and level groups based on account level(replace api key))
+ * add game to WishList
+ * comment on a profile
+ * game Recommend
 
 # Events
 Events modules are stored in ´modules/events´
@@ -18,6 +21,7 @@ Events modules are stored in ´modules/events´
  * * will get the tokens 
  * * and buy for the tokens default 1000 edit to use more
  * * will get same amount of all bg and Emoticon
+ * the game awards - 2019
 
 # Setup
 Just run ´npm install´ in the root folder
