@@ -36,8 +36,10 @@ function queueRun(steamClient, RequestCommunity, RequestStore, SessionID, option
 //after run for the 3 items, and we did not get what we shoud this methode will retry 3 times to get the missing item
 function runToGetItem(steamClient, RequestCommunity, RequestStore, SessionID, options, needed, callback) {
     var fullLoop = needed + 3;
+    console.log(fullLoop);
     var foundItems = 0;
     var loop = function (loopIndex, whenDone) {
+        console.log("retry: "+loopIndex);
         if(loopIndex > fullLoop || foundItems == needed){
             console.log(steamClient.steamID + " - " + options.UserName + ": might not have been able to get all the items");
             whenDone();

@@ -1,4 +1,4 @@
-var delayTime = 60; // in sec (60 is one min)
+var delayTime = 1; // in sec (60 is one min)
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     setTimeout(() => {        
         getQueue(RequestStore, SessionID, function (apps) {
@@ -25,8 +25,16 @@ function getQueue(RequestStore, SessionID, callback) {
             queuetype: 0
         },
     }, function (error, response, body) {
-        //console.log(JSON.parse(body).queue);
-        callback(JSON.parse(body).queue);
+        try {
+            var data = JSON.parse(body);
+            callback(data.queue);
+        } catch (e) {
+            console.log("was not able to get new queue, will retry ( can end end loop, if never get a new queue )")
+            console.log(body);
+            setTimeout(() => {
+                getQueue(RequestStore, SessionID, callback);                
+            }, 1000);
+        }
     });
 }
 function queueApp(RequestStore, SessionID, app) {
