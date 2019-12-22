@@ -10,6 +10,7 @@ Just add more account in the config.
  * add game to WishList
  * comment on a profile
  * game Recommend
+ * run queue
 
 # Events
 Events modules are stored in ´modules/events´
@@ -22,6 +23,8 @@ Events modules are stored in ´modules/events´
  * * and buy for the tokens default 1000 edit to use more
  * * will get same amount of all bg and Emoticon
  * the game awards - 2019
+ * the steam awards - winter 2019
+ * the steam queue card (module ´salequeue´)
 
 # Setup
 Just run ´npm install´ in the root folder
