@@ -1,3 +1,6 @@
+# Quer's Guide to Bots on Steam 
+[![Steam Donate][steam-img]][steam-url]
+
 # The steam events on multi account
 
 Just add more account in the config.
@@ -63,3 +66,7 @@ runBot(indexInConfig, function () {
 	return;
 });
 ```
+
+
+[steam-img]:  https://img.shields.io/badge/donate-Steam-lightgrey.svg?style=flat-square
+[steam-url]:  https://steamcommunity.com/tradeoffer/new/?partner=29967844&token=ipZz21tf
