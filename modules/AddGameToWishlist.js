@@ -1,12 +1,12 @@
-var list = [239140, 1195460, 649950, 493520, 1174180]; // List
+var list = [239140, 1195460, 649950]; // List
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	//TODO: this shoud be unasigned later
 	RequestStore.MakeNavCookie('1_4_4__118', 'https://store.steampowered.com/api/addtowishlist');
+	RequestStore.mature_content();
 	var loop = function (index, end_callback) {
 		if(list.length > index){
 			var app = list[index];
 			//RequestStore.jar().setCookie('wants_mature_content=1; expires=Thu, 10 Dec 2020 16:57:37 GMT;path=/app/' + app, 'https://store.steampowered.com');
-			RequestStore.mature_content();
 			RequestStore.post({
 		        url: "https://store.steampowered.com/api/addtowishlist",
 		        form:{
