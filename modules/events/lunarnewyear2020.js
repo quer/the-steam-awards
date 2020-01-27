@@ -8,21 +8,32 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
             console.log(options.accountPretty + " error no authwgtoken");
             callback();
         }else{
-            RequestStore.post({
-                url:'https://store.steampowered.com/saleaction/ajaxopendoor', 
-                form: { sessionid: SessionID, authwgtoken: authwgtoken, door_index: 0}
-            }, function (error, response, body){
-                try {
-                    var res = JSON.parse(body);
-                    if(res.success){
-                        console.log(options.accountPretty + " done, message", res.rewards.length > 0? res.rewards : null);
-                    }else{
-                        console.log(options.accountPretty + " error somfing went wrong", res);
+            var loop = function (door, inner_callback) {
+                RequestStore.post({
+                    url:'https://store.steampowered.com/saleaction/ajaxopendoor', 
+                    form: { sessionid: SessionID, authwgtoken: authwgtoken, door_index: door}
+                }, function (error, response, body){
+                    try {
+                        var res = JSON.parse(body);
+                        if(res.success){
+                            console.log(options.accountPretty + " done, message", res.rewards.length > 0? res.rewards : null);
+                        }else{
+                            console.log(options.accountPretty + " error somfing went wrong", res);
+                        }
+                    } catch (error) {
+                        console.log(options.accountPretty + " error somfing went wrong, many allready run this account?? (will skip and run next)", body);
                     }
-                } catch (error) {
-                    console.log(options.accountPretty + " error somfing went wrong, many allready run this account?? (will skip and run next)", body);
-                }
-                callback();
+                    inner_callback();
+                })
+            }
+            loop(0, function () {
+                loop(1, function () {
+                    loop(2, function () {
+                        loop(3, function () {
+                            callback();
+                        })
+                    })
+                })
             })
         }
     })    

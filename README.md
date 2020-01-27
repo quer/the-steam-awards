@@ -21,14 +21,15 @@ Events modules are stored in ´modules/events´
  * winter-sale-door-opener
  * winter-sale-vote
  * steam Award Nominate Game
- * lunar New Year Sale Tokens
+ * lunar New Year Sale Tokens (2019)
  * * will get the tokens 
  * * and buy for the tokens default 1000 edit to use more
  * * will get same amount of all bg and Emoticon
  * the game awards - 2019
  * the steam awards - winter 2019
  * the steam queue card (module ´salequeue´)
-
+ * lunar new year 2020, get coins
+ * * lunar new year 2020, get items
 # Setup
 Just run ´npm install´ in the root folder
 and then ´node main´
