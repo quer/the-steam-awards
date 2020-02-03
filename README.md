@@ -55,10 +55,12 @@ var options = {
     Index: index, // the index in config
     UserName: auth.steam_user, // steam user name
     steamUser: steamUser, // Steam.SteamUser
-    steamFriends: steamFriends //Steam.SteamFriends
+    steamFriends: steamFriends //Steam.SteamFriends,
+    accountPretty: steamClient.steamID + " - " + auth.username + ":"
 }
 ```
 just call the callback, and it will go on.
+Read more in the wiki
 ## account
 if you only want to run a sinkel account use the following in ´main.js´, just replace the ´indexInConfig´ whit the index in the ´config.js´ file
 ```js
@@ -67,7 +69,8 @@ runBot(indexInConfig, function () {
 	return;
 });
 ```
-
+# Wiki
+Read more in the wiki
 
 [steam-img]:  https://img.shields.io/badge/donate-Steam-lightgrey.svg?style=flat-square
 [steam-url]:  https://steamcommunity.com/tradeoffer/new/?partner=29967844&token=ipZz21tf
