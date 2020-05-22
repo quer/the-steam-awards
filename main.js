@@ -10,7 +10,7 @@ var modules = [];
 //modules.push(require('./modules/joinGroup'));
 //modules.push(require('./modules/chanceAccountSettings'));
 //modules.push(require('./modules/gameRecommend'));
-modules.push(require('./modules/AddGameToWishlist'));
+modules.push(require('./modules/events/springcleaning-2020'));
 function loop(index) {
 	runBot(index, loop);
     // end 

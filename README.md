@@ -30,6 +30,7 @@ Events modules are stored in ´modules/events´
  * the steam queue card (module ´salequeue´)
  * lunar new year 2020, get coins
  * * lunar new year 2020, get items
+ * spring cleaning 2020
 # Setup
 Just run ´npm install´ in the root folder
 and then ´node main´
