@@ -14,7 +14,7 @@
   "dependencies": {
     "cheerio": "*",
     "request": "*",
-    "steam": "^1.4.0",
+    "steam": "*",
     "steam-totp": "*",
     "steam-weblogon": "*"
   }

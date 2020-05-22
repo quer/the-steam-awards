@@ -104,4 +104,17 @@ function runModules(index, steamClient, _requestCommunity, _requestStore, sessio
         console.log("Modules done");
         callback();
     }
-}
+}/**
+ * Request licenses for one or more free-on-demand apps.
+ * @param {int[]} appIDs
+ */
+Steam.SteamUser.prototype.requestFreeLicense = function(appIDs) {
+	if (!Array.isArray(appIDs)) {
+		appIDs = [appIDs];
+	}
+	this._client.send({
+		msg: Steam.EMsg.ClientRequestFreeLicense,
+		proto: {}
+	  }, new Steam.Internal.CMsgClientRequestFreeLicense({"appids": appIDs}).toBuffer());
+};
+
