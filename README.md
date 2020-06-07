@@ -7,6 +7,7 @@ Just add more account in the config.
 
 # Modules
  * chance profile settings (will preload all setting allready made. then just edit the inputs you need)
+ * clear profile name alias
  * chance profile image (will select a radom from ´http://steamcommunity.com/actions/GameAvatars/´)
  * vote and like a guide (just add id and appid in file)
  * join group (will join must have groups and random from a list, and level groups based on account level(replace api key))
@@ -32,7 +33,10 @@ Events modules are stored in ´modules/events´
  * * lunar new year 2020, get items
  * spring cleaning 2020
 # Setup
-Just run ´npm install´ in the root folder
+Just run ´npm install´ in the root folder,
+add you account into the ´config.js´ file.
+change main.js to run the module you want
+and if needed chance the module file. 
 and then ´node main´
 
 # To use 
