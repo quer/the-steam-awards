@@ -22,6 +22,5 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
                 callback();
             });
         }
-        });
-        //RequestStore.Get("d98009af3bc71f16f10914118d7f0b39")
+    });
 }
