@@ -8,6 +8,7 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
                 prom.push(queueApp(RequestStore, SessionID, app));
             }
             Promise.all(prom).then(function() {
+                console.log("Queue done!")
                 callback();
             }, function(reason) {
                 console.log('Bad: ' + reason);

@@ -15,6 +15,8 @@ Just add more account in the config.
  * comment on a profile
  * game Recommend
  * run queue
+ * ActivateFreeGame ( will active a entered free game)
+ * remove all game from wishlist
 
 # Events
 Events modules are stored in ´modules/events´
