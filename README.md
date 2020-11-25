@@ -1,6 +1,13 @@
 # Quer's Guide to Bots on Steam 
 [![Steam Donate][steam-img]][steam-url]
 
+# steam awards 2020
+Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event
+it will complete the event and give the max level badge
+```js
+modules.push(require('./modules/events/steamAwardNominateGame_v2'));
+```
+
 # The steam events on multi account
 
 Just add more account in the config.
@@ -34,6 +41,8 @@ Events modules are stored in ´modules/events´
  * lunar new year 2020, get coins
  * * lunar new year 2020, get items
  * spring cleaning 2020
+ * the steam awards - 2020
+
 # Setup
 Just run ´npm install´ in the root folder,
 add you account into the ´config.js´ file.
@@ -78,6 +87,11 @@ runBot(indexInConfig, function () {
 ```
 # Wiki
 Read more in the wiki
+
+# Web panel to contol the account
+I have started to create a web panel to handle the bots, 
+it will soon be able to use all the function that this script give.
+https://github.com/quer/Steam-bot-Controller
 
 [steam-img]:  https://img.shields.io/badge/donate-Steam-lightgrey.svg?style=flat-square
 [steam-url]:  https://steamcommunity.com/tradeoffer/new/?partner=29967844&token=ipZz21tf

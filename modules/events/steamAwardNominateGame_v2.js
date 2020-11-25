@@ -1,22 +1,73 @@
 var cheerio = require('cheerio');
 var apiKey = "xxxxx"; // to get most played game, to make a recommend on a game whit more then 5 min on.
-var skipListToAutoNomination = [3];
-module.exports = function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
+
+module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
 	if(apiKey == "xxxxx"){
 		console.log("you need to setup your api key. or remove this and skip from the GetMostPlayedGame methode")
-		throw
+		callback();
+		return;
 	}
+	
 	seeIfHaveAll(_requestStore, sessionID, function () {
 		GetMostPlayedGame(_requestCommunity, steamClient.steamID, function (appid) { //OBS the game must have played over 5 min. 
 			console.log(appid);
-			vote(3, appid, _requestStore, sessionID, function () {
-				Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid, callback);
+			options.steamUser.gamesPlayed([{ game_id: appid.appid }]);
+			vote("52", appid.appid, _requestStore, sessionID, function () {
+				//Info wee remove the Review 
+				removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
+					Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
+						setTimeout(async function () {						
+							try {
+								await EnsureWeAreDone(_requestStore, options);
+								callback();
+								return;
+							} catch (error) {
+								module.exports(steamClient, _requestCommunity, _requestStore, sessionID, options, callback);// if not all did go as we expected we rerun. there is build a save ind so we only nomination missing.
+							}
+							
+						}, 60000);
+					});
+				})
 			})
 		})
 	});
 
 };
-
+function EnsureWeAreDone(_requestStore, options) {
+	return new Promise(function (resolve, reject) {
+		_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
+			var $ = cheerio.load(body);
+			if($(".badge_preview.level_4.current").length <= 0){
+				//it did not complete all
+				//let see why
+				var rowsMissing = [];
+				var nomination_rows = $(".nomination_row");
+				for (let i = 0; i < nomination_rows.length; i++) {
+					const nomination_row = nomination_rows[i];
+					var rowjquery = $(nomination_row);
+					if(!rowjquery.hasClass('has_nomination')){
+						rowsMissing.push(i + 1); // to show human read row number
+					}
+				}
+				var onlyLookAtPlayGameAndReviewTaskStatus = $($(".badge_tasks_right")[0]).find(".badge_task");
+				var haveDonePlaygame = onlyLookAtPlayGameAndReviewTaskStatus[0] && $(onlyLookAtPlayGameAndReviewTaskStatus[0]).find(".nominate_check").length > 0 ? "true" : "false";
+				var haveDoneReview  = onlyLookAtPlayGameAndReviewTaskStatus[1] && $(onlyLookAtPlayGameAndReviewTaskStatus[1]).find(".nominate_check").length > 0? "true" : "false";
+				console.log(options.accountPretty +" did not complete the flow. status: ");
+				console.table([
+					{massage: "missing nominations rows", status: rowsMissing.join(",")},
+					{massage: "have played the game", status: haveDonePlaygame},
+					{massage: "have create a review for the game", status: haveDoneReview},
+				]);
+				reject();
+				return;
+			}else{
+				resolve();
+				return;
+			}
+		});
+	});
+	
+}
 function vote(categoryid, appid, _request, sessionID, callback) {
 	console.log("vote - " +categoryid + " - start");
 	_request.post({
@@ -44,7 +95,7 @@ function vote(categoryid, appid, _request, sessionID, callback) {
 		}, 500);
 	});
 }
-
+//make a Review 
 function Make(_requestCommunity, _requestStore, sessionID, steamID, appid, callback) {
 	var url = 'https://store.steampowered.com/friends/recommendgame';
 	var form = {
@@ -71,6 +122,7 @@ function Make(_requestCommunity, _requestStore, sessionID, steamID, appid, callb
 		}, 2000);
 	});
 }
+//remove a Review 
 function removeMake(_requestCommunity, _requestStore, sessionID, steamID, appid, callback) {
 	_requestCommunity.post({
 		url: 'https://steamcommunity.com/profiles/'+steamID+'/recommended/',
@@ -89,12 +141,28 @@ function seeIfHaveAll(_requestStore, sessionID, callback) {
 	_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
 		var $ = cheerio.load(body);
 		var nomination_rows = $(".nomination_row");
+		//add all allready used appids
+		for (let i = 0; i < nomination_rows.length; i++) {
+			const nomination_row = nomination_rows[i];
+			var rowjquery = $(nomination_row);
+			if(rowjquery.hasClass('has_nomination')){
+				var appUrl = rowjquery.find(".younominated_game");
+				if(appUrl && appUrl.length > 0){
+					appUrl = appUrl.attr("href");
+					appUrl = appUrl.split("/");
+					usedApps.push(appUrl[4]);
+				}
+			}
+		}
+		
+		//loop all missing
 		var loop = function (list, index, returnCallback) {
 			if(list.length > index){
 				var nomination_row = $(list[index]);
-				if(!nomination_row.hasClass('has_nomination') && !skipListToAutoNomination.includes(index + 1) ){
+				if(!nomination_row.hasClass('has_nomination') ){
+					var catId = $(nomination_row.find(".nominate_button")).attr("data-categoryid")
 					console.log("need index " + (index+1));
-					MakeNominations(index + 1, _requestStore, sessionID)
+					MakeNominations(catId, _requestStore, sessionID)
 					.then(function () {
 						loop(list, ++index, returnCallback);
 					})
@@ -108,15 +176,15 @@ function seeIfHaveAll(_requestStore, sessionID, callback) {
 		loop(nomination_rows, 0, callback);
 	})
 }
-function MakeNominations(index, _requestStore, sessionID) {
+function MakeNominations(catId, _requestStore, sessionID) {
 	return new Promise(function (resolve) {
-		var url = "https://store.steampowered.com/search/suggest?term={search}&f=games&cc=US&l=danish&excluded_content_descriptors%5B%5D=3&excluded_content_descriptors%5B%5D=4&v=7294643&require_type=game&release_date_max=2019-12-03T18%3A00%3A00Z&release_date_min=2018-11-27T18%3A00%3A00Z";
+		var url = "https://store.steampowered.com/search/suggest?term={search}&f=games&cc=DK&l=english&excluded_content_descriptors%5B%5D=3&excluded_content_descriptors%5B%5D=4&v=10109111&require_type=game&release_date_max=2020-12-01T18%3A00%3A00Z&release_date_min=2019-12-03T18%3A00%3A00Z";
 		var search = "a";
-		switch (index) {
-			case 2:
+		switch (catId) {
+			case "51":
 				url = url + "&vrsupport=1";
 				break;
-			case 3:
+			case "52": // here we add a game that the account own.
 				resolve();
 				return;																				
 			default:
@@ -124,7 +192,7 @@ function MakeNominations(index, _requestStore, sessionID) {
 		}
 		getUnUsedAppId(_requestStore, url, 0)
 		.then(function (appId) {
-			vote(index, appId, _requestStore, sessionID, function () {
+			vote(catId, appId, _requestStore, sessionID, function () {
 				return resolve();
 			})
 		})
