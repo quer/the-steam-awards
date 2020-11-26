@@ -1,8 +1,8 @@
 # Quer's Guide to Bots on Steam 
 [![Steam Donate][steam-img]][steam-url] 
-[![Steam Profile][steam-account-img]][steam-account-url] 
-[![Contact via ts3][ts3-img]][ts3-url]
+[![Steam Profile][steam-account-img]][steam-account-url]
 
+i can also be contact on team speak 3, im offen on IP:"ts5.dk"
 # steam awards 2020
 Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event
 it will complete the event and give the max level badge
@@ -105,5 +105,3 @@ https://github.com/quer/Steam-bot-Controller
 [steam-url]:  https://steamcommunity.com/tradeoffer/new/?partner=29967844&token=ipZz21tf
 [steam-account-url]:  https://steamcommunity.com/id/quer_the_gamer/
 [steam-account-img]:  https://img.shields.io/badge/Steam-Profile-lightgrey.svg?style=flat-square
-[ts3-url]:  ts3server://ts5.dk
-[ts3-img]:  https://img.shields.io/badge/Contact-Im_offen_on_team_speak3-lightgrey.svg?style=flat-square
