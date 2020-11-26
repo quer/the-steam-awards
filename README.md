@@ -1,5 +1,7 @@
 # Quer's Guide to Bots on Steam 
-[![Steam Donate][steam-img]][steam-url]
+[![Steam Donate][steam-img]][steam-url] 
+[![Steam Profile][steam-account-img]][steam-account-url] 
+[![Contact via ts3][steam-ts3-img]][steam-url]
 
 # steam awards 2020
 Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event
@@ -101,3 +103,7 @@ https://github.com/quer/Steam-bot-Controller
 
 [steam-img]:  https://img.shields.io/badge/donate-Steam-lightgrey.svg?style=flat-square
 [steam-url]:  https://steamcommunity.com/tradeoffer/new/?partner=29967844&token=ipZz21tf
+[steam-account-url]:  https://steamcommunity.com/id/quer_the_gamer/
+[steam-account-img]:  https://img.shields.io/badge/Steam-Profile-lightgrey.svg?style=flat-square
+[steam-ts3-url]:  ts3server://ts5.dk
+[steam-ts3-img]:  https://img.shields.io/badge/Contact-Im_offen_on_team_speak3-lightgrey.svg?style=flat-square
