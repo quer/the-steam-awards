@@ -7,7 +7,7 @@ i can also be contact on team speak 3, im offen on IP:"ts5.dk"
 Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event
 it will complete the event and give the max level badge
 
-You need a steam api key, if you do not have one, read issue https://github.com/quer/the-steam-awards/issues/15 
+You need a steam api key in the file, if you do not have one, read issue https://github.com/quer/the-steam-awards/issues/15 
 
 I will recommend, remove the part where the code play the game. as you might need 5 min in a game. 
 And making somfing that can run all account at once, and playing the app. as the scripts will play for 5 min, and then go to the next, that can be all time before the code is done, whit all account.
