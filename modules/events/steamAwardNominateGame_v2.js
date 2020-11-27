@@ -11,8 +11,8 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 	seeIfHaveAll(_requestStore, sessionID, function () {
 		GetMostPlayedGame(_requestCommunity, steamClient.steamID, function (appid) { //OBS the game must have played over 5 min. 
 			console.log(appid);
-			options.steamUser.gamesPlayed([{ game_id: appid.appid }]);
 			vote("52", appid.appid, _requestStore, sessionID, function () {
+				options.steamUser.gamesPlayed([{ game_id: appid.appid }]);
 				//Info wee remove the Review 
 				removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
 					Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
