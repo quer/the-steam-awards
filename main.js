@@ -10,7 +10,8 @@ var modules = [];
 //modules.push(require('./modules/joinGroup'));
 //modules.push(require('./modules/chanceAccountSettings'));
 //modules.push(require('./modules/gameRecommend'));
-modules.push(require('./modules/events/springcleaning-2020'));
+modules.push(require('./modules/events/winter-sale-vote'));
+modules.push(require('./modules/queue'));
 function loop(index) {
 	runBot(index, loop);
     // end 

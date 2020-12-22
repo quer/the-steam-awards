@@ -2,7 +2,9 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-i can also be contact on team speak 3, im offen on IP:"ts5.dk"
+# Steam Winter Sale
+I have updated the 'winter-sale-vote' script, Just run the script. and it will vote for all the categories.
+also remeber to run the queue, to get one card each day
 
 # The steam events on multi account
 
