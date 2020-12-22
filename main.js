@@ -12,6 +12,7 @@ var modules = [];
 //modules.push(require('./modules/gameRecommend'));
 modules.push(require('./modules/events/winter-sale-vote'));
 modules.push(require('./modules/queue'));
+modules.push(require('./modules/events/FreeDailySticker'));
 function loop(index) {
 	runBot(index, loop);
     // end 
