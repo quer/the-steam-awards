@@ -8,11 +8,12 @@ Also remeber to run the queue, to get one card each day
 Also remeber to get a free sticker every 48 hours  
 
 use the following to vote 
-´modules.push(require('./modules/events/winter-sale-vote'));´
+`modules.push(require('./modules/events/winter-sale-vote'));`
 use the following to run queue 
-´modules.push(require('./modules/queue'));´
+`modules.push(require('./modules/queue'));`
 use the following to get free sticker every 48 hours  
-´modules.push(require('./modules/events/FreeDailySticker'));´
+`modules.push(require('./modules/events/FreeDailySticker'));`
+
 
 # The steam events on multi account
 
@@ -21,7 +22,7 @@ Just add more account in the config.
 # Modules
  * chance profile settings (will preload all setting allready made. then just edit the inputs you need)
  * clear profile name alias
- * chance profile image (will select a radom from ´http://steamcommunity.com/actions/GameAvatars/´)
+ * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`)
  * vote and like a guide (just add id and appid in file)
  * join group (will join must have groups and random from a list, and level groups based on account level(replace api key))
  * add game to WishList
@@ -32,7 +33,7 @@ Just add more account in the config.
  * remove all game from wishlist
 
 # Events
-Events modules are stored in ´modules/events´
+Events modules are stored in `modules/events`
  * spring cleaning (set 'day' in js file. this will run for that day, it made to insure it only run once a day.)
  * winter-sale-door-opener
  * winter-sale-vote
@@ -50,14 +51,14 @@ Events modules are stored in ´modules/events´
  * the steam awards - 2020
 
 # Setup
-Just run ´npm install´ in the root folder,
-add you account into the ´config.js´ file.
+Just run `npm install` in the root folder,
+add you account into the `config.js` file.
 change main.js to run the module you want
 and if needed chance the module file. 
-and then ´node main´
+and then `node main`
 
 # To use 
-When you run ´node main´ it will run the modules in ´/modules/´
+When you run `node main` it will run the modules in `/modules/`
 
 just add a new module in the folder and add it in the main.js on line 9 like
 ```js
@@ -84,7 +85,7 @@ var options = {
 just call the callback, and it will go on.
 Read more in the wiki
 ## account
-if you only want to run a sinkel account use the following in ´main.js´, just replace the ´indexInConfig´ whit the index in the ´config.js´ file
+if you only want to run a sinkel account use the following in `main.js`, just replace the `indexInConfig` whit the index in the `config.js` file
 ```js
 runBot(indexInConfig, function () {
 	console.log("all done!")
