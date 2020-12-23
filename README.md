@@ -8,10 +8,15 @@ Also remeber to run the queue, to get one card each day
 Also remeber to get a free sticker every 48 hours  
 
 use the following to vote 
+
 `modules.push(require('./modules/events/winter-sale-vote'));`
+
 use the following to run queue 
+
 `modules.push(require('./modules/queue'));`
+
 use the following to get free sticker every 48 hours  
+
 `modules.push(require('./modules/events/FreeDailySticker'));`
 
 
