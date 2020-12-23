@@ -2,7 +2,7 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# Steam Winter Sale
+# Steam Winter Sale ( current live 2020 )
 I have updated the 'winter-sale-vote' script, Just run the script. and it will vote for all the categories.
 Also remeber to run the queue, to get one card each day
 Also remeber to get a free sticker every 48 hours  
@@ -54,6 +54,7 @@ Events modules are stored in `modules/events`
  * * lunar new year 2020, get items
  * spring cleaning 2020
  * the steam awards - 2020
+ * Steam Winter Sale - 2020
 
 # Setup
 Just run `npm install` in the root folder,
