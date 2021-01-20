@@ -25,7 +25,8 @@ use the following to get free sticker every 48 hours
 Just add more account in the config.
 
 # Modules
- * chance profile settings (will preload all setting allready made. then just edit the inputs you need)
+ * chance profile settings
+ * * chance setting on the general edit page (Edit Profile / chanceAccountSettings_general)
  * clear profile name alias
  * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`)
  * vote and like a guide (just add id and appid in file)
