@@ -35,7 +35,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     }
 
         
-        RequestCommunity.post({uri: "https://steamcommunity.com/profiles/76561198423665605/edit/info", form: objectToEdit}, function(error, response, body) {
+        RequestCommunity.post({uri: "https://steamcommunity.com/profiles/"+ steamClient.steamID +"/edit/info", form: objectToEdit}, function(error, response, body) {
             var returnJson = JSON.parse(body); // {success: 1, errmsg: ""}
             if(returnJson.success == 1){
                 console.log(options.accountPretty+ " Setting chanced!");
