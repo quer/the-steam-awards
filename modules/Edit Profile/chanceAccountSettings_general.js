@@ -60,42 +60,8 @@ function serialize(obj) {
     // Return the resulting serialization
     return retArr.join('&').replace(r20, '+');
 };
-function GetFormField(list, fieldName, index = 0) {
-    var found = 0; // if there is a list, like "profile_showcase" where you select Featured, thay all have the same name, then to get the right one in the list, you can use the index.
-    for (let i = 0; i < list.length; i++) {
-        const item = list[i];
-        if(item.name == fieldName){
-            if(found == index){
-                return item;
-            }else{
-                ++found;
-            }
-        }
-    }
-    return null;
-}
 
 /*
-Here is the possible fields to changes: (you need to go to "https://steamcommunity.com/profiles/xxxxx/edit", to see what is what. )
-
-sessionID
-type
-weblink_1_title
-weblink_1_url
-weblink_2_title
-weblink_2_url
-weblink_3_title
-weblink_3_url
-personaName
-real_name
-customURL
-country
-state
-city
-summary
-hide_profile_awards
-
-
 //ForDev og module
 
 use "json(`form[action=""https://steamcommunity.com/profiles/##steamID##/edit/info""]`).serializeArray()"
