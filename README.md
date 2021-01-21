@@ -9,8 +9,9 @@ Just add more account in the config.
 # Modules
  * chance profile settings
  * * chance setting on the general edit page (Edit Profile / chanceAccountSettings_general)
+ * * chance profile avatar, from the games that it own, it will select a random one
  * clear profile name alias
- * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`)
+ * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
  * vote and like a guide (just add id and appid in file)
  * join group (will join must have groups and random from a list, and level groups based on account level(replace api key))
  * add game to WishList
