@@ -10,6 +10,7 @@ Just add more account in the config.
  * chance profile settings
  * * chance setting on the general edit page (Edit Profile / chanceAccountSettings_general)
  * * chance profile avatar, from the games that it own, it will select a random one
+ * * chance profile background, will take a random one that the account own, can also remove the bg
  * clear profile name alias
  * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
  * vote and like a guide (just add id and appid in file)

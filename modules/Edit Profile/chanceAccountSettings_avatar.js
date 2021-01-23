@@ -1,11 +1,12 @@
 
 // this will select a random profile avatar, from the games owned. 
+var helper = require('./chanceAccountHelper')
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     var avarats = await GetAvatars(RequestCommunity);
     if(avarats != null){
         var games = avarats.rgOtherGames;
-        var randomGame = GetRandomFromList(games);
-        var randomGameAvatar = GetRandomFromList(randomGame.avatars);
+        var randomGame = helper.GetRandomFromList(games);
+        var randomGameAvatar = helper.GetRandomFromList(randomGame.avatars);
         console.log(randomGame.appid + " - " + randomGameAvatar.ordinal);
         RequestCommunity.post({uri: "https://steamcommunity.com/ogg/"+ randomGame.appid +"/selectAvatar", form: { sessionid: SessionID, json: 1, selectedAvatar: randomGameAvatar.ordinal}}, function(error, response, body) {
             var returnJson = JSON.parse(body); // {success: 1, errmsg: ""}
@@ -28,9 +29,7 @@ function GetAvatars(RequestCommunity) {
         })
     })
 }
-function GetRandomFromList(list) {
-    return list[Math.floor(Math.random() * list.length)];
-}
+
 
 // to upload a image, you have to post to 
 // https://steamcommunity.com/actions/FileUploader/
