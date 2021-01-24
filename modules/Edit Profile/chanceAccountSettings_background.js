@@ -14,9 +14,12 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             var randomBG = helper.GetRandomFromList(backgroundImages);
             await SetProfileBackground(RequestCommunity, accountInfo.ProfileEdit.webapi_token, randomBG.communityitemid);
             await SetProfileBackgroundMode(RequestCommunity, accountInfo.ProfileEdit.webapi_token, randomBG.communityitemid, 0);
-            console.log(options.accountPretty + " Profile background image chanced");
+            console.log(options.accountPretty + " Profile background image changed");
+        }else{
+            console.log(options.accountPretty + " Profile do not have any background image");
         }
     } catch (error) {
+        console.log(options.accountPretty + " Profile background image NOT changed");
         
     }
     callback();

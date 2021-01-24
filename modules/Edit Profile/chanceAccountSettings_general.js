@@ -10,7 +10,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         var accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
         accountInfo = accountInfo.ProfileEdit;
         if(accountInfo == null){
-            console.log(options.accountPretty+ " somefing went wrong when getting account info!");
+            console.log(options.accountPretty+ " something went wrong when getting account info!");
             callback();
             return;
         }
@@ -38,7 +38,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         RequestCommunity.post({uri: "https://steamcommunity.com/profiles/"+ steamClient.steamID +"/edit/info", form: objectToEdit}, function(error, response, body) {
             var returnJson = JSON.parse(body); // {success: 1, errmsg: ""}
             if(returnJson.success == 1){
-                console.log(options.accountPretty+ " Setting chanced!");
+                console.log(options.accountPretty+ " Setting changed!");
             }else{
                 console.log(options.accountPretty+ " Error saving Setting! Error:" + errmsg);
             }
