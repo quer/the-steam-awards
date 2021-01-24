@@ -4,18 +4,19 @@
  * 
  */
 
-
+var helper = require('./Edit Profile/chanceAccountHelper')
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+    var accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
     //1. get rewards that can be given to a profile
     var allRewardsForProfile = await GetAllRewardsType(RequestCommunity, 3); // the 3, will ensure it only return reward that can be used on a user
     var cheapestRewards = allRewardsForProfile.sort((prev, next) => prev.points_cost - next.points_cost).shift();
     var allRewardsForProfileToTheCheapestRewards = allRewardsForProfile.filter(function(element){ return element.points_cost == cheapestRewards.points_cost; });
     var randomReward = GetRandomFromList(allRewardsForProfileToTheCheapestRewards);
 
-    //get the accounts points to ensure it can aford the awared.
-    var accountPointSummary = await GetProfilePointsSummary(RequestCommunity, steamClient.steamID);
+    //2. get the accounts points to ensure it can aford the awared.
+    var accountPointSummary = await GetProfilePointsSummary(RequestCommunity, steamClient.steamID, accountInfo.ProfileEdit.webapi_token);
     if(parseInt(accountPointSummary.summary.points, 10) >= randomReward.points_cost){
-        //give profile award
+        //3. give profile award
         await GiveAward(RequestCommunity, 3, 76561197990233572, randomReward.reactionid);
         console.log(options.accountPretty + " Given award!")
     }else{
@@ -97,9 +98,9 @@ function GetAllRewardsType(RequestCommunity, target_type) {
     }
  * }
  */
-function GetProfilePointsSummary(RequestCommunity, steamID) {
+function GetProfilePointsSummary(RequestCommunity, steamID, access_token) {
     return new Promise(function (resolve, reject) {
-        RequestCommunity.get({uri: "https://api.steampowered.com/ILoyaltyRewardsService/GetSummary/v1?access_token=a7c4c99fa956152c85ea80ab9c821983&input_json=%7B%22steamid%22:%22"+ steamID +"%22%7D"}, function(error, response, body) {
+        RequestCommunity.get({uri: "https://api.steampowered.com/ILoyaltyRewardsService/GetSummary/v1?access_token="+ access_token +"&input_json=%7B%22steamid%22:%22"+ steamID +"%22%7D"}, function(error, response, body) {
             var json = null;
             try {
                 json = JSON.parse(body);
