@@ -17,7 +17,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     var accountPointSummary = await GetProfilePointsSummary(RequestCommunity, steamClient.steamID, accountInfo.ProfileEdit.webapi_token);
     if(parseInt(accountPointSummary.summary.points, 10) >= randomReward.points_cost){
         //3. give profile award
-        await GiveAward(RequestCommunity, 3, 76561197990233572, randomReward.reactionid, accountInfo.ProfileEdit.webapi_token);
+        await GiveAward(RequestCommunity, 3, "76561197990233572", randomReward.reactionid, accountInfo.ProfileEdit.webapi_token);
         console.log(options.accountPretty + " Given award!")
     }else{
         console.log(options.accountPretty + " the account do not have enough points to give award!")
@@ -26,6 +26,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
 }
 
 /*
+the target_type MUST be a string, if it is a int, js cant handle big numbers. so eks 76561197990233572 become 76561197990233570 when converted to string. 
 +-------------+----------------+-------------------------------------------------+
 | target_type | targetid       | ( description )                                 |
 +-------------+----------------+-------------------------------------------------+
