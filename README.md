@@ -11,6 +11,10 @@ Just add more account in the config.
  * * chance setting on the general edit page (Edit Profile / chanceAccountSettings_general)
  * * chance profile avatar, from the games that it own, it will select a random one
  * * chance profile background, will take a random one that the account own, can also remove the bg
+ * * chance mini profile, will take a random one that the account own
+ * * chance profile theme, will take a random one that the account own
+ * * chance profile favorite badge, will take a random one that the account own
+ * * chance profile favorite group, will take a random one that the account own
  * clear profile name alias
  * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
  * vote and like a guide (just add id and appid in file)
@@ -21,6 +25,7 @@ Just add more account in the config.
  * run queue
  * ActivateFreeGame ( will active a entered free game)
  * remove all game from wishlist
+ * Give Awared/Rewards ( GiveSteamAward.js )
 
 # Events
 Events modules are stored in `modules/events`
