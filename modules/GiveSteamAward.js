@@ -17,7 +17,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     var accountPointSummary = await GetProfilePointsSummary(RequestCommunity, steamClient.steamID, accountInfo.ProfileEdit.webapi_token);
     if(parseInt(accountPointSummary.summary.points, 10) >= randomReward.points_cost){
         //3. give profile award
-        await GiveAward(RequestCommunity, 3, 76561197990233572, randomReward.reactionid);
+        await GiveAward(RequestCommunity, 3, 76561197990233572, randomReward.reactionid, accountInfo.ProfileEdit.webapi_token);
         console.log(options.accountPretty + " Given award!")
     }else{
         console.log(options.accountPretty + " the account do not have enough points to give award!")
@@ -40,12 +40,12 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
 | 5           | forum post id  | if in the code on the button                    |
 +-------------+----------------+-------------------------------------------------+
 */
-function GiveAward(RequestCommunity, target_type, targetid, reactionid) {
+function GiveAward(RequestCommunity, target_type, targetid, reactionid, access_token) {
     return new Promise(function (resolve) {
         var objectToSend = {
             input_json: `{ "target_type": "${target_type}", "targetid": "${targetid}", "reactionid": "${reactionid}" }`
         }
-        RequestCommunity.post({uri: "https://api.steampowered.com/ILoyaltyRewardsService/AddReaction/v1", form: objectToSend }, function(error, response, body) {
+        RequestCommunity.post({uri: "https://api.steampowered.com/ILoyaltyRewardsService/AddReaction/v1?access_token=" + access_token, form: objectToSend }, function(error, response, body) {
             
             resolve();
         });
