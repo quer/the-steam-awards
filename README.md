@@ -37,6 +37,7 @@ Just add more account in the config.
  * ActivateFreeGame ( will active a entered free game)
  * remove all game from wishlist
  * Give Awared/Rewards ( GiveSteamAward.js )
+ * Create badge (createBadge.js)
 
 # Events
 Events modules are stored in `modules/events`
