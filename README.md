@@ -2,17 +2,6 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# Steam lunar new year sale ( current live 2021 )	
-The lunar new year sale, It look like you only can get a free sticker each day.
-The script to get free sticker, still works.
-All you have to do is to run the system once a day, whit the following module.
-
-`modules.push(require('./modules/events/FreeDailySticker'));`	
-
-and you will get the sticker.
-
-If there is more to do in the lunar New Year, plz contact me. 
-
 # The steam events on multi account
 
 Just add more account in the config.
