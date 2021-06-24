@@ -2,29 +2,25 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
     getNewItems(RequestCommunity, function (itemBefore) {
         //run queue 3 times to get items
         queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
-            queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
-                queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
-                    getNewItems(RequestCommunity, function (itemAfter) {
-                        if(itemBefore + 3 == itemAfter)
-                        {
-                            setTimeout(() => {
-                                callback();
-                            }, 10000);// wait 10 sec before, start new module   
-                        }
-                        else
-                        {
-                            var itemNeeded = (itemBefore + 3) - itemAfter;
-                            console.log(steamClient.steamID + " - " + options.UserName + ": might need " + itemNeeded + " items. will try to get it");
-                            
-                            runToGetItem(steamClient, RequestCommunity, RequestStore, SessionID, options, itemNeeded, function () {    
-                                setTimeout(() => {
-                                    callback();
-                                }, 10000);// wait 10 sec before, start new module   
-                            })
-                        }
+            getNewItems(RequestCommunity, function (itemAfter) {
+                if(itemBefore + 3 == itemAfter)
+                {
+                    setTimeout(() => {
+                        callback();
+                    }, 10000);// wait 10 sec before, start new module   
+                }
+                else
+                {
+                    var itemNeeded = (itemBefore + 1) - itemAfter;
+                    console.log(steamClient.steamID + " - " + options.UserName + ": might need " + itemNeeded + " items. will try to get it");
+                    
+                    runToGetItem(steamClient, RequestCommunity, RequestStore, SessionID, options, itemNeeded, function () {    
+                        setTimeout(() => {
+                            callback();
+                        }, 10000);// wait 10 sec before, start new module   
                     })
-                })
-            })    
+                }
+            })
         })
     });
 }
