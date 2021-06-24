@@ -2,6 +2,22 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
+# Steam lunar new year sale ( current live 2021 )	
+The steam summer sale is here. A book event.
+The current event module will complete the event, and get all the item, and badge. 
+also the queue will give a card. I have not test the `salequeue` module, as steam is busy
+All you have to do is to run the system once, whit the following module.
+
+`modules.push(require('./modules/events/forgeyourfate-summer-2021'));`
+`modules.push(require('./modules/events/salequeue'));`	
+
+and you will run the book event, and a queue. 
+
+Then each day you just have to run the module:
+`modules.push(require('./modules/events/salequeue'));`	
+
+If there is more to do in the steam summer sale, plz contact me. 
+
 # The steam events on multi account
 
 Just add more account in the config.
