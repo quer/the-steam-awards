@@ -1,58 +1,58 @@
+var runQueueTimes = 1; // will run queue 1 time ( some event, have 3 time card drop)
+var timeBetweenFullQueue = 10 * 1000; // 10 sec
+var shoudRetryedMissingItem = true;
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    getNewItems(RequestCommunity, function (itemBefore) {
-        //run queue 3 times to get items
-        queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
-            getNewItems(RequestCommunity, function (itemAfter) {
-                if(itemBefore + 3 == itemAfter)
-                {
-                    setTimeout(() => {
-                        callback();
-                    }, 10000);// wait 10 sec before, start new module   
-                }
-                else
-                {
-                    var itemNeeded = (itemBefore + 1) - itemAfter;
-                    console.log(steamClient.steamID + " - " + options.UserName + ": might need " + itemNeeded + " items. will try to get it");
-                    
-                    runToGetItem(steamClient, RequestCommunity, RequestStore, SessionID, options, itemNeeded, function () {    
-                        setTimeout(() => {
-                            callback();
-                        }, 10000);// wait 10 sec before, start new module   
-                    })
-                }
-            })
-        })
-    });
-}
-function queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options, callback) {
-    setTimeout(() => {
-        require('../queue')(steamClient, RequestCommunity, RequestStore, SessionID, options, callback);        
-    }, 10000);// 10 sec
-}
-//after run for the 3 items, and we did not get what we shoud this methode will retry 3 times to get the missing item
-function runToGetItem(steamClient, RequestCommunity, RequestStore, SessionID, options, needed, callback) {
-    var fullLoop = needed + 3;
-    console.log(fullLoop);
-    var foundItems = 0;
-    var loop = function (loopIndex, whenDone) {
-        console.log("retry: "+loopIndex);
-        if(loopIndex > fullLoop || foundItems == needed){
-            console.log(steamClient.steamID + " - " + options.UserName + ": might not have been able to get all the items");
-            whenDone();
-        }else{
-            getNewItems(RequestCommunity, function (itemBefore) {
-                queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
-                    getNewItems(RequestCommunity, function (itemAfter) {
-                        if(itemBefore + 1 == itemAfter){
-                            foundItems += 1;
-                        }
-                        loop(++loopIndex, whenDone);
-                    });
-                });
-            });
+    getNewItems(RequestCommunity, async function (itemBefore) {
+        //run queue x times to get items
+
+        for (let i = 0; i < runQueueTimes; i++) {
+            await queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options);
+            
         }
-    }
-    loop(0, callback)
+        getNewItems(RequestCommunity, async function (itemAfter) {
+            var itemNeeded = (itemBefore + runQueueTimes) - itemAfter;
+            //all done and did get the items expected 
+            if(itemNeeded == 0)
+            {
+                setTimeout(() => {
+                    callback();
+                }, timeBetweenFullQueue);// wait 10 sec before, start new module   
+            }
+            else
+            {
+                if(shoudRetryedMissingItem){
+                    console.log(steamClient.steamID + " - " + options.UserName + ": might need " + itemNeeded + " items. will try to get it");
+                    // we will run queue, one more time for each item that we need. ( as a second chance )
+                    for (let i = 0; i < itemNeeded; i++) {
+                        await queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options);
+                    }
+
+                    getNewItems(RequestCommunity, function (itemAfterSecondChance) {
+                        if(itemAfterSecondChance == itemAfter + itemNeeded){
+                            console.log(steamClient.steamID + " - " + options.UserName + ": Got all items after second run");
+                        }else{
+                            console.error(steamClient.steamID + " - " + options.UserName + ": Did not get all the expected item. and will be skiped.");
+                        }
+                        callback();
+                    })
+                }else{
+                    console.error(steamClient.steamID + " - " + options.UserName + ": Did not get all the expected item. and will be skiped.");
+                    callback();
+                }
+            }
+        })
+    })
+}
+function queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options) {
+    return new Promise(function (resolve) {
+        var callback = function () {
+            resolve();
+        }
+        setTimeout(() => {
+            require('../queue')(steamClient, RequestCommunity, RequestStore, SessionID, options, callback);        
+        }, timeBetweenFullQueue);// 10 sec
+    })
+    
 }
 
 function getNewItems(RequestCommunity, callback) {
