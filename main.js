@@ -59,7 +59,7 @@ function runBot(index, callback) {
 					UserName: auth.steam_user,
 					steamUser: steamUser,
 					steamFriends: steamFriends,
-					accountPretty: steamClient.steamID + " - " + auth.username + ":"
+					accountPretty: steamClient.steamID + " - " + auth.steam_user + ":"
 				}
                 runModules(0, steamClient, _requestCommunity, _requestStore, sessionID, options, function () {
                     console.log("done!");
