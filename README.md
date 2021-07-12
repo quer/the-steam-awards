@@ -2,25 +2,6 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# Steam Summer sale ( current live 2021 )	
-The steam summer sale is here. A book event.
-The current event module will complete the event, and get all the item, and badge. 
-also the queue will give a card.
-All you have to do is to run the system once, whit the following module.
-
-`modules.push(require('./modules/events/forgeyourfate-summer-2021'));`
-`modules.push(require('./modules/events/salequeue'));`	
-
-and you will run the summer sale event, and a queue. 
-
-Then each day you just have to run the module:
-`modules.push(require('./modules/events/salequeue'));`	
-
-in the `forgeyourfate-summer-2021` you can setup what badge to get.
-and if you doent what the default setting for module `salequeue` just look in the top of the file, and chance them
-
-If there is more to do in the steam summer sale, plz contact me. 
-
 # The steam events on multi account
 
 Just add more account in the config.
@@ -65,7 +46,7 @@ Events modules are stored in `modules/events`
  * spring cleaning 2020
  * the steam awards - 2020
  * Steam Winter Sale - 2020
- * Steam Summer Sale - 2021
+ * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
 
 # Setup
 Just run `npm install` in the root folder,
