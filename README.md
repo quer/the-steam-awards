@@ -2,18 +2,19 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# THE STEAM AWARDS sale ( current live 2021 )	
-THE STEAM AWARDS sale is here.
-The current event module will complete the event, and get the last badge. 
-All you have to do is to run the system once, whit the following module.
+# steam awards ( current live 2021 )	
+Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event
+it will complete the event and give the max level badge
 
-`modules.push(require('./modules/events/steamAwardNominateGame_v2'));`
+You need a steam api key in the file, if you do not have one, read issue https://github.com/quer/the-steam-awards/issues/15 
 
-By default it will run for 5 min, for each account as it need to have game time in the game. to register that it have been played. you can change it in the file, if you what. in the top part.
-I have added a check to ensure, that the game that it will nominate that you own, can be nominate. as i can se a game like CSGO cant be nominated.
-If there shoud be any error, open a issue, in this github.
+I will recommend, remove the part where the code play the game. as you might need 5 min in a game. 
+And making somfing that can run all account at once, and playing the app. as the scripts will play for 5 min, and then go to the next, that can be all time before the code is done, whit all account.
 
-If there is more to do in THE STEAM AWARDS sale, plz contact me. 
+```js
+modules.push(require('./modules/events/steamAwardNominateGame_v2'));
+```
+
 
 # The steam events on multi account
 Just add more account in the config.
