@@ -9,7 +9,13 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 		callback();
 		return;
 	}
-	
+	usedApps = [];
+	//skip account if all is unlocked.
+	if(await IsAccountDone(_requestStore)){
+		console.log(options.accountPretty + "is allready done, and have the badge, will be skiped");
+		callback();
+		return;
+	}
 	seeIfHaveAll(_requestStore, sessionID, function () {
 		GetMostPlayedGame(_requestCommunity, _requestStore, steamClient.steamID, options, function (appid) { //OBS the game must have played over 5 min. 
 			console.log(appid);
@@ -17,8 +23,8 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 				options.steamUser.gamesPlayed([{ game_id: appid.appid }]);					
 				//Info wee remove the Review 
 				removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
-					Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
-						setTimeout(async function () {						
+					setTimeout( function () { // we need 5 min to make steam register the have been played, and at least 5 min game total game time, to be able to create a review
+						Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, async function () {
 							try {
 								await EnsureWeAreDone(_requestStore, options);
 								console.log("done");
@@ -28,14 +34,29 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 								module.exports(steamClient, _requestCommunity, _requestStore, sessionID, options, callback);// if not all did go as we expected we rerun. there is build a save ind so we only nomination missing.
 							}
 							
-						}, 60000 * idleGameTime);
-					});
+						});
+					}, 60000 * idleGameTime);
 				})
 			})
 		})
 	});
 
 };
+function IsAccountDone(_requestStore) {
+	return new Promise(function (resolve) {
+		_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
+			var $ = cheerio.load(body);
+			if($(".badge_preview.level_4.current").length <= 0){
+				resolve(false);
+				return;
+			}
+			else{
+				resolve(true);
+				return;
+			}
+		})
+	})
+}
 function EnsureWeAreDone(_requestStore, options) {
 	return new Promise(function (resolve, reject) {
 		_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
