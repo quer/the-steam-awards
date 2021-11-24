@@ -1,6 +1,8 @@
 var cheerio = require('cheerio');
 var apiKey = "xxxxx"; // to get most played game, to make a recommend on a game whit more then 5 min on.
-
+var vrsupportKey = "62";
+var IdToSelfVoteOn = "63";
+var idleGameTime = 5 // 5 min 
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
 	if(apiKey == "xxxxx"){
 		console.log("you need to setup your api key. or remove this and skip from the GetMostPlayedGame methode")
@@ -9,23 +11,24 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 	}
 	
 	seeIfHaveAll(_requestStore, sessionID, function () {
-		GetMostPlayedGame(_requestCommunity, steamClient.steamID, function (appid) { //OBS the game must have played over 5 min. 
+		GetMostPlayedGame(_requestCommunity, _requestStore, steamClient.steamID, options, function (appid) { //OBS the game must have played over 5 min. 
 			console.log(appid);
-			vote("52", appid.appid, _requestStore, sessionID, function () {
-				options.steamUser.gamesPlayed([{ game_id: appid.appid }]);
+			vote(IdToSelfVoteOn, appid.appid, _requestStore, sessionID, function () {
+				options.steamUser.gamesPlayed([{ game_id: appid.appid }]);					
 				//Info wee remove the Review 
 				removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
 					Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
 						setTimeout(async function () {						
 							try {
 								await EnsureWeAreDone(_requestStore, options);
+								console.log("done");
 								callback();
 								return;
 							} catch (error) {
 								module.exports(steamClient, _requestCommunity, _requestStore, sessionID, options, callback);// if not all did go as we expected we rerun. there is build a save ind so we only nomination missing.
 							}
 							
-						}, 60000);
+						}, 60000 * idleGameTime);
 					});
 				})
 			})
@@ -178,13 +181,13 @@ function seeIfHaveAll(_requestStore, sessionID, callback) {
 }
 function MakeNominations(catId, _requestStore, sessionID) {
 	return new Promise(function (resolve) {
-		var url = "https://store.steampowered.com/search/suggest?term={search}&f=games&cc=DK&l=english&excluded_content_descriptors%5B%5D=3&excluded_content_descriptors%5B%5D=4&v=10109111&require_type=game&release_date_max=2020-12-01T18%3A00%3A00Z&release_date_min=2019-12-03T18%3A00%3A00Z";
+		var url = "https://store.steampowered.com/search/suggest?term={search}&f=games&cc=DK&l=english&excluded_content_descriptors%5B%5D=3&excluded_content_descriptors%5B%5D=4&v=13235800&require_type=game&release_date_max=2021-11-30T18%3A00%3A00Z&release_date_min=2020-12-01T18%3A00%3A00Z"
 		var search = "a";
 		switch (catId) {
-			case "51":
+			case vrsupportKey:
 				url = url + "&vrsupport=1";
 				break;
-			case "52": // here we add a game that the account own.
+			case IdToSelfVoteOn: // here we add a game that the account own.
 				resolve();
 				return;																				
 			default:
@@ -225,10 +228,29 @@ function getUnUsedAppId(_requestStore, url, searchIndex) {
 	});
 }
 
-function GetMostPlayedGame(_requestCommunity, steamId, callback) {
-	_requestCommunity.get('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='+apiKey+'&steamid='+steamId+'&format=json', function (error, response, body) {
+function GetMostPlayedGame(_requestCommunity, _requestStore, steamId, options, callback) {
+	_requestCommunity.get('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='+apiKey+'&steamid='+steamId+'&format=json', async function (error, response, body) {
 		var json = JSON.parse(body);
 		json.response.games.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
+		var ownedApps = json.response.games;
+		for (let i = 0; i < ownedApps.length; i++) {
+			const ownedApp = ownedApps[i];
+			if(await EnSureGameCanBeNominated(_requestStore, ownedApp.appid)){
+				callback(ownedApp);
+				return;
+			}
+		}
+		console.error(options.accountPretty + " do not own a valid game, that can be nominated!")
 		callback(json.response.games[0]);
+	})
+}
+function EnSureGameCanBeNominated(_requestStore, appid) {
+	return new Promise(function (resolve) {
+		_requestStore.get('https://store.steampowered.com/app/'+appid,  function (error, response, body) {
+			var $ = cheerio.load(body);
+			
+			var canNominate = $(".steamaward_nominate_gamepage_ctn").length > 0;
+			resolve(canNominate)
+		})
 	})
 }
