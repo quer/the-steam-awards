@@ -24,6 +24,7 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 				//Info wee remove the Review 
 				removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
 					setTimeout( function () { // we need 5 min to make steam register the have been played, and at least 5 min game total game time, to be able to create a review
+						options.steamUser.gamesPlayed([]);					
 						Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, async function () {
 							try {
 								await EnsureWeAreDone(_requestStore, options);
