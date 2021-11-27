@@ -6,7 +6,7 @@ var idleGameTime = 5 // 5 min
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
 	apiKey = await GetSteamApiKey(_requestCommunity);
 	if(apiKey == null){
-		console.log("you need to setup your api key. or remove this and skip from the GetMostPlayedGame methode")
+		console.log(options.accountPretty + " was not able to get apiKey, will be skipped")
 		callback();
 		return;
 	}
