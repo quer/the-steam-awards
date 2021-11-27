@@ -1,6 +1,7 @@
 var cheerio = require('cheerio');
 var apiKey = null; 
 var MasterKey = "xxxx"; // will be used if changed. will be used if, it did not find a key. on the account running. 
+var usehardCodeAppId = null; // if this is not null, it will ignore the apiKey. and just use that game, to play, and that to create review on. for all the accounts.
 var vrsupportKey = "62";
 var IdToSelfVoteOn = "63";
 var idleGameTime = 5 // 5 min 
@@ -23,30 +24,33 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 		callback();
 		return;
 	}
-	seeIfHaveAll(_requestStore, sessionID, function () {
-		GetMostPlayedGame(_requestCommunity, _requestStore, steamClient.steamID, options, function (appid) { //OBS the game must have played over 5 min. 
-			console.log(appid);
-			vote(IdToSelfVoteOn, appid.appid, _requestStore, sessionID, function () {
-				options.steamUser.gamesPlayed([{ game_id: appid.appid }]);					
-				//Info wee remove the Review 
-				removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
-					setTimeout( function () { // we need 5 min to make steam register the have been played, and at least 5 min game total game time, to be able to create a review
-						options.steamUser.gamesPlayed([]);					
-						Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, async function () {
-							try {
-								await EnsureWeAreDone(_requestStore, options);
-								console.log("done");
-								callback();
-								return;
-							} catch (error) {
-								module.exports(steamClient, _requestCommunity, _requestStore, sessionID, options, callback);// if not all did go as we expected we rerun. there is build a save ind so we only nomination missing.
-							}
-							
-						});
-					}, 60000 * idleGameTime);
-				})
+	seeIfHaveAll(_requestStore, sessionID, async function () {
+		var appid = usehardCodeAppId;
+		if(appid == null){
+			appid = await GetMostPlayedGame(_requestCommunity, _requestStore, steamClient.steamID, options) //OBS the game must have played over 5 min. 
+		}
+		console.log(appid);
+		vote(IdToSelfVoteOn, appid.appid, _requestStore, sessionID, function () {
+			options.steamUser.gamesPlayed([{ game_id: appid.appid }]);					
+			//Info wee remove the Review 
+			removeMake(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, function () {
+				setTimeout( function () { // we need 5 min to make steam register the have been played, and at least 5 min game total game time, to be able to create a review
+					options.steamUser.gamesPlayed([]);					
+					Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, appid.appid, async function () {
+						try {
+							await EnsureWeAreDone(_requestStore, options);
+							console.log("done");
+							callback();
+							return;
+						} catch (error) {
+							module.exports(steamClient, _requestCommunity, _requestStore, sessionID, options, callback);// if not all did go as we expected we rerun. there is build a save ind so we only nomination missing.
+						}
+						
+					});
+				}, 60000 * idleGameTime);
 			})
 		})
+		
 	});
 
 };
@@ -256,21 +260,22 @@ function getUnUsedAppId(_requestStore, url, searchIndex) {
 		});
 	});
 }
-
-function GetMostPlayedGame(_requestCommunity, _requestStore, steamId, options, callback) {
-	_requestCommunity.get('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='+apiKey+'&steamid='+steamId+'&format=json', async function (error, response, body) {
-		var json = JSON.parse(body);
-		json.response.games.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
-		var ownedApps = json.response.games;
-		for (let i = 0; i < ownedApps.length; i++) {
-			const ownedApp = ownedApps[i];
-			if(await EnSureGameCanBeNominated(_requestStore, ownedApp.appid)){
-				callback(ownedApp);
-				return;
+function GetMostPlayedGame(_requestCommunity, _requestStore, steamId, options) {
+	return new Promise(function (resolve) {
+		_requestCommunity.get('http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key='+apiKey+'&steamid='+steamId+'&format=json', async function (error, response, body) {
+			var json = JSON.parse(body);
+			json.response.games.sort(function(a, b){return b.playtime_forever - a.playtime_forever});
+			var ownedApps = json.response.games;
+			for (let i = 0; i < ownedApps.length; i++) {
+				const ownedApp = ownedApps[i];
+				if(await EnSureGameCanBeNominated(_requestStore, ownedApp.appid)){
+					resolve(ownedApp);
+					return;
+				}
 			}
-		}
-		console.error(options.accountPretty + " do not own a valid game, that can be nominated!")
-		callback(json.response.games[0]);
+			console.error(options.accountPretty + " do not own a valid game, that can be nominated!")
+			resolve(json.response.games[0]);
+		})
 	})
 }
 function EnSureGameCanBeNominated(_requestStore, appid) {
