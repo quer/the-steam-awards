@@ -6,6 +6,12 @@ var vrsupportKey = "62";
 var IdToSelfVoteOn = "63";
 var idleGameTime = 5 // 5 min 
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
+	//skip account if all is unlocked.
+	if(await IsAccountDone(_requestStore)){
+		console.log(options.accountPretty + "is already done, and have the badge, will be skipped");
+		callback();
+		return;
+	}
 	if(apiKey == null){
 		apiKey = await GetSteamApiKey(_requestCommunity);
 	}
@@ -18,12 +24,6 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 		return;
 	}
 	usedApps = [];
-	//skip account if all is unlocked.
-	if(await IsAccountDone(_requestStore)){
-		console.log(options.accountPretty + "is already done, and have the badge, will be skipped");
-		callback();
-		return;
-	}
 	seeIfHaveAll(_requestStore, sessionID, async function () {
 		var appid = usehardCodeAppId;
 		if(appid == null){
@@ -72,6 +72,9 @@ function IsAccountDone(_requestStore) {
 function EnsureWeAreDone(_requestStore, options) {
 	return new Promise(function (resolve, reject) {
 		_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
+			if (error || response.statusCode >= 400) {
+				console.log('Was not able to get steam awards status. Error:', response.statusCode, error);
+			}
 			var $ = cheerio.load(body);
 			if($(".badge_preview.level_4.current").length <= 0){
 				//it did not complete all
