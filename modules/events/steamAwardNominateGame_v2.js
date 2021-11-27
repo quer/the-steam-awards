@@ -1,10 +1,11 @@
 var cheerio = require('cheerio');
-var apiKey = "xxxxx"; // to get most played game, to make a recommend on a game whit more then 5 min on.
+var apiKey = null;
 var vrsupportKey = "62";
 var IdToSelfVoteOn = "63";
 var idleGameTime = 5 // 5 min 
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
-	if(apiKey == "xxxxx"){
+	apiKey = await GetSteamApiKey(_requestCommunity);
+	if(apiKey == null){
 		console.log("you need to setup your api key. or remove this and skip from the GetMostPlayedGame methode")
 		callback();
 		return;
@@ -12,7 +13,7 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 	usedApps = [];
 	//skip account if all is unlocked.
 	if(await IsAccountDone(_requestStore)){
-		console.log(options.accountPretty + "is allready done, and have the badge, will be skiped");
+		console.log(options.accountPretty + "is already done, and have the badge, will be skipped");
 		callback();
 		return;
 	}
@@ -79,9 +80,9 @@ function EnsureWeAreDone(_requestStore, options) {
 				var haveDoneReview  = onlyLookAtPlayGameAndReviewTaskStatus[1] && $(onlyLookAtPlayGameAndReviewTaskStatus[1]).find(".nominate_check").length > 0? "true" : "false";
 				console.log(options.accountPretty +" did not complete the flow. status: ");
 				console.table([
-					{massage: "missing nominations rows", status: rowsMissing.join(",")},
-					{massage: "have played the game", status: haveDonePlaygame},
-					{massage: "have create a review for the game", status: haveDoneReview},
+					{message: "missing nominations rows", status: rowsMissing.join(",")},
+					{message: "have played the game", status: haveDonePlaygame},
+					{message: "have create a review for the game", status: haveDoneReview},
 				]);
 				reject();
 				return;
@@ -275,4 +276,15 @@ function EnSureGameCanBeNominated(_requestStore, appid) {
 			resolve(canNominate)
 		})
 	})
+}
+
+function GetSteamApiKey(_requestCommunity) {
+	return new Promise(function (resolve) {
+		_requestCommunity.get('https://steamcommunity.com/dev/apikey?l=english', function (error, response, body) {
+			const $ = cheerio.load(body);
+			const $apiKeyPTag = $("#bodyContents_ex > p:first");
+
+			resolve($apiKeyPTag.length > 0 ? $apiKeyPTag.text().replace(/^.*?:\s+/, '') : null);
+		})
+	});
 }
