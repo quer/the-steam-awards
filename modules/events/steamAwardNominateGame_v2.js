@@ -291,12 +291,25 @@ function EnSureGameCanBeNominated(_requestStore, appid) {
 
 function GetSteamApiKey(_requestCommunity) {
 	return new Promise(function (resolve) {
-		_requestCommunity.get('https://steamcommunity.com/dev/apikey?l=english', function (error, response, body) {
+		_requestCommunity.get('https://steamcommunity.com/dev/apikey', function (error, response, body) {
 			try {
 				const $ = cheerio.load(body);
-				const $apiKeyPTag = $("#bodyContents_ex > p:first");
+				if ($('#mainContents h2').text() === 'Access Denied') {
+					resolve(null);
+					console.log('Access Denied, the account is limited account, read more herer https://support.steampowered.com/kb_article.php?ref=3330-IAGK-7663')
+					return;
+				}
+				if ($('#bodyContents_ex h2').text() === 'Your Steam Web API Key') {
+					var key = $('#bodyContents_ex p')
+						.eq(0)
+						.text()
+						.split(' ')[1];
+						resolve(key);
+					return
+				}
+				/*const $apiKeyPTag = $("#bodyContents_ex > p:first");
 	
-				resolve($apiKeyPTag.length > 0 ? $apiKeyPTag.text().replace(/^.*?:\s+/, '') : null);
+				resolve($apiKeyPTag.length > 0 ? $apiKeyPTag.text().replace(/^.*?:\s+/, '') : null);*/
 			} catch (error) {
 				resolve(null)
 			}
