@@ -1,4 +1,5 @@
 var cheerio = require('cheerio');
+const GetApiKey = require('../GetApiKey');
 var apiKey = null; 
 var MasterKey = "xxxx"; // will be used if changed. will be used if, it did not find a key. on the account running. 
 var usehardCodeAppId = null; // if this is not null, it will ignore the apiKey. and just use that game, to play, and that to create review on. for all the accounts.
@@ -13,7 +14,7 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 		return;
 	}
 	if(apiKey == null){
-		apiKey = await GetSteamApiKey(_requestCommunity);
+		apiKey = await GetApiKey.asPromise(_requestCommunity);
 	}
 	if(apiKey == null && MasterKey != "xxxx"){
 		apiKey = MasterKey;
@@ -290,25 +291,4 @@ function EnSureGameCanBeNominated(_requestStore, appid) {
 			resolve(canNominate)
 		})
 	})
-}
-
-function GetSteamApiKey(_requestCommunity) {
-	return new Promise(function (resolve) {
-		_requestCommunity.get('https://steamcommunity.com/dev/apikey?l=english', function (error, response, body) {
-			if (error || response.statusCode >= 400) {
-				console.log('Was not able to pick the apiKey.', response.statusCode, error);
-			}
-			try {
-				const [, apiKey] = body.match(/Key:\s+([0-9A-Z]{32})/);
-				if (typeof apiKey !== 'undefined') {
-					console.log('apiKey resolved:', apiKey);
-					resolve(apiKey);
-					return;
-				}
-			} catch (error) {
-				console.log('apiKey error!', error);
-			}
-			resolve(null);
-		})
-	});
 }
