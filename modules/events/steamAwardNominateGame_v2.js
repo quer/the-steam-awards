@@ -295,14 +295,20 @@ function EnSureGameCanBeNominated(_requestStore, appid) {
 function GetSteamApiKey(_requestCommunity) {
 	return new Promise(function (resolve) {
 		_requestCommunity.get('https://steamcommunity.com/dev/apikey?l=english', function (error, response, body) {
-			try {
-				const $ = cheerio.load(body);
-				const $apiKeyPTag = $("#bodyContents_ex > p:first");
-	
-				resolve($apiKeyPTag.length > 0 ? $apiKeyPTag.text().replace(/^.*?:\s+/, '') : null);
-			} catch (error) {
-				resolve(null)
+			if (error || response.statusCode >= 400) {
+				console.log('Was not able to pick the apiKey.', response.statusCode, error);
 			}
+			try {
+				const [, apiKey] = body.match(/Key:\s+([0-9A-Z]{32})/);
+				if (typeof apiKey !== 'undefined') {
+					console.log('apiKey resolved:', apiKey);
+					resolve(apiKey);
+					return;
+				}
+			} catch (error) {
+				console.log('apiKey error!', error);
+			}
+			resolve(null);
 		})
 	});
 }
