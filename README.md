@@ -6,9 +6,11 @@
 Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event.
 It will complete the event and give the max level badge
 
-Each account must have a active dev api key, it will be used to get the games that the account own. 
-if the account do not have a dev key generated. you can asign a "MasterKey", in the module file. 
-Then it will try fetching, whit that. But if the account is not public, it will not be able to get the games. 
+There are 3 way this can be done.
+ * by default the script will look up, and find each account steam api key. it ensure we use a game that the account own.
+ * having one api key, where it will fetch each account using that. but then the account must be public. 
+ * just giving a master appid. that all account will be playing. 
+The reason for the above, is that you have to play a game and create a review, of one of the nominated games. so we use a game the account own for this. 
 
 ```js
 modules.push(require('./modules/events/steamAwardNominateGame_v2'));
