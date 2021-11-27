@@ -1,10 +1,16 @@
 var cheerio = require('cheerio');
-var apiKey = null;
+var apiKey = null; 
+var MasterKey = "xxxx"; // will be used if changed. will be used if, it did not find a key. on the account running. 
 var vrsupportKey = "62";
 var IdToSelfVoteOn = "63";
 var idleGameTime = 5 // 5 min 
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
-	apiKey = await GetSteamApiKey(_requestCommunity);
+	if(apiKey == null){
+		apiKey = await GetSteamApiKey(_requestCommunity);
+	}
+	if(apiKey == null && MasterKey != "xxxx"){
+		apiKey = MasterKey;
+	}
 	if(apiKey == null){
 		console.log(options.accountPretty + " was not able to get apiKey, will be skipped")
 		callback();

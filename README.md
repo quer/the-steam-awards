@@ -3,14 +3,12 @@
 [![Steam Profile][steam-account-img]][steam-account-url]
 
 # steam awards ( current live 2021 )	
-Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event
-it will complete the event and give the max level badge
+Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event.
+It will complete the event and give the max level badge
 
-You need a steam api key in the file, if you do not have one, read issue https://github.com/quer/the-steam-awards/issues/15 
-if your account is not public, you will have to add the api key for each account, read more here : https://github.com/quer/the-steam-awards/discussions/17#discussioncomment-305665
-
-I will recommend, remove the part where the code play the game. as you might need 5 min in a game. 
-And making somfing that can run all account at once, and playing the app. as the scripts will play for 5 min, and then go to the next, that can be all time before the code is done, whit all account.
+Each account must have a active dev api key, it will be used to get the games that the account own. 
+if the account do not have a dev key generated. you can asign a "MasterKey", in the module file. 
+Then it will try fetching, whit that. But if the account is not public, it will not be able to get the games. 
 
 ```js
 modules.push(require('./modules/events/steamAwardNominateGame_v2'));
