@@ -1,6 +1,6 @@
 /** @typedef {(apiKey: string|null) => void} ApiKeyResolve */
 
-/** @typedef {(error: string|null, response: string) => void} ApiKeyReject */
+/** @typedef {(error: string|null, statusCode: number) => void} ApiKeyReject */
 
 /**
  * @param {module:request} RequestCommunity
@@ -10,7 +10,7 @@
 function RequestApiKey(RequestCommunity, resolve, reject) {
     RequestCommunity.get('https://steamcommunity.com/dev/apikey?l=english', function (error, response, body) {
         if (error || response.statusCode >= 400) {
-            return reject(error || 'Was not able to pick the apiKey.', response);
+            return reject(error || 'Was not able to pick the apiKey.', response ? response.statusCode : 0);
         }
         return resolve(ParseApiKeyFromHtml(body));
     });
@@ -44,13 +44,13 @@ function GetApiKey(steamClient, RequestCommunity, RequestStore, SessionID, optio
         console.log({apiKey}, options.accountPretty, 'ok');
         setTimeout(callback, 700);
 
-    }, function (error, response) {
+    }, function (error, statusCode) {
 
         // 429: in error case, sleep longer
         const min = 1;
         console.log('.. sleep', min, 'min ...');
         setTimeout(function () {
-            console.log(error, options.accountPretty, response.statusCode);
+            console.log(error, options.accountPretty, statusCode);
             callback();
         }, min * 60 * 1000);
     });
@@ -65,8 +65,8 @@ function GetApiKey(steamClient, RequestCommunity, RequestStore, SessionID, optio
  */
 GetApiKey.asPromise = function (RequestCommunity, options) {
     return new Promise(function (resolve) {
-        RequestApiKey(RequestCommunity, resolve, function (error, response) {
-            console.log(error, options.accountPretty, response.statusCode);
+        RequestApiKey(RequestCommunity, resolve, function (error, statusCode) {
+            console.log(error, options.accountPretty, statusCode);
             resolve(null);
         });
     });
