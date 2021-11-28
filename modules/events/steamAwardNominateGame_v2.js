@@ -74,7 +74,7 @@ function EnsureWeAreDone(_requestStore, options) {
 	return new Promise(function (resolve, reject) {
 		_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
 			if (error || response.statusCode >= 400) {
-				console.log('Was not able to get steam awards status. Error:', response.statusCode, error);
+				console.log('Was not able to get steam awards status. Error:', response ? response.statusCode : 0, error);
 			}
 			var $ = cheerio.load(body);
 			if($(".badge_preview.level_4.current").length <= 0){
