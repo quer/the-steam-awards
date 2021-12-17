@@ -42,6 +42,10 @@ Just add more account in the config.
  * remove all game from wishlist
  * Give Awared/Rewards ( GiveSteamAward.js )
  * Create badge (createBadge.js)
+ * Follow Games
+ * Unfollow Games
+ * Follow Curators
+ * UnFollow Curators
 
 # Events
 Events modules are stored in `modules/events`
