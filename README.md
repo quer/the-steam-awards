@@ -2,21 +2,6 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# steam awards ( current live 2021 )	
-Use module steamAwardNominateGame_v2, it have been updated to be able to hande the event.
-It will complete the event and give the max level badge
-
-There are 3 way this can be done.
- * by default the script will look up, and find each account steam api key. it ensure we use a game that the account own.
- * having one api key, where it will fetch each account using that. but then the account must be public. 
- * just giving a master appid. that all account will be playing. 
-The reason for the above, is that you have to play a game and create a review, of one of the nominated games. so we use a game the account own for this. 
-
-```js
-modules.push(require('./modules/events/steamAwardNominateGame_v2'));
-```
-
-
 # The steam events on multi account
 Just add more account in the config.
 
