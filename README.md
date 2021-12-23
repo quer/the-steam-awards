@@ -2,6 +2,15 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
+# Steam winter sale 2021 ( current )
+The winter sale is live. and as each year, i have the modules to giv you all the free stuff
+This year we can get free:
+ * 1 free card earh day, by running the queue. (module: `./modules/events/salequeue`)
+ * 10 card for voting in all the categorys. ( one card for each category ) (module: `./modules/events/steamawards-2021`)
+ * a free sticker each 48 hours (module: `./modules/events/FreeDailySticker`)
+
+shoud there be anythink i missed, or that do not work as expected, Create a issue
+
 # The steam events on multi account
 Just add more account in the config.
 
@@ -51,6 +60,7 @@ Events modules are stored in `modules/events`
  * the steam awards - 2020
  * Steam Winter Sale - 2020
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
+ * steam winter sale - 2021 ( steamawards-2021 )
 
 # Setup
 Just run `npm install` in the root folder,
