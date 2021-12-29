@@ -85,8 +85,8 @@ module.exports = {
     /**
      * will return a list of
     {
-        avatarHash: "160d0ea47303bd7eb364c7bcf686286b5feafb16"
-        name: "Big Picture"
+        avatarHash: "160d0ea47303bd7eb364c7bcf686286b5feafb16",
+        name: "Big Picture",
         steamid: "103582791433577547"
     }
      */
@@ -100,6 +100,43 @@ module.exports = {
                     
                 } catch (error) {
                     reject({text: "Error when getting account Groups", error: error});
+                }
+
+            })
+        })
+    },
+    /**
+     * will return a list of
+     {
+        appID: "440",
+        name: "Team Fortress 2"
+     }
+     this do not require any steam api key. 
+     ( the request will also include soundtracks and software. there is no direct way to tell what is a soundtrack or software. but all that include 'Soundtrack' in the name, will be exclude)
+     ( also this methode will only work whit the steamid that match the account being running. the 'steamClient.steamID')
+     */
+    GetOwnGames: function (RequestCommunity, steamId) {
+        return new Promise(function (resolve, reject) {
+            RequestCommunity.get({uri: "https://steamcommunity.com/profiles/"+ steamId +"/games/?tab=all&xml=1"}, function(error, response, body) {
+                var apps = [];
+                try {
+                    var $ = cheerio.load(body, { xmlMode: true });
+                    for (let i = 0; i < $("game").length; i++) {
+                        const appInto = $("game")[i];
+                        const appName = appInto.childNodes.find(x => x.name == 'name').children[0].children[0].data;
+                        const appID = appInto.childNodes.find(x => x.name == 'appID').children[0].data;
+                        if(appName.indexOf("Soundtrack") == -1){
+                            apps.push({
+                                appID: appID,
+                                name: appName
+                            })
+                        }
+                    }
+                    resolve(apps);
+                    return;
+                                
+                } catch (error) {
+                    reject({text: "Error when getting Owned games", error: error});
                 }
 
             })

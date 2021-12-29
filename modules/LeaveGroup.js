@@ -1,13 +1,25 @@
+var LeaveAllGroups = true; // if true, it will leave all groups joined. 
 //groupId's
 var GroupsToLeave = [
     "103582791433470748"
 ]
-var timeBetweenEachRequest = 2000; //2sec
+var timeBetweenEachRequest = 500; //0.5sec
+
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+
+    if(LeaveAllGroups){
+        const helper = require('./Edit Profile/chanceAccountHelper')
+        var allGroupsLinkedToAccount = await helper.GetGroups(RequestCommunity, steamClient.steamID);
+        GroupsToLeave = [];// reset list, as it will leave all groups. also to ensure we doent do unnecessary request to steam.
+        for (let i = 0; i < allGroupsLinkedToAccount.length; i++) {
+            const group = allGroupsLinkedToAccount[i];
+            GroupsToLeave.push(group.steamid);
+        }
+    }
     for (let i = 0; i < GroupsToLeave.length; i++) {
         const groupId = GroupsToLeave[i];
         try {        
-            await FollowGame(RequestCommunity, SessionID, steamClient.steamID, groupId);
+            await LeaveGroup(RequestCommunity, SessionID, steamClient.steamID, groupId);
         } catch (error) {
             console.log(options.accountPretty+" error Leaving group, and will be skipped, groupId: "+ groupId);
             console.log(error)
@@ -17,7 +29,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     callback();
 }
 
-function FollowGame(RequestCommunity, SessionID, steamID, groupId) {
+function LeaveGroup(RequestCommunity, SessionID, steamID, groupId) {
     return new Promise(function (resolve, reject) {
         RequestCommunity.post({
             url: "https://steamcommunity.com/profiles/"+ steamID +"/home_process",

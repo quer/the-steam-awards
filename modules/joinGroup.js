@@ -1,7 +1,8 @@
-var ApiKey = "xxxxxx";
-//list to where it will select between 6 and 2 (edit on line 36)
-var list = [
-    "https://steamcommunity.com/groups/NewSteamCommunityBeta",
+//This module can join via url and GroupID. ( no need to fill both, just enter the group in one of the list)
+var timeBetweenEachRequest = 500; //0.5sec
+//The url for the group to join
+var joinGroupViaGroupUrl = [
+    /*"https://steamcommunity.com/groups/NewSteamCommunityBeta",
     "https://steamcommunity.com/groups/Infinity-CS-GO",
     "https://steamcommunity.com/groups/bigpicture",
     "https://steamcommunity.com/groups/thevalvestore",
@@ -14,96 +15,60 @@ var list = [
     "https://steamcommunity.com/groups/familysharing",
     "https://steamcommunity.com/groups/SteamClientBeta",
     "https://steamcommunity.com/groups/steammusic",
-    "https://steamcommunity.com/groups/homestream"
+    "https://steamcommunity.com/groups/homestream"*/
 ]
-// all in this list, will the account join
-var MustHave = [
-    "https://steamcommunity.com/groups/enhanced-clients"
-];
-//each level group must be in the right order. uses account Math.floor(level / 10) to get 10's and run index's
-var levelGroups = [
-    "https://steamcommunity.com/groups/level10collector",
-    "https://steamcommunity.com/groups/level20collector",
-    "https://steamcommunity.com/groups/level30collector",
-    "https://steamcommunity.com/groups/level40collector",
-    "https://steamcommunity.com/groups/level50collector",
-    "https://steamcommunity.com/groups/level60collector",
-];
+// the groupid to join
+var joinGroupViaGroupID = [
+    "103582791463767598",
+    "103582791459933004"
+  ]
 var RequestCommunity;
 var SessionID;
-module.exports = function(steamClient, _RequestCommunity, RequestStore, _SessionID, options, callback){
+module.exports = async function(steamClient, _RequestCommunity, RequestStore, _SessionID, options, callback){
     RequestCommunity = _RequestCommunity;
     SessionID = _SessionID;
-    loopMustHaveGroups(0, function () {
-        loopRandomGroupsToHave(Math.floor((Math.random() * 6) + 2), 0, [], function () {
-            getLevel(steamClient.steamID, function (usersLevel) {
-                usersLevel = Math.floor(usersLevel/10);
-                loopLevelGroupsToHave(usersLevel, 0, function () {
-                    callback();
-                })
-            })
-            
-        })
-    })
-}
-function loopLevelGroupsToHave(MaxLoops, index, callback) {
-    if(MaxLoops.length > index){
-        JoinGroup(levelGroups[index], function () {
-            loopLevelGroupsToHave(MaxLoops, ++index, callback);
-        })
-    }else{
-        callback();
-    }
-}
-function loopMustHaveGroups(index, callback) {
-    if(MustHave.length > index){
-        JoinGroup(MustHave[index], function () {
-            loopMustHaveGroups(++index, callback);
-        })
-    }else{
-        callback();
-    }
-}
-function loopRandomGroupsToHave(maxGroups, index, haveInvitedTo, callback) {
-    if(maxGroups > index){
-        var foundIndex = -1;
-        while (foundIndex == -1) { //WARNING: if maxGroups is bigger then list. then this can get stuck in limbo
-            var groupToJoin = Math.floor(Math.random() * (list.length - 1) );
-            if(!haveInvitedTo.includes(groupToJoin)){
-                foundIndex = groupToJoin;
-            }
+    //join  via url
+    for (let i = 0; i < joinGroupViaGroupUrl.length; i++) {
+        const groupUrl = joinGroupViaGroupUrl[i];
+        try {
+            await JoinGroup(groupUrl);
+        } catch (error) {
+            console.log(options.accountPretty+ " failed to join group : " + groupUrl);
         }
-        JoinGroup(list[foundIndex], function () {
-            haveInvitedTo.push(foundIndex);
-            loopRandomGroupsToHave(maxGroups, ++index, haveInvitedTo, callback);
-        })
-    }else{
-        callback();
+        await Wait(timeBetweenEachRequest);
     }
+    //join via groupID
+    for (let i = 0; i < joinGroupViaGroupID.length; i++) {
+        const groupID = joinGroupViaGroupID[i];
+        try {
+            await JoinGroup("https://steamcommunity.com/gid/"+groupID);
+        } catch (error) {
+            console.log(options.accountPretty+ " failed to join group : " + groupID);
+        }
+        await Wait(timeBetweenEachRequest);
+    }
+    callback();
 }
 function JoinGroup(groupUrl, callback) {
-    RequestCommunity.post({
-		url: groupUrl,
-		form:{
-            sessionID: SessionID,
-            action: "join"
-		}
-	}, function (error, response, body) {
-        setTimeout(function () {
-            callback();
-        }, 500);
-    });
+    return new Promise(function (resolve, reject) {
+        RequestCommunity.post({
+            url: groupUrl,
+            form:{
+                sessionID: SessionID,
+                action: "join"
+            }
+        }, function (error, response, body) {
+            if(error){
+                reject(error);
+                return
+            }
+            resolve();
+        });
+    })
+    
 }
-function getLevel(steamId, callback) {
-    RequestCommunity.get({
-		url: "https://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key="+ApiKey+"&steamid=" + steamId
-	}, function (error, response, body) {
-        var json = JSON.parse(body);
-        if(json.response.player_level){
-            callback(json.response.player_level);
-        }
-        else{
-            callback(0);
-        }
+function Wait(time) {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(), time)
     });
 }

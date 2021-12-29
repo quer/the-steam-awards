@@ -26,8 +26,8 @@ Just add more account in the config.
  * clear profile name alias
  * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
  * vote and like a guide (just add id and appid in file)
- * join group (will join must have groups and random from a list, and level groups based on account level(replace api key))
- * LeaveGroup
+ * join group
+ * LeaveGroup ( can also remove all groups from each account )
  * Comment in a Guide
  * add game to WishList
  * comment on a profile
