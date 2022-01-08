@@ -2,7 +2,9 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-shoud there be anythink i missed, or that do not work as expected, Create a issue
+Should there be anything i missed, or that do not work as expected, Create a issue.
+
+Curreny working on a better core for all the account and modules see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
 # The steam events on multi account
 Just add more account in the config.
