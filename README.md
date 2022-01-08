@@ -2,13 +2,6 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# Steam winter sale 2021 ( current )
-The winter sale is live. and as each year, i have the modules to giv you all the free stuff
-This year we can get free:
- * 1 free card earh day, by running the queue. (module: `./modules/events/salequeue`)
- * 10 card for voting in all the categorys. ( one card for each category ) (module: `./modules/events/steamawards-2021`)
- * a free sticker each 48 hours (module: `./modules/events/FreeDailySticker`)
-
 shoud there be anythink i missed, or that do not work as expected, Create a issue
 
 # The steam events on multi account
