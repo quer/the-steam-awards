@@ -4,6 +4,15 @@
 
 shoud there be anythink i missed, or that do not work as expected, Create a issue
 
+
+# work in progress
+This branch is use to commit the changes i do the core.
+
+More info later.. But see how clean the Main.js now is.. ( 
+    and you can run in cluster mode, to run more unit at once, and anti spam to steam have been build in, so even if there is 10 account at once, it will ensure it, min do a call once a sec. even when running async on all the accounts..
+)
+
+
 # The steam events on multi account
 Just add more account in the config.
 

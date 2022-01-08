@@ -1,6 +1,6 @@
 //UserReceivedNewGame_{steamid}_{userNewGameId}
-var steamid = "76561197996021861";
-var userNewGameId = "1570300345";
+var steamid = "76561198067646546";
+var userNewGameId = "1604111664";
 
 var url = "https://steamcommunity.com/comment/UserReceivedNewGame/voteup/"+ steamid +"/"+ userNewGameId +"/";
 

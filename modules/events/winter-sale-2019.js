@@ -1,7 +1,11 @@
 //remeber to cance app in AddGameToWishlist.js
 var cheerio = require('cheerio');
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    quest1(steamClient, RequestStore, SessionID, function () {
+    getPoints(RequestStore, function (points) {
+        console.log(steamClient.steamID + " - " + options.UserName + " points:"+ points);
+        callback();
+    })
+    /*quest1(steamClient, RequestStore, SessionID, function () {
         quest2(function () {
             require('../AddGameToWishlist')(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
                 quest4(RequestStore, function () {
@@ -11,9 +15,10 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
                                 quest8(RequestStore, function () {
                                     quest11(RequestCommunity, function () {
                                         quest12(steamClient, RequestCommunity, RequestStore, SessionID, options, function () {
-                                            getPoints(RequestStore, function (points) {
-                                                console.log(steamClient.steamID + " - " + options.UserName + " points:"+ points);
-                                                callback();
+                                            questAlmostLast(RequestStore, SessionID, function () {
+                                                guestLast(RequestStore, function () {
+                                                    
+                                                })
                                             })
                                         })
                                     })
@@ -24,7 +29,7 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
                 });
             })
         })
-    })
+    })*/
 };
 function quest1(steamClient, RequestStore, SessionID, callback) {
     var steamid = steamClient.steamID;
@@ -110,7 +115,8 @@ function quest11(RequestCommunity, callback){
 }
 
 function quest12(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    var itemsToChat = null;
+    callback();
+    /*var itemsToChat = null;
     var steamid = steamClient.steamID;
     RequestCommunity.get('https://steamcommunity.com/profiles/'+steamid+'/inventory/json/753/6', function (error, response, body) {
         var json = JSON.parse(body);
@@ -162,7 +168,7 @@ function quest12(steamClient, RequestCommunity, RequestStore, SessionID, options
             console.log("account doent have emoticon");
             callback();
         }    
-    })
+    })*/
 }
 function getPoints(RequestStore, callback) {
     RequestStore.get('https://store.steampowered.com/holidayquests', function (error, response, body) {
@@ -170,3 +176,24 @@ function getPoints(RequestStore, callback) {
         callback($(".winter2019_quest_checked").length * 100);
     })
 }
+function questAlmostLast(RequestStore, SessionID, callback) {
+    RequestStore.post(
+        {
+            url:'https://store.steampowered.com/holidayquests/ajaxclaimitem/', 
+            form: { sessionid: SessionID, type: 2 }
+        }, function (error, response, body){
+            var data = JSON.parse(body);
+            if(data.success){
+                callback();
+            }else{
+                console.log('error getting free token');
+                callback();
+            }
+        })
+}
+function guestLast(RequestStore, callback) {
+    RequestStore.get('https://store.steampowered.com/steamawards/2019/', function (error, response, body) {
+        callback();
+    })
+}
+    

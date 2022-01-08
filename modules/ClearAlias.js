@@ -6,10 +6,10 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
     RequestCommunity.post({uri: url, formData: formData}, function(error, response, body) {
         var respons = JSON.parse(body);
         if(respons && respons.success){
-            console.log(options.accountPretty + " - Cleared Alias");
-            callback();
+            console.log(" - Cleared Alias");
         }else{
-            console.log(options.accountPretty + " - Failed to clear Alias");
+            console.error(" - Failed to clear Alias");
         }
+        callback();
     });
 }

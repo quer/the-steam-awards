@@ -12,7 +12,9 @@
     "url": "https://github.com/quer/the-steam-awards"
   },
   "dependencies": {
+    "bignumber.js": "^2.0.7",
     "cheerio": "*",
+    "csgocoordinator": "^1.2.0",
     "request": "*",
     "steam": "*",
     "steam-totp": "*",

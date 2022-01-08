@@ -1,5 +1,5 @@
 var cheerio = require('cheerio');
-var day = 0; // will ensure that 
+var day = 3; // will ensure that 
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 
     addTag(RequestStore, SessionID, function () {

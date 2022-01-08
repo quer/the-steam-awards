@@ -13,7 +13,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             if(returnJson.success == 1){
                 console.log(options.accountPretty+ " Setting chanced!");
             }else{
-                console.log(options.accountPretty+ " Error saving avatar! Error:" + errmsg);
+                console.error(options.accountPretty+ " Error saving avatar! Error:" + errmsg);
             }
             callback();
         });

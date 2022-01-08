@@ -1,13 +1,44 @@
-module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    RequestCommunity.post({
-        url: "https://steamcommunity.com/actions/AddFriendAjax",
-        form:{
-            sessionID: SessionID,
-            steamid: "76561197985676785",
-            accept_invite: 0
+//a list of all the steam account to add as friends
+var steamIds = ["xxx", "76561197990233572", "xxx"]
+
+module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+    for (let i = 0; i < steamIds.length; i++) {
+        const steamid = steamIds[i];
+        try {
+            await AddFriend(RequestCommunity, SessionID, steamid)            
+        } catch (error) {
+            console.error(`somefing went wrong, add '${steamid}' as frind. error: `, error);
         }
-    }, function (error, response, body) {
-        console.log(body);
-        callback();
-    });
+    }
+    callback();
+}
+
+function AddFriend(RequestCommunity, SessionID, steamId) {
+    return new Promise(function (resolve, reject ) {
+        RequestCommunity.post({
+            url: "https://steamcommunity.com/actions/AddFriendAjax",
+            form:{
+                sessionID: SessionID,
+                steamid: steamId,
+                accept_invite: 0
+            }
+        }, function (error, response, body) {
+            if(error){
+                reject(error);
+                return;
+            }
+            try {
+                var bodyJson = JSON.parse(body);
+                if(bodyJson.success == 1){
+                    console.log("added " + bodyJson.invited);
+                    resolve();
+                }else{
+                    throw new Error(body);
+                }
+            } catch (error) {
+                reject(error);
+                return;
+            }
+        });
+    })
 }

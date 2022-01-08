@@ -1,19 +1,22 @@
+var cheerio = require('cheerio');
 module.exports = function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
 	vote(1, 620980, _requestStore, sessionID, 3, function () {
 		vote(2, 954740, _requestStore, sessionID, 3, function () {
-			vote(3, 570, _requestStore, sessionID, 3, function () {
+			vote(3, 730, _requestStore, sessionID, 3, function () {
 				vote(4, 1165670, _requestStore, sessionID, 3, function () {
 					vote(5, 813780, _requestStore, sessionID, 3, function () {
 						vote(6, 985430, _requestStore, sessionID, 3, function () {
 							vote(7, 746110, _requestStore, sessionID, 3, function () {
 								vote(8, 1172380, _requestStore, sessionID, 3, function () {
 									options.steamUser.gamesPlayed({games_played:[{game_id:570}]});
-									Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, function(){
-										console.log("done!");
-										setTimeout(function(){	
-											callback();
-										}, 500);
-									})
+									setTimeout(function(){	
+										Make(_requestCommunity, _requestStore, sessionID, steamClient.steamID, function(){
+											console.log("done!");
+											setTimeout(function(){	
+												callback();
+											}, 500);
+										})
+									}, 500);
 								})
 							})
 						})
@@ -55,7 +58,7 @@ function vote(categoryid, appid, _request, sessionID, writein, callback) {
 function Make(_requestCommunity, _requestStore, sessionID, steamID, callback) {
 	var url = 'https://store.steampowered.com/friends/recommendgame';
 	var form = {
-		appid: 570,
+		appid: 730,
 		comment: "Great game!",
 		disable_comments: 1,
 		is_public: false,
@@ -63,7 +66,7 @@ function Make(_requestCommunity, _requestStore, sessionID, steamID, callback) {
 		rated_up: true,
 		received_compensation: 0,
 		sessionid: sessionID,
-		steamworksappid: 570
+		steamworksappid: 730
 	}
 
 	_requestStore.post({
@@ -84,7 +87,7 @@ function removeMake(_requestCommunity, _requestStore, sessionID, steamID, callba
 		form: {
 			action: "delete",
 			sessionid: sessionID,
-			appid: 570
+			appid: 730
 		}
 	}, function (er, re,  bo) {
 		console.log("fjerenet");

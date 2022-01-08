@@ -1,5 +1,5 @@
 var runQueueTimes = 1; // will run queue 1 time ( some event, have 3 time card drop)
-var timeBetweenFullQueue = 10 * 1000; // 10 sec
+var timeBetweenFullQueue = 2 * 1000; // 10 sec
 var shoudRetryedMissingItem = true;
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     getNewItems(RequestCommunity, async function (itemBefore) {
