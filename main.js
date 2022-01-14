@@ -1,9 +1,11 @@
-const core = require('./lib/core');
-core.Setting.AuthFieldNameUsername = "username";
-core.Setting.AuthFieldNamePassword = "password";
-core.Setting.Logging.SaveLogMode = core.Enums.logging.all;
-core.Setting.RunningMode.Mode = core.Enums.RunningMode.cluster;
-core.Setting.RunningMode.clusterSize = 4;
+const settings = require('./lib/Settings');
+const core = require('./lib/Core');
+settings.AuthFieldNameUsername = "username";
+settings.AuthFieldNamePassword = "password";
+settings.Logging.SaveLogMode = settings.Enums.logging.mode.all;
+settings.Logging.SaveLogType = settings.Enums.logging.type.splitFile;
+settings.RunningMode.Mode = settings.Enums.RunningMode.cluster;
+settings.RunningMode.clusterSize = 4;
 
 var modules = [];
 //modules.push('events/salequeue');
@@ -11,16 +13,16 @@ var modules = [];
 //modules.push('profileComment');
 //modules.push('Wishlist_AddGame');
 //modules.push('GameRecommend_Add');
-modules.push('SharedFile_Comment');
+modules.push('test');
 
 
 
 //core.RunAllBots(modules)
-core.RunIndexSpecificBot([0], modules)
+core.RunIndexSpecificBot([0, 1], modules)
 .then(function () {
 }).catch(function (error) {
-	console.error("Somefing happend!");
-	console.error(error);
+	core.logError("Somefing happend!");
+	core.logError(error);
 }).finally(function () {
 	process.exit();
 })
