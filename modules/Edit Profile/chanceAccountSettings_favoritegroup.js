@@ -13,16 +13,16 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             var randomGroup = helper.GetRandomFromList(Groups);
             try {
                 await SetFavoriteGroup(RequestCommunity, randomGroup.steamid, SessionID, steamClient.steamID);                
-                console.log(options.accountPretty + " Profile favorite group changed");
+                options.log("Profile favorite group changed");
             } catch (error) {
-                console.log(options.accountPretty + " Profile group, error changeing it", error.msg, error.error);
+                options.logError("Profile group, error changeing it", error.msg, error.error);
             }
             
         }else{
-            console.log(options.accountPretty + " Profile do not have any group");
+            options.log("Profile do not have any group");
         }
     } catch (error) {
-        console.log(options.accountPretty + " Profile favorite group NOT changed");
+        options.logError("Profile favorite group NOT changed");
     }
     callback();
 }

@@ -21,8 +21,8 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         try {        
             await LeaveGroup(RequestCommunity, SessionID, steamClient.steamID, groupId);
         } catch (error) {
-            console.log(options.accountPretty+" error Leaving group, and will be skipped, groupId: "+ groupId);
-            console.log(error)
+            options.logError(options.accountPretty+" error Leaving group, and will be skipped, groupId: "+ groupId);
+            options.logError(error)
         }
         await Wait(timeBetweenEachRequest);
     }

@@ -8,14 +8,18 @@ var SharedFileToComment = [
     }
 ]
 
+var log = () => {};
+var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+	log = options.log;
+	logError = options.logError;
     for (let i = 0; i < SharedFileToComment.length; i++) {
         const sharedFileObj = SharedFileToComment[i];
         try {
             await CommentSharedFile(RequestCommunity, SessionID, sharedFileObj);
         } catch (error) {
-            console.error(`somefing went wrong, adding comment to sharedFile.`, sharedFileObj);
-            console.error('Error:', error);
+            logError(`somefing went wrong, adding comment to sharedFile.`, sharedFileObj);
+            logError('Error:', error);
         }
     }   
     callback();   
@@ -40,7 +44,7 @@ function CommentSharedFile(RequestCommunity, SessionID, sharedfileObj) {
             try {
                 var bodyJson = JSON.parse(body);
                 if(bodyJson.success){
-                    console.log("added comment. ", sharedfileObj);
+                    log("added comment. ", sharedfileObj);
                     resolve();
                 }else{
                     throw new Error(body);

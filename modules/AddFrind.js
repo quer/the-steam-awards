@@ -1,13 +1,17 @@
 //a list of all the steam account to add as friends
 var steamIds = ["xxx", "76561197990233572", "xxx"]
 
+var log = () => {};
+var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+	log = options.log;
+	logError = options.logError;
     for (let i = 0; i < steamIds.length; i++) {
         const steamid = steamIds[i];
         try {
             await AddFriend(RequestCommunity, SessionID, steamid)            
         } catch (error) {
-            console.error(`somefing went wrong, add '${steamid}' as frind. error: `, error);
+            logError(`somefing went wrong, add '${steamid}' as frind. error: `, error);
         }
     }
     callback();
@@ -30,7 +34,7 @@ function AddFriend(RequestCommunity, SessionID, steamId) {
             try {
                 var bodyJson = JSON.parse(body);
                 if(bodyJson.success == 1){
-                    console.log("added " + bodyJson.invited);
+                    log("added " + bodyJson.invited);
                     resolve();
                 }else{
                     throw new Error(body);

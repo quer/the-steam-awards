@@ -4,7 +4,7 @@ settings.AuthFieldNameUsername = "username";
 settings.AuthFieldNamePassword = "password";
 settings.Logging.SaveLogMode = settings.Enums.logging.mode.all;
 settings.Logging.SaveLogType = settings.Enums.logging.type.splitFile;
-settings.RunningMode.Mode = settings.Enums.RunningMode.cluster;
+settings.RunningMode.Mode = settings.Enums.RunningMode.single;
 settings.RunningMode.clusterSize = 4;
 
 var modules = [];
@@ -13,7 +13,7 @@ var modules = [];
 //modules.push('profileComment');
 //modules.push('Wishlist_AddGame');
 //modules.push('GameRecommend_Add');
-modules.push('test');
+modules.push('ActivateFreeGame');
 
 
 

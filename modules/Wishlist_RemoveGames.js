@@ -1,12 +1,12 @@
 var AppList = [];
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    console.log("Removing "+ AppList + " apps from wishlist");
+    options.log("Removing "+ AppList + " apps from wishlist");
     for (let i = 0; i < AppList.length; i++) {
         const appid = AppList[i];
         try {
             await RemoveGame(RequestStore, SessionID, steamClient.steamID, appid);
         } catch (error) {
-            console.error(`somefing went wrong, removing '${appid}' from the wishlist. error: `, error);
+            options.logError(`somefing went wrong, removing '${appid}' from the wishlist. error: `, error);
         }
     }
     callback();

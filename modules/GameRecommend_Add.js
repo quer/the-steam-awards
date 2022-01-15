@@ -6,13 +6,17 @@ var list = [
     }
 ]
 
+var log = () => {};
+var logError = () => {};
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
+	log = options.log;
+	logError = options.logError;
     for (let i = 0; i < list.length; i++) {
         const recommendation = list[i];
         try {
             await Make(_requestStore, sessionID, recommendation);
         } catch (error) {
-            console.error(`somefing went wrong, add recommendation to appid '${recommendation.appid}'. error: `, error);
+            logError(`somefing went wrong, add recommendation to appid '${recommendation.appid}'. error: `, error);
         }
     }
     callback();
@@ -47,9 +51,9 @@ function Make(_requestStore, sessionID, recommendation) {
                 if(bodyJson.success){
                     //some times et return an error message, and still add it..
                     if(bodyJson.strError){
-                        console.log("added recommendation to app: " + recommendation.appid, "but did also return a error: " + bodyJson.strError);
+                        log("added recommendation to app: " + recommendation.appid, "but did also return a error: " + bodyJson.strError);
                     }else{
-                        console.log("added recommendation to app: " + recommendation.appid);
+                        log("added recommendation to app: " + recommendation.appid);
                     }
                     resolve();
                     return;

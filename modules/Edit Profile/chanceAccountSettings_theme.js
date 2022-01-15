@@ -21,12 +21,12 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         if(allAvailableThemes.length > 0){
             var randomAvailableTheme = helper.GetRandomFromList(allAvailableThemes);
             await SetProfileTheme(RequestCommunity, accountInfo.ProfileEdit.webapi_token, randomAvailableTheme.theme_id);
-            console.log(options.accountPretty + " Profile theme changed");
+            options.log(options.accountPretty + " Profile theme changed");
         }else{
-            console.log(options.accountPretty + " Profile do not have any theme");
+            options.log(options.accountPretty + " Profile do not have any theme");
         }
     } catch (error) {
-        console.log(options.accountPretty + " Profile theme NOT changed");
+        options.logError(options.accountPretty + " Profile theme NOT changed");
     }
     callback();
 }

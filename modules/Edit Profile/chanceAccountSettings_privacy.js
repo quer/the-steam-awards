@@ -21,7 +21,7 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
         eCommentPermission: 1
     }
     RequestCommunity.post({uri: url, formData: formData}, function(error2, response2, body2) {
-       console.log(body2)
+        options.log(body2)
         callback();
     });
 }

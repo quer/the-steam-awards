@@ -2,15 +2,22 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-shoud there be anythink i missed, or that do not work as expected, Create a issue
-
-
 # work in progress
 This branch is use to commit the changes i do the core.
 
 More info later.. But see how clean the Main.js now is.. ( 
     and you can run in cluster mode, to run more unit at once, and anti spam to steam have been build in, so even if there is 10 account at once, it will ensure it, min do a call once a sec. even when running async on all the accounts..
 )
+
+## Added new features
+ * run in cluster mode. be able to run more account at once.
+ * adding better logging
+ * adding logging to save file 
+ * * can be saved to on file, for each run
+ * * can be splited up into each account, so a log file for each account. for each run
+ * adding a anti spam to steam. so even when running more account at once. it will only send request to steam, one at a time.
+ * * There is a Setting to set how this shoud behave. default is that is shoud at least use 1 sec on each request. so it will calculate how log before the next request is allow to be runed. 
+
 
 
 # The steam events on multi account
@@ -68,46 +75,75 @@ Events modules are stored in `modules/events`
 
 # Setup
 Just run `npm install` in the root folder,
+
 add you account into the `config.js` file.
-change main.js to run the module you want
+
+change `main.js`, setup what module to run.
+And how the setting shoud be. 
+
 and if needed chance the module file. 
+
 and then `node main`
 
-# To use 
-When you run `node main` it will run the modules in `/modules/`
+# To use
+## Running Modes
+we have a few way to run this.
+ * RunAllBots - `core.RunAllBots(modules)` - will run all account in `config.js` 
+ * RunIndexSpecificBot - `core.RunIndexSpecificBot([0, 1], modules)` - will run the specifig index in the `config.js` only
+ * DoRunBots - `core.RunAllBots(auths, modules)` - will run the given account in the auths list. ( this will ignore the `config.js` and only run the account in the given list )
 
-just add a new module in the folder and add it in the main.js on line 9 like
+
+ the `modules` parameter, you need to give it a list of modules. read the next section
+
+
+## Run Modules
+To select what module to run. you have to add then into a list in the `main.js` file
+
+You just add the filename in the `modules`. ( if the module in a sub folder. you have to add the subfolder name also)
+
+eks:
 ```js
-modules.push(require('./modules/guideVoteLikeShare'));
+var modules = [];
+modules.push('events/salequeue');
+modules.push('events/FreeDailySticker');
+modules.push('profileComment');
+modules.push('Wishlist_AddGame');
+modules.push('GameRecommend_Add');
+modules.push('ActivateFreeGame');
 ```
-then when you start the node, it will all the moduels in the arrays order
-## Module
-To make a new module just create a new js file in the folder that have this code inside
+
+## Setting
+In the `main.js` you can set up setting on how it shoud be running.
+The default settings are show under here. ( can be foung in `lib/Setting.js`)
 ```js
-module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-// add your code here
-});
-```
-Options contains 
-```js
-var options = {
-    Index: index, // the index in config
-    UserName: auth.steam_user, // steam user name
-    steamUser: steamUser, // Steam.SteamUser
-    steamFriends: steamFriends //Steam.SteamFriends,
-    accountPretty: steamClient.steamID + " - " + auth.username + ":"
+{
+    AuthFieldNameUsername: "steam_user",
+    AuthFieldNamePassword: "steam_pass",
+    AuthFieldNamesharedSecret: "sharedSecret",
+    Logging: {
+        ShowTimeStamp: true,
+        ShowAccountSteamId: true,
+        ShowAccountName: true,
+        ShowStack: true,
+        ShowModule: true,
+        SaveLog: true,
+        SaveLogMode: Enums.logging.None,
+        SaveLogType: Enums.logging.type.SingleFile
+    },
+    RunningMode: {
+        Mode: 0,
+        clusterSize: 4
+    },
+    Request: {
+        Time: 1000, // 1000 is 1 sec
+        Mode: Enums.Request.MinTimeBetweenRequest
+    }
 }
 ```
-just call the callback, and it will go on.
-Read more in the wiki
-## account
-if you only want to run a sinkel account use the following in `main.js`, just replace the `indexInConfig` whit the index in the `config.js` file
-```js
-runBot(indexInConfig, function () {
-	console.log("all done!")
-	return;
-});
-```
+There will be a wiki page telling, what each part means. 
+
+
+
 # Wiki
 Read more in the wiki
 

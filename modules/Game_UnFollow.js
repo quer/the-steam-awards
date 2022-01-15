@@ -10,8 +10,8 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         try {        
             await FollowGame(RequestStore, SessionID, appId);
         } catch (error) {
-            console.log(options.accountPretty+" error Following Game, and will be skipped, appid: "+appId);
-            console.log(error)
+            options.logError(options.accountPretty+" error Following Game, and will be skipped, appid: "+appId);
+            options.logError(error)
         }
         await Wait(timeBetweenEachRequest);
     }

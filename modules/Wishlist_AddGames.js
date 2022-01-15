@@ -1,5 +1,9 @@
 var list = []; // List
+var log = () => {};
+var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+	log = options.log;
+	logError = options.logError;
 	//TODO: this shoud be unasigned later
 	RequestStore.MakeNavCookie('1_4_4__118', 'https://store.steampowered.com/api/addtowishlist');
 	RequestStore.mature_content();
@@ -8,7 +12,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
 		try {
 			await AddGame(RequestStore, SessionID, appid);
 		} catch (error) {
-            console.error(`somefing went wrong, add '${appid}' to wishlist. error: `, error);
+            logError(`somefing went wrong, add '${appid}' to wishlist. error: `, error);
         }
 	}
 	callback();
@@ -29,7 +33,7 @@ function AddGame(RequestStore, SessionID, appID) {
             try {
                 var bodyJson = JSON.parse(body);
                 if(bodyJson.success){
-                    console.log("Added: " + appID);
+                    log("Added: " + appID);
                     resolve();
                 }else{
                     throw new Error(body);

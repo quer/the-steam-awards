@@ -10,7 +10,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         var accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
         accountInfo = accountInfo.ProfileEdit;
         if(accountInfo == null){
-            console.log(options.accountPretty+ " something went wrong when getting account info!");
+            options.logError(options.accountPretty+ " something went wrong when getting account info!");
             callback();
             return;
         }
@@ -38,14 +38,14 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         RequestCommunity.post({uri: "https://steamcommunity.com/profiles/"+ steamClient.steamID +"/edit/info", form: objectToEdit}, function(error, response, body) {
             var returnJson = JSON.parse(body); // {success: 1, errmsg: ""}
             if(returnJson.success == 1){
-                console.log(options.accountPretty+ " Setting changed!");
+                options.log(options.accountPretty+ " Setting changed!");
             }else{
-                console.log(options.accountPretty+ " Error saving Setting! Error:" + errmsg);
+                options.logError(options.accountPretty+ " Error saving Setting! Error:" + errmsg);
             }
             callback();
         });
     }else{
-        console.log(options.accountPretty+ " Skipping changing account settings");
+        options.log(options.accountPretty+ " Skipping changing account settings");
         callback();
     }   
 };

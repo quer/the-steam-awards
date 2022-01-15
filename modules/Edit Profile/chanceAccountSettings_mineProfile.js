@@ -12,12 +12,12 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         if(mineProfiles.length > 0){
             var randomMineProfiles = helper.GetRandomFromList(mineProfiles);
             await SetMiniProfileBackground(RequestCommunity, accountInfo.ProfileEdit.webapi_token, randomMineProfiles.communityitemid);
-            console.log(options.accountPretty + " Profile mini background changed");
+            options.log(options.accountPretty + " Profile mini background changed");
         }else{
-            console.log(options.accountPretty + " Profile do not have any mini background");
+            options.log(options.accountPretty + " Profile do not have any mini background");
         }
     } catch (error) {
-        console.log(options.accountPretty + " Profile mini background NOT changed");
+        options.logError("Profile mini background NOT changed");
     }
     callback();
 }

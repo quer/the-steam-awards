@@ -39,8 +39,8 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                 await RateVoteGagGameReview(RequestCommunity, SessionID, evaluateingReview.ID, false);
             }
         } catch (error) {
-            console.log(options.accountPretty + " Evaluating game review failed, on id: "+ evaluateingReview.ID);
-            console.log(error);
+            options.logError(options.accountPretty + " Evaluating game review failed, on id: "+ evaluateingReview.ID);
+            options.logError(error);
         }
         await Wait(timeBetweenEachRequest)
     }

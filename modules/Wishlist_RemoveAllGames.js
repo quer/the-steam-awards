@@ -8,13 +8,13 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         pageIndex += 1;
     } while (PageApps.length > 0);
     //remove apps 
-    console.log("Removing "+ wishlistApps.length + " apps from wishlist");
+    options.log("Removing "+ wishlistApps.length + " apps from wishlist");
     for (let i = 0; i < wishlistApps.length; i++) {
         const appid = wishlistApps[i];
         try {
             await RemoveGame(RequestStore, SessionID, steamClient.steamID, appid);
         } catch (error) {
-            console.error(`somefing went wrong, removing '${appid}' from the wishlist. error: `, error);
+            options.logError(`somefing went wrong, removing '${appid}' from the wishlist. error: `, error);
         }
     }
     callback();

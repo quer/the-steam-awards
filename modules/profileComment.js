@@ -14,27 +14,27 @@ var list = [
     '+rep Friendly Person 💜',
     '+rep ONE TAP MACHINE 👍'
 ];
-var i = 0;
-var steamid= "76561197990233572";
+var steamid = "76561197990233572";
 var url = "https://steamcommunity.com/comment/Profile/post/"+steamid+"/-1/";
-module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    console.log("start module");
-    RequestCommunity.post({
-        url: url,
-        form:{
-            comment: list[i],
-            count: 6,
-            sessionid: SessionID,
-            feature2: -1
-        }
-    }, function (error, response, body) {
-        console.log("post done", {obj: {"test": "test", "test2": []}, "list": []});
-        console.error("post done", {obj: {"test": "test", "test2": []}, "list": []});
-        //console.log(body);
-        ++i;
-        setTimeout(function () {
-            console.log("done module");
-            callback();
-        }, 500);
-    });
+module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+    await MakeProfileComment(RequestCommunity, SessionID, list[3]);
+    await MakeProfileComment(RequestCommunity, SessionID, list[4]);
+    await MakeProfileComment(RequestCommunity, SessionID, list[5]);
+    callback();
 };
+
+function MakeProfileComment(RequestCommunity, SessionID, text) {
+    return new Promise(function (resolve, reject) {
+        RequestCommunity.post({
+            url: url,
+            form:{
+                comment: text,
+                count: 6,
+                sessionid: SessionID,
+                feature2: -1
+            }
+        }, function (error, response, body) {
+                resolve();
+        });
+    })
+}

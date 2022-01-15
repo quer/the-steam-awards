@@ -8,9 +8,13 @@ var GuideList = [
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     for (let i = 0; i < GuideList.length; i++) {
         const guideInfo = GuideList[i];
-        await LoadGuide(RequestCommunity, guideInfo.GuideId);
-        await Rate(RequestCommunity, SessionID, guideInfo.GuideId);
-        await Favorite(RequestCommunity, SessionID, guideInfo.GuideId, guideInfo.appid);
+        try {       
+            await LoadGuide(RequestCommunity, guideInfo.GuideId);
+            await Rate(RequestCommunity, SessionID, guideInfo.GuideId);
+            await Favorite(RequestCommunity, SessionID, guideInfo.GuideId, guideInfo.appid);
+        } catch (error) {
+            options.logError(error);
+        }
     }
 
     callback();

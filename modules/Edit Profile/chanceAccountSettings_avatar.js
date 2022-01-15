@@ -7,13 +7,13 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         var games = avarats.rgOtherGames;
         var randomGame = helper.GetRandomFromList(games);
         var randomGameAvatar = helper.GetRandomFromList(randomGame.avatars);
-        console.log(randomGame.appid + " - " + randomGameAvatar.ordinal);
+        options.log(randomGame.appid + " - " + randomGameAvatar.ordinal);
         RequestCommunity.post({uri: "https://steamcommunity.com/ogg/"+ randomGame.appid +"/selectAvatar", form: { sessionid: SessionID, json: 1, selectedAvatar: randomGameAvatar.ordinal}}, function(error, response, body) {
             var returnJson = JSON.parse(body); // {success: 1, errmsg: ""}
             if(returnJson.success == 1){
-                console.log(options.accountPretty+ " Setting chanced!");
+                options.log(" Setting chanced!");
             }else{
-                console.error(options.accountPretty+ " Error saving avatar! Error:" + errmsg);
+                options.logError(" Error saving avatar! Error:" + errmsg);
             }
             callback();
         });

@@ -6,9 +6,9 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
     RequestCommunity.post({uri: url, formData: formData}, function(error, response, body) {
         var respons = JSON.parse(body);
         if(respons && respons.success){
-            console.log(" - Cleared Alias");
+            options.log(" - Cleared Alias");
         }else{
-            console.error(" - Failed to clear Alias");
+            options.logError(" - Failed to clear Alias");
         }
         callback();
     });

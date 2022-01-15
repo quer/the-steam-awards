@@ -22,12 +22,12 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             }else{
                 await SetFavoriteBadge_ViaBadgeId(RequestCommunity, accountInfo.ProfileEdit.webapi_token, randomProfileBadge.badgeid);
             }
-            console.log(options.accountPretty + " Profile favorite badge changed");
+            options.log("Profile favorite badge changed");
         }else{
-            console.log(options.accountPretty + " Profile do not have any badge");
+            options.logError("Profile do not have any badge");
         }
     } catch (error) {
-        console.log(options.accountPretty + " Profile favorite badge NOT changed");
+        options.logError("Profile favorite badge NOT changed");
     }
     callback();
 }

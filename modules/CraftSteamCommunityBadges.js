@@ -15,9 +15,13 @@ var fs = require('fs');
 var requestCommunity = null;
 var gemPrices = 32; // 0,32€; -- set the price for a boosted pack on the market ( if you have to buy it )
 //To update prices delete the file "BoostedPacks.json", in the "saves" folder
+var log = () => {};
+var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+	log = options.log;
+	logError = options.logError;
     requestCommunity = RequestCommunity;
-    console.log("you have to chance this module to fit you needs.")
+    log("you have to chance this module to fit you needs.")
     callback();
     return;
     // a eks off the more advance ideer.
@@ -107,16 +111,16 @@ function fetchBoosterFromMarket(page) {
             var searchResolve = JSON.parse(Body);
             if(searchResolve.success){
                 if(searchResolve.start + searchResolve.pagesize > searchResolve.total_count){
-                    console.log("fetch done!");
+                    log("fetch done!");
                     resolve(searchResolve.results);
                 }else{
-                    console.log("fetch page: "+ page);
+                    log("fetch page: "+ page);
                     fetchBoosterFromMarket( page + searchResolve.pagesize ).then(function (list) {
                         resolve(list.concat(searchResolve.results));
                     })    
                 }
             }else{
-                console.log("fetch failed");
+                log("fetch failed");
                 fetchBoosterFromMarket(page).then(function (list) {
                     resolve(list);
                 })

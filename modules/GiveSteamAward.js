@@ -6,21 +6,26 @@
 
 var helper = require('./Edit Profile/chanceAccountHelper')
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    var accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
-    //1. get rewards that can be given to a profile
-    var allRewardsForProfile = await GetAllRewardsType(RequestCommunity, 3); // the 3, will ensure it only return reward that can be used on a user
-    var cheapestRewards = allRewardsForProfile.sort((prev, next) => prev.points_cost - next.points_cost).shift();
-    var allRewardsForProfileToTheCheapestRewards = allRewardsForProfile.filter(function(element){ return element.points_cost == cheapestRewards.points_cost; });
-    var randomReward = GetRandomFromList(allRewardsForProfileToTheCheapestRewards);
+    try {
+        var accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
+        //1. get rewards that can be given to a profile
+        var allRewardsForProfile = await GetAllRewardsType(RequestCommunity, 3); // the 3, will ensure it only return reward that can be used on a user
+        var cheapestRewards = allRewardsForProfile.sort((prev, next) => prev.points_cost - next.points_cost).shift();
+        var allRewardsForProfileToTheCheapestRewards = allRewardsForProfile.filter(function(element){ return element.points_cost == cheapestRewards.points_cost; });
+        var randomReward = GetRandomFromList(allRewardsForProfileToTheCheapestRewards);
 
-    //2. get the accounts points to ensure it can aford the awared.
-    var accountPointSummary = await GetProfilePointsSummary(RequestCommunity, steamClient.steamID, accountInfo.ProfileEdit.webapi_token);
-    if(parseInt(accountPointSummary.summary.points, 10) >= randomReward.points_cost){
-        //3. give profile award
-        await GiveAward(RequestCommunity, 3, "76561197990233572", randomReward.reactionid, accountInfo.ProfileEdit.webapi_token);
-        console.log(options.accountPretty + " Given award!")
-    }else{
-        console.log(options.accountPretty + " the account do not have enough points to give award!")
+        //2. get the accounts points to ensure it can aford the awared.
+        var accountPointSummary = await GetProfilePointsSummary(RequestCommunity, steamClient.steamID, accountInfo.ProfileEdit.webapi_token);
+        if(parseInt(accountPointSummary.summary.points, 10) >= randomReward.points_cost){
+            //3. give profile award
+            await GiveAward(RequestCommunity, 3, "76561197990233572", randomReward.reactionid, accountInfo.ProfileEdit.webapi_token);
+            options.log(" Given award!")
+        }else{
+            options.log(" the account do not have enough points to give award!")
+        }  
+    } catch (error) {
+        options.logError("Error Giving award!")
+        options.logError(error)
     }
     callback();
 }

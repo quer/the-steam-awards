@@ -4,12 +4,17 @@ var cheerio = require('cheerio');
 // steamdb have a list of free app ( sub ids ) that can be activated. here is a eks, from the day i crate this. where i have just copy and paste the list in here.
 var subIds = [
     //add the ids here, as a list
+    1130390,
+    485620
 ];
+var log = null;
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    for (let i = 0; i < subIds.length; i++) {
+    log = options.log;
+    var items = subIds.length;
+    for (let i = 0; i < items; i++) {
         const subid = subIds[i];
         await ActivateGame(RequestStore, SessionID, options, subid);
-        console.log(options.accountPretty + " "+i);
+        log((i + 1) +"/" + items + " - " + subid);
     }
     callback();
 }
@@ -25,7 +30,7 @@ function ActivateGame(RequestStore, SessionID, options, subid) {
             }
         }, function (error, response, body) {
             var $ = cheerio.load(body);
-            console.log(options.accountPretty + " subid:" + subid + " - status: " + $(".checkout_tab.checkout_content h2").html())
+            log(" subid:" + subid + " - status: " + $(".checkout_tab.checkout_content h2").html())
             setTimeout(function () {
                 resolve();
             }, 500);

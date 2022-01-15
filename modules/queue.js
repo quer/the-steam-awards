@@ -1,5 +1,9 @@
 var delayTime = 1; // in sec (60 is one min)
+var log = () => {};
+var logError = () => {};
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+	log = options.log;
+	logError = options.logError;
     setTimeout(() => {        
         getQueue(RequestStore, SessionID, function (apps) {
             var prom = [];
@@ -8,10 +12,10 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
                 prom.push(queueApp(RequestStore, SessionID, app));
             }
             Promise.all(prom).then(function() {
-                console.log("Queue done!")
+                log("Queue done!")
                 callback();
             }, function(reason) {
-                console.log('Bad: ' + reason);
+                logError('Bad: ' + reason);
                 callback();
             });
         })
@@ -30,8 +34,8 @@ function getQueue(RequestStore, SessionID, callback) {
             var data = JSON.parse(body);
             callback(data.queue);
         } catch (e) {
-            console.log("was not able to get new queue, will retry ( can end end loop, if never get a new queue )")
-            console.log(body);
+            logError("was not able to get new queue, will retry ( can end end loop, if never get a new queue )")
+            logError(body);
             setTimeout(() => {
                 getQueue(RequestStore, SessionID, callback);                
             }, 1000);

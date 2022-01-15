@@ -4,14 +4,16 @@ var CuratorIds = [
     40954427
 ]
 var timeBetweenEachRequest = 2000; //2sec
+var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+	logError = options.logError;
     for (let i = 0; i < CuratorIds.length; i++) {
         const clanid = CuratorIds[i];
         try {        
             await UnFollowCurator(RequestStore, SessionID, clanid);
         } catch (error) {
-            console.log(options.accountPretty+" error Following Curator, and will be skipped, CuratorId: "+clanid);
-            console.log(error)
+            logError(options.accountPretty+" error Following Curator, and will be skipped, CuratorId: "+clanid);
+            logError(error)
         }
         await Wait(timeBetweenEachRequest);
     }
