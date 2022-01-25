@@ -1,6 +1,9 @@
-var cheerio = require('cheerio');
 var filesToLike  = ["2658116668", "2658140590"];
-module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+var log = () => {};
+var logError = () => {};
+module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){	
+    log = options.log;
+	logError = options.logError;
     for (let i = 0; i < filesToLike.length; i++) {
         const fileToLike = filesToLike[i];
         await Like(RequestCommunity, SessionID, fileToLike);
@@ -16,7 +19,7 @@ function Like(RequestCommunity, SessionID, appid) {
                 sessionid: SessionID,
             }
         }, function (error, response, body) {  
-            console.log(body);
+            log(body);
             setTimeout(function () {
                 resolve();
             }, 500);
