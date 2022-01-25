@@ -17,6 +17,7 @@ More info later.. But see how clean the Main.js now is.. (
  * * can be splited up into each account, so a log file for each account. for each run
  * adding a anti spam to steam. so even when running more account at once. it will only send request to steam, one at a time.
  * * There is a Setting to set how this shoud behave. default is that is shoud at least use 1 sec on each request. so it will calculate how log before the next request is allow to be runed. 
+ * can now be runed whit account that do not have sharedSecret ( but have not add the "secret" file to auto login. )
 
 
 
