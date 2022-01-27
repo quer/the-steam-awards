@@ -4,7 +4,14 @@
 
 Should there be anything i missed, or that do not work as expected, Create a issue.
 
-Curreny working on a better core for all the account and modules see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
+Curreny working on a better core, to better handle multi account at once. and loggin and modules 
+
+see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
+
+
+# Lunar New Year Sale 2022 ( current )
+Lunar New Year Sale is live. this year you can get a free sticker each day. 
+To get the sticker just run module: `./modules/events/FreeDailySticker` once a day
 
 # The steam events on multi account
 Just add more account in the config.
