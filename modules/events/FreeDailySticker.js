@@ -1,5 +1,9 @@
 var cheerio = require('cheerio');
+var log = () => {};
+var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+    log = options.log;
+	logError = options.logError;
     var authwgtoken = null;
     try {
         authwgtoken = await GetToken(RequestStore);
@@ -8,7 +12,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     }
     //re get the authwgtoken if first failed
     if(authwgtoken == null){
-        console.error("failed to get authwgtoken, will try agirn")
+        logError("failed to get authwgtoken, will try agirn")
         try {
             authwgtoken = await GetToken(RequestStore);
         } catch (error) {
@@ -16,7 +20,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         }
     }
     if(authwgtoken == null || !authwgtoken.webapi_token){
-        console.error("error no authwgtoken");
+        logError("error no authwgtoken");
     }else{
         try {
             await GetFreeItem(RequestStore, authwgtoken);
@@ -35,7 +39,7 @@ function GetToken(RequestStore) {
                 var authwgtoken = JSON.parse($("#application_config").attr("data-loyaltystore"));
                 resolve(authwgtoken);
             } catch (error) {
-                console.error("error:", body);
+                logError("error:", body);
                 reject();
             }
         });
@@ -50,17 +54,18 @@ function GetFreeItem(RequestStore, authwgtoken) {
             }
         }, function (error, response, body){
             var jsonResonse = JSON.parse(body);
-            if( jsonResonse.response && 
+            if( jsonResonse && 
+                jsonResonse.response && 
                 jsonResonse.response.reward_item && 
                 jsonResonse.response.reward_item.internal_description){
                 var next_claim_time = new Date();
                 next_claim_time.setTime((jsonResonse.response.next_claim_time * 1000))
-                console.log(" done - item:" + jsonResonse.response.reward_item.internal_description);
-                console.log(" next_claim_time:" + next_claim_time.toString());
+                log(" done - item:" + jsonResonse.response.reward_item.internal_description);
+                log(" next_claim_time:" + next_claim_time.toString());
                 resolve();
                 return;
             }else{
-                console.error(options.accountPretty + " - something went wrong, responce:", body);
+                logError("something went wrong, responce:", body);
                 reject();
                 return;
             }
