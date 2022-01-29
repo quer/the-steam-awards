@@ -9,6 +9,26 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}\\main.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "SetSpecialAccountText",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "SetSpecialAccountText"
+            ]
+        },       
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "ConvertFromLineFormat",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run",
+                "ConvertFromLineFormat"
+            ]
         }
     ]
 }

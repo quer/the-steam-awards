@@ -143,7 +143,13 @@ The default settings are show under here. ( can be foung in `lib/Setting.js`)
 ```
 There will be a wiki page telling, what each part means. 
 
+# Script
+The script are some event, that might save you some time. 
 
+If you do not use default settings, you have to add the setting in the files also. as it will use the settings.
+
+ * `npm run SetSpecialAccountText` -> will add the property to each account, whit a index in it.
+ * `npm run ConvertFromLineFormat` -> will add account from a text file with the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
 
 # Wiki
 Read more in the wiki

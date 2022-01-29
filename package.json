@@ -5,7 +5,9 @@
   "main": "main.js",
   "author": "Lasse Pedersen",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "SetSpecialAccountText": "node .\\scripts\\SetSpecialAccountText.js",
+    "ConvertFromLineFormat": "node .\\scripts\\ConvertFromLineFormat.js"
   },
   "repository": {
     "type": "git",
