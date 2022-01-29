@@ -44,6 +44,9 @@ Just add more account in the config.
  * Follow Curators
  * UnFollow Curators
  * Evaluating Game Review
+ * Group Announcement Comment Add
+ * Group Announcement Comment Delete
+ * Group Announcement Rate
 
 # Events
 Events modules are stored in `modules/events`
