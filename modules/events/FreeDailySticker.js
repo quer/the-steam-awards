@@ -39,7 +39,7 @@ function GetToken(RequestStore) {
                 var authwgtoken = JSON.parse($("#application_config").attr("data-loyaltystore"));
                 resolve(authwgtoken);
             } catch (error) {
-                logError("error:", body);
+                logError("error:", html);
                 reject();
             }
         });
