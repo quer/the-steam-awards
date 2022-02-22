@@ -3,6 +3,10 @@ const request = require('request');
 //var storeURL = 'https://store.steampowered.com';
 //var communityURL = 'https://steamcommunity.com';
 
+/**
+ * @param {string} url
+ * @module request
+ */
 module.exports = function (url) {
     this.url = url;
     this.defaultTimeout = 30000;

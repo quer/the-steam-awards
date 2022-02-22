@@ -1,4 +1,5 @@
 var cheerio = require('cheerio');
+const GetApiKey = require('../GetApiKey');
 var apiKey = null; 
 var MasterKey = "xxxx"; // will be used if changed. will be used if, it did not find a key. on the account running. 
 var usehardCodeAppId = null; // if this is not null, it will ignore the apiKey. and just use that game, to play, and that to create review on. for all the accounts.
@@ -6,8 +7,14 @@ var vrsupportKey = "62";
 var IdToSelfVoteOn = "63";
 var idleGameTime = 5 // 5 min 
 module.exports = async function(steamClient, _requestCommunity, _requestStore, sessionID, options, callback){
+	//skip account if all is unlocked.
+	if(await IsAccountDone(_requestStore)){
+		console.log(options.accountPretty + "is already done, and have the badge, will be skipped");
+		callback();
+		return;
+	}
 	if(apiKey == null){
-		apiKey = await GetSteamApiKey(_requestCommunity);
+		apiKey = await GetApiKey.asPromise(_requestCommunity);
 	}
 	if(apiKey == null && MasterKey != "xxxx"){
 		apiKey = MasterKey;
@@ -18,12 +25,6 @@ module.exports = async function(steamClient, _requestCommunity, _requestStore, s
 		return;
 	}
 	usedApps = [];
-	//skip account if all is unlocked.
-	if(await IsAccountDone(_requestStore)){
-		console.log(options.accountPretty + "is already done, and have the badge, will be skipped");
-		callback();
-		return;
-	}
 	seeIfHaveAll(_requestStore, sessionID, async function () {
 		var appid = usehardCodeAppId;
 		if(appid == null){
@@ -72,6 +73,9 @@ function IsAccountDone(_requestStore) {
 function EnsureWeAreDone(_requestStore, options) {
 	return new Promise(function (resolve, reject) {
 		_requestStore.get('https://store.steampowered.com/steamawards/nominations', function (error, response, body) {
+			if (error || response.statusCode >= 400) {
+				console.log('Was not able to get steam awards status. Error:', response ? response.statusCode : 0, error);
+			}
 			var $ = cheerio.load(body);
 			if($(".badge_preview.level_4.current").length <= 0){
 				//it did not complete all
@@ -287,32 +291,4 @@ function EnSureGameCanBeNominated(_requestStore, appid) {
 			resolve(canNominate)
 		})
 	})
-}
-
-function GetSteamApiKey(_requestCommunity) {
-	return new Promise(function (resolve) {
-		_requestCommunity.get('https://steamcommunity.com/dev/apikey', function (error, response, body) {
-			try {
-				const $ = cheerio.load(body);
-				if ($('#mainContents h2').text() === 'Access Denied') {
-					resolve(null);
-					console.log('Access Denied, the account is limited account, read more herer https://support.steampowered.com/kb_article.php?ref=3330-IAGK-7663')
-					return;
-				}
-				if ($('#bodyContents_ex h2').text() === 'Your Steam Web API Key') {
-					var key = $('#bodyContents_ex p')
-						.eq(0)
-						.text()
-						.split(' ')[1];
-						resolve(key);
-					return
-				}
-				/*const $apiKeyPTag = $("#bodyContents_ex > p:first");
-	
-				resolve($apiKeyPTag.length > 0 ? $apiKeyPTag.text().replace(/^.*?:\s+/, '') : null);*/
-			} catch (error) {
-				resolve(null)
-			}
-		})
-	});
 }
