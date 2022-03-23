@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node main.js",
     "SetSpecialAccountText": "node .\\scripts\\SetSpecialAccountText.js",
-    "ConvertFromLineFormat": "node .\\scripts\\ConvertFromLineFormat.js"
+    "ConvertFromLineFormat": "node .\\scripts\\ConvertFromLineFormat.js",
+    "AddSteamApiKeyToAllAccount": "node .\\scripts\\AddSteamApiKeyToAllAccount.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,8 @@
     "request": "*",
     "steam": "*",
     "steam-totp": "*",
+    "steam-tradeoffers": "^3.2.1",
+    "steam-web-api-key": "^0.0.4",
     "steam-weblogon": "*"
   }
 }

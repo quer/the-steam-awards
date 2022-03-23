@@ -15,11 +15,10 @@ var fs = require('fs');
 var requestCommunity = null;
 var gemPrices = 32; // 0,32€; -- set the price for a boosted pack on the market ( if you have to buy it )
 //To update prices delete the file "BoostedPacks.json", in the "saves" folder
-var log = () => {};
-var logError = () => {};
+
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-	log = options.log;
-	logError = options.logError;
+	var log = options.log;
+	var logError = options.logError;
     requestCommunity = RequestCommunity;
     log("you have to chance this module to fit you needs.")
     callback();
@@ -64,106 +63,106 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
      * marketLink - "https://steamcommunity.com/market/listings/753/" + the "marketLink" will get the market page.
      * gemsToCreate - how many gems it cost to create.
      */
-    callback()
-}
-
-function CraftBostedPack(appid, sessionid) {
-    return new Promise(function (resolve) {
-        requestCommunity.post({
-            url: "https://steamcommunity.com/tradingcards/ajaxcreatebooster/",
-            form:{
-                sessionid: sessionid,
-                appid: appid,
-                series: 1,
-                tradability_preference: 2, // 2 is default. 1 SHOUD be that you cant trade it. If you use gems that is locked, you cant create a tradabil pack.
-            }
-        }, function (Err, HttpResponse, Body) {
-            resolve();
-        });
-    });
-}
-
-function getMarketSet(appid, BoostedPacks) {
-    for (let i = 0; i < BoostedPacks.length; i++) {
-        const BoostedPack = BoostedPacks[i];
-        if(BoostedPack.hash_name.startsWith(appid)){
-            return BoostedPack;
-        }
-    }
-    return null;
-}
-var SessionBoosterCache = null;
-async function GetBoosterPrices() {
-    if(SessionBoosterCache == null){
-        SessionBoosterCache = LoadBooosterFile();
-        if(SessionBoosterCache == null) {
-            SessionBoosterCache = await fetchBoosterFromMarket(0);
-            SaveBoosterToFile(SessionBoosterCache)
-        }
-    }
-    return SessionBoosterCache;
-}
-
-function fetchBoosterFromMarket(page) {
-    return new Promise(function (resolve) {
-        var url = "https://steamcommunity.com/market/search/render/?query=Booster%20Pack&start="+page+"&count=20000&search_descriptions=0&sort_column=default&sort_dir=desc&norender=1";
-        requestCommunity.get(url, function( Error, Response, Body ){
-            var searchResolve = JSON.parse(Body);
-            if(searchResolve.success){
-                if(searchResolve.start + searchResolve.pagesize > searchResolve.total_count){
-                    log("fetch done!");
-                    resolve(searchResolve.results);
-                }else{
-                    log("fetch page: "+ page);
-                    fetchBoosterFromMarket( page + searchResolve.pagesize ).then(function (list) {
-                        resolve(list.concat(searchResolve.results));
-                    })    
-                }
-            }else{
-                log("fetch failed");
-                fetchBoosterFromMarket(page).then(function (list) {
-                    resolve(list);
-                })
-            }
-        })
-    })
-}
-var dir = './Saves/';
-function SaveBoosterToFile(Data) {
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
-    }
-    const data = fs.writeFileSync(dir+'/BoostedPacks.json', JSON.stringify(Data, null, 4))
-}
-function LoadBooosterFile() {
-    try {
-    var list = fs.readFileSync( dir + '/BoostedPacks.json', {encoding:'utf8', flag:'r'} );
-        if(list != ""){
-            return JSON.parse(list);
-        }
-    } catch (error) {
+    callback();
         
-    }
-    return null;
-}
-
-function GetAccountGamesToCreateBadgeTo() {
-    return new Promise(function (resolve) {
-        requestCommunity.get("https://steamcommunity.com/tradingcards/boostercreator/", function( Error, Response, Body ){
-            var bodyAsRows = Body.split('\n');
-            var rowIWhitApps = null;
-            for (let i = 0; i < bodyAsRows.length; i++) {
-                const bodyAsRow = bodyAsRows[i];
-                if(bodyAsRow.indexOf('CBoosterCreatorPage.Init') > -1){
-                    rowIWhitApps = i + 1;
-                    break;
+    function CraftBostedPack(appid, sessionid) {
+        return new Promise(function (resolve) {
+            requestCommunity.post({
+                url: "https://steamcommunity.com/tradingcards/ajaxcreatebooster/",
+                form:{
+                    sessionid: sessionid,
+                    appid: appid,
+                    series: 1,
+                    tradability_preference: 2, // 2 is default. 1 SHOUD be that you cant trade it. If you use gems that is locked, you cant create a tradabil pack.
                 }
-            }
-            if(rowIWhitApps != null){
-                resolve(JSON.parse(bodyAsRows[rowIWhitApps].replace(/,\s*$/, "")));
-            }else{
-                resolve(null);
-            }
+            }, function (Err, HttpResponse, Body) {
+                resolve();
+            });
         });
-    });
+    }
+
+    function getMarketSet(appid, BoostedPacks) {
+        for (let i = 0; i < BoostedPacks.length; i++) {
+            const BoostedPack = BoostedPacks[i];
+            if(BoostedPack.hash_name.startsWith(appid)){
+                return BoostedPack;
+            }
+        }
+        return null;
+    }
+    var SessionBoosterCache = null;
+    async function GetBoosterPrices() {
+        if(SessionBoosterCache == null){
+            SessionBoosterCache = LoadBooosterFile();
+            if(SessionBoosterCache == null) {
+                SessionBoosterCache = await fetchBoosterFromMarket(0);
+                SaveBoosterToFile(SessionBoosterCache)
+            }
+        }
+        return SessionBoosterCache;
+    }
+
+    function fetchBoosterFromMarket(page) {
+        return new Promise(function (resolve) {
+            var url = "https://steamcommunity.com/market/search/render/?query=Booster%20Pack&start="+page+"&count=20000&search_descriptions=0&sort_column=default&sort_dir=desc&norender=1";
+            requestCommunity.get(url, function( Error, Response, Body ){
+                var searchResolve = JSON.parse(Body);
+                if(searchResolve.success){
+                    if(searchResolve.start + searchResolve.pagesize > searchResolve.total_count){
+                        log("fetch done!");
+                        resolve(searchResolve.results);
+                    }else{
+                        log("fetch page: "+ page);
+                        fetchBoosterFromMarket( page + searchResolve.pagesize ).then(function (list) {
+                            resolve(list.concat(searchResolve.results));
+                        })    
+                    }
+                }else{
+                    log("fetch failed");
+                    fetchBoosterFromMarket(page).then(function (list) {
+                        resolve(list);
+                    })
+                }
+            })
+        })
+    }
+    var dir = './Saves/';
+    function SaveBoosterToFile(Data) {
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
+        const data = fs.writeFileSync(dir+'/BoostedPacks.json', JSON.stringify(Data, null, 4))
+    }
+    function LoadBooosterFile() {
+        try {
+        var list = fs.readFileSync( dir + '/BoostedPacks.json', {encoding:'utf8', flag:'r'} );
+            if(list != ""){
+                return JSON.parse(list);
+            }
+        } catch (error) {
+            
+        }
+        return null;
+    }
+
+    function GetAccountGamesToCreateBadgeTo() {
+        return new Promise(function (resolve) {
+            requestCommunity.get("https://steamcommunity.com/tradingcards/boostercreator/", function( Error, Response, Body ){
+                var bodyAsRows = Body.split('\n');
+                var rowIWhitApps = null;
+                for (let i = 0; i < bodyAsRows.length; i++) {
+                    const bodyAsRow = bodyAsRows[i];
+                    if(bodyAsRow.indexOf('CBoosterCreatorPage.Init') > -1){
+                        rowIWhitApps = i + 1;
+                        break;
+                    }
+                }
+                if(rowIWhitApps != null){
+                    resolve(JSON.parse(bodyAsRows[rowIWhitApps].replace(/,\s*$/, "")));
+                }else{
+                    resolve(null);
+                }
+            });
+        });
+    }
 }

@@ -45,65 +45,65 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         await Wait(timeBetweenEachRequest)
     }
     callback();
-}
-
-//the same as RateDownGameReview(), just have rateUp as true
-function RateGameReview(RequestCommunity, SessionID, GameReviewID, RateMode) {
-    return new Promise(function (resolve, reject) {
-        RequestCommunity.post({
-            url: "https://steamcommunity.com/userreviews/rate/" + GameReviewID,
-            form:{
-                sessionid: SessionID,
-                rateup: RateMode
-            }
-        }, function (error, response, body) {
-            if(error){
-                reject(error);
-                return;
-            }
-            try {
-                var response = JSON.parse(body);
-                if(response && response.success == 1){
-                    resolve();
+        
+    //the same as RateDownGameReview(), just have rateUp as true
+    function RateGameReview(RequestCommunity, SessionID, GameReviewID, RateMode) {
+        return new Promise(function (resolve, reject) {
+            RequestCommunity.post({
+                url: "https://steamcommunity.com/userreviews/rate/" + GameReviewID,
+                form:{
+                    sessionid: SessionID,
+                    rateup: RateMode
+                }
+            }, function (error, response, body) {
+                if(error){
+                    reject(error);
                     return;
                 }
-            } catch (error) {
-                reject(error);
-                return;
-            }
-        });
-    })
-}
-function RateVoteGagGameReview(RequestCommunity, SessionID, GameReviewID, RateMode) {
-    return new Promise(function (resolve, reject) {
-        RequestCommunity.post({
-            url: "https://steamcommunity.com/userreviews/votetag/" + GameReviewID,
-            form:{
-                sessionid: SessionID,
-                rateup: RateMode,
-                tagid: 1
-            }
-        }, function (error, response, body) {
-            if(error){
-                reject(error);
-                return;
-            }
-            try {
-                var response = JSON.parse(body);
-                if(response && response.success == 1){
-                    resolve();
+                try {
+                    var response = JSON.parse(body);
+                    if(response && response.success == 1){
+                        resolve();
+                        return;
+                    }
+                } catch (error) {
+                    reject(error);
                     return;
                 }
-            } catch (error) {
-                reject(error);
-                return;
-            }
-        });
-    })
-}
+            });
+        })
+    }
+    function RateVoteGagGameReview(RequestCommunity, SessionID, GameReviewID, RateMode) {
+        return new Promise(function (resolve, reject) {
+            RequestCommunity.post({
+                url: "https://steamcommunity.com/userreviews/votetag/" + GameReviewID,
+                form:{
+                    sessionid: SessionID,
+                    rateup: RateMode,
+                    tagid: 1
+                }
+            }, function (error, response, body) {
+                if(error){
+                    reject(error);
+                    return;
+                }
+                try {
+                    var response = JSON.parse(body);
+                    if(response && response.success == 1){
+                        resolve();
+                        return;
+                    }
+                } catch (error) {
+                    reject(error);
+                    return;
+                }
+            });
+        })
+    }
 
-function Wait(time) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(), time)
-    });
+    function Wait(time) {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(), time)
+        });
+    }
 }

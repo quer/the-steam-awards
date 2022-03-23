@@ -33,7 +33,7 @@ module.exports = async function(steamClient, _RequestCommunity, RequestStore, _S
         try {
             await JoinGroup(groupUrl);
         } catch (error) {
-            options.logError(options.accountPretty+ " failed to join group : " + groupUrl);
+            options.logError("failed to join group : " + groupUrl);
         }
         await Wait(timeBetweenEachRequest);
     }
@@ -43,7 +43,7 @@ module.exports = async function(steamClient, _RequestCommunity, RequestStore, _S
         try {
             await JoinGroup("https://steamcommunity.com/gid/"+groupID);
         } catch (error) {
-            options.logError(options.accountPretty+ " failed to join group : " + groupID);
+            options.logError("failed to join group : " + groupID);
         }
         await Wait(timeBetweenEachRequest);
     }

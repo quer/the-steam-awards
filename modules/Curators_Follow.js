@@ -3,11 +3,9 @@ var CuratorIds = [
     40954427
 ]
 var timeBetweenEachRequest = 2000; //2sec
-var log = () => {};
-var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-	log = options.log;
-	logError = options.logError;
+	var log = options.log;
+	var logError = options.logError;
     for (let i = 0; i < CuratorIds.length; i++) {
         const clanid = CuratorIds[i];
         try {        
@@ -19,37 +17,37 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         await Wait(timeBetweenEachRequest);
     }
     callback();
-}
-
-function FollowCurator(RequestStore, SessionID, clanid) {
-    return new Promise(function (resolve, reject) {
-        RequestStore.post({
-            url: "https://store.steampowered.com/curators/ajaxfollow",
-            form:{
-                clanid: clanid,
-                sessionid: SessionID,
-                follow: 1
-            }
-        }, function (error, response, body) {
-            if(error){
-                reject(error)
-                return;
-            }
-            try {
-                var response = JSON.parse(body)
-                if(response.success.success == 1){
-                    resolve();
+    function FollowCurator(RequestStore, SessionID, clanid) {
+        return new Promise(function (resolve, reject) {
+            RequestStore.post({
+                url: "https://store.steampowered.com/curators/ajaxfollow",
+                form:{
+                    clanid: clanid,
+                    sessionid: SessionID,
+                    follow: 1
+                }
+            }, function (error, response, body) {
+                if(error){
+                    reject(error)
                     return;
                 }
-            } catch (error) {
-                
-            }
-            reject();
+                try {
+                    var response = JSON.parse(body)
+                    if(response.success.success == 1){
+                        resolve();
+                        return;
+                    }
+                } catch (error) {
+                    
+                }
+                reject();
+            });
+        })
+    }
+    function Wait(time) {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(), time)
         });
-    })
+    }
 }
-function Wait(time) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(), time)
-    });
-}
+

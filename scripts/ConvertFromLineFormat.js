@@ -1,5 +1,10 @@
 const fs = require('fs');
-const config = require('../config');
+var config = [];
+try {
+    config = require('../config');
+} catch (error) {
+    
+}
 const Settings = require('../lib/Settings');
 //change Settings here.
 

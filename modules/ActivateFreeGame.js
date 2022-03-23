@@ -7,34 +7,32 @@ var subIds = [
     1130390,
     485620
 ];
-var log = null;
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    log = options.log;
     var items = subIds.length;
     for (let i = 0; i < items; i++) {
         const subid = subIds[i];
-        await ActivateGame(RequestStore, SessionID, options, subid);
-        log((i + 1) +"/" + items + " - " + subid);
+        await ActivateGame(subid);
+        options.log((i + 1) +"/" + items + " - " + subid);
     }
     callback();
-}
-
-function ActivateGame(RequestStore, SessionID, options, subid) {
-    return new Promise(function (resolve) {
-        RequestStore.post({
-            url: "https://store.steampowered.com/checkout/addfreelicense/",
-            form:{
-                action: 'add_to_cart',
-                subid: subid,
-                sessionid: SessionID
-            }
-        }, function (error, response, body) {
-            var $ = cheerio.load(body);
-            log(" subid:" + subid + " - status: " + $(".checkout_tab.checkout_content h2").html())
-            setTimeout(function () {
-                resolve();
-            }, 500);
-        })
-    })
     
+    function ActivateGame(subid) {
+        return new Promise(function (resolve) {
+            RequestStore.post({
+                url: "https://store.steampowered.com/checkout/addfreelicense/",
+                form:{
+                    action: 'add_to_cart',
+                    subid: subid,
+                    sessionid: SessionID
+                }
+            }, function (error, response, body) {
+                var $ = cheerio.load(body);
+                options.log(" subid:" + subid + " - status: " + $(".checkout_tab.checkout_content h2").html())
+                setTimeout(function () {
+                    resolve();
+                }, 500);
+            })
+        })
+        
+    }
 }

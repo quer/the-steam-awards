@@ -5,7 +5,7 @@ const Settings = require('../lib/Settings');
 
 for (let i = 0; i < config.length; i++) {
     const auth = config[i];
-    auth[Settings.AuthFieldSpecialAccountText] = i;
+    auth[Settings.AuthFieldSpecialAccountText] = "b" + i;
 }
 var endString = `var config = ${ JSON.stringify(config, null, 4) };\n`;
     endString += "module.exports = config;";

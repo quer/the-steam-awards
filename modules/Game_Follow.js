@@ -7,7 +7,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     for (let i = 0; i < appsToFollow.length; i++) {
         const appId = appsToFollow[i];
         try {        
-            await FollowGame(RequestStore, SessionID, appId);
+            await FollowGame(appId);
         } catch (error) {
             options.logError(options.accountPretty+" error Following Game, and will be skipped, appid: " + appId);
             options.logError(error)
@@ -15,31 +15,31 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         await Wait(timeBetweenEachRequest);
     }
     callback();
-}
-
-function FollowGame(RequestStore, SessionID, appId) {
-    return new Promise(function (resolve, reject) {
-        RequestStore.post({
-            url: "https://store.steampowered.com/explore/followgame/",
-            form:{
-                appid: appId,
-                sessionid: SessionID
-            }
-        }, function (error, response, body) {
-            if(error){
-                reject(error)
-                return;
-            }
-            if(body == "true"){
-                resolve();
-                return;
-            }
-            reject();
+    
+    function FollowGame(appId) {
+        return new Promise(function (resolve, reject) {
+            RequestStore.post({
+                url: "https://store.steampowered.com/explore/followgame/",
+                form:{
+                    appid: appId,
+                    sessionid: SessionID
+                }
+            }, function (error, response, body) {
+                if(error){
+                    reject(error)
+                    return;
+                }
+                if(body == "true"){
+                    resolve();
+                    return;
+                }
+                reject();
+            });
+        })
+    }
+    function Wait(time) {
+        return new Promise((resolve) => {
+            setTimeout(() => resolve(), time)
         });
-    })
-}
-function Wait(time) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(), time)
-    });
+    }
 }

@@ -19,6 +19,8 @@ More info later.. But see how clean the Main.js now is.. (
  * * There is a Setting to set how this shoud behave. default is that is shoud at least use 1 sec on each request. so it will calculate how log before the next request is allow to be runed. 
  * can now be runed whit account that do not have sharedSecret ( but have not add the "secret" file to auto login. )
 
+## known issues
+ * the console, will in some module print for only on account. it have somefing to do whit async.
 
 
 # The steam events on multi account
@@ -149,7 +151,7 @@ The script are some event, that might save you some time.
 If you do not use default settings, you have to add the setting in the files also. as it will use the settings.
 
  * `npm run SetSpecialAccountText` -> will add the property to each account, whit a index in it.
- * `npm run ConvertFromLineFormat` -> will add account from a text file with the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
+ * `npm run ConvertFromLineFormat [FilePath]` -> will add account from a text file with the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
 
 # Wiki
 Read more in the wiki

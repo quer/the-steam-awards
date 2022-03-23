@@ -15,7 +15,7 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
             newestfirstpagination: true
         }
     }, function (error, response, body) {
-        console.log(body);
+        options.log(body);
         setTimeout(function () {
             callback();
         }, 500);
