@@ -2,41 +2,41 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# work in progress
-This branch is use to commit the changes i do the core.
+# Work still in progress
+This branch is used to commit the changes i made to the core.
 
-More info later.. But see how clean the Main.js now is.. ( 
-    and you can run in cluster mode, to run more unit at once, and anti spam to steam have been build in, so even if there is 10 account at once, it will ensure it, min do a call once a sec. even when running async on all the accounts..
+More info later.. But see how clean the Main.js now.. ( 
+    and you can run in cluster mode, to run more unit at once, and anti spam for steam have been built in, so even if there is 10 account at once, it will ensure there is no more then one call per sec. even when running async on all the accounts..
 )
 
 ## Added new features
- * run in cluster mode. be able to run more account at once.
- * adding better logging
- * adding logging to save file 
- * * can be saved to on file, for each run
- * * can be splited up into each account, so a log file for each account. for each run
- * adding a anti spam to steam. so even when running more account at once. it will only send request to steam, one at a time.
- * * There is a Setting to set how this shoud behave. default is that is shoud at least use 1 sec on each request. so it will calculate how log before the next request is allow to be runed. 
- * can now be runed whit account that do not have sharedSecret ( but have not add the "secret" file to auto login. )
+ * Run in cluster mode. which allows you to run more account at once.
+ * Added better loggins with enriched details.
+ * Loggins can be saved now
+ * * Can be saved to a single file, for each run.
+ * * Can be splitted up to per each account, for each run. ( a log file for each account. )
+ * Added an anti spam for steam. so even if running multiple accounts at once, it will only send one request to steam at a time.
+ * * There is a Option to set how this should behave. default is talking 1 sec between requests. so it will calculate how long to hold the next request before fired. 
+ * Added ability to run guard enabled accounts alongside free guard accounts. ( make sure to not add the "secret" file to auto login. )
 
-## known issues
- * the console, will in some module print for only on account. it have somefing to do whit async.
+## Known issues
+ * The console, will print only one account in some modules. This have something to do with async().
 
 
-# The steam events on multi account
-Just add more account in the config.
+# The steam events on multiple accounts
+Just add more accounts in the config.
 
 # Modules
- * chance profile settings
- * * chance setting on the general edit page (Edit Profile / chanceAccountSettings_general)
- * * chance profile avatar, from the games that it own, it will select a random one
- * * chance profile background, will take a random one that the account own, can also remove the bg
- * * chance mini profile, will take a random one that the account own
- * * chance profile theme, will take a random one that the account own
- * * chance profile favorite badge, will take a random one that the account own
- * * chance profile favorite group, will take a random one that the account own
+ * change profile settings
+ * * change setting on the general edit page (Edit Profile / chanceAccountSettings_general)
+ * * change profile avatar, from the games that it own, it will select a random one
+ * * change profile background, will take a random one that the account own, can also remove the bg
+ * * change mini profile, will take a random one that the account own
+ * * change profile theme, will take a random one that the account own
+ * * change profile favorite badge, will take a random one that the account own
+ * * change profile favorite group, will take a random one that the account own
  * clear profile name alias
- * chance profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
+ * change profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
  * vote and like a guide (just add id and appid in file)
  * join group
  * LeaveGroup ( can also remove all groups from each account )
@@ -77,32 +77,32 @@ Events modules are stored in `modules/events`
  * steam winter sale - 2021 ( steamawards-2021 )
 
 # Setup
-Just run `npm install` in the root folder,
+Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
 
-add you account into the `config.js` file.
+Add your account(s) into the `config.js` file.
 
-change `main.js`, setup what module to run.
-And how the setting shoud be. 
+Edit `main.js`, by setting up the modules to run in order.
+And how the settings should be.
 
-and if needed chance the module file. 
+And if needed change the module file.
 
-and then `node main`
+And then run `node main`
 
 # To use
 ## Running Modes
-we have a few way to run this.
- * RunAllBots - `core.RunAllBots(modules)` - will run all account in `config.js` 
+There is a few ways to run this.
+ * RunAllBots - `core.RunAllBots(modules)` - will run all account in `config.js`
  * RunIndexSpecificBot - `core.RunIndexSpecificBot([0, 1], modules)` - will run the specifig index in the `config.js` only
- * DoRunBots - `core.RunAllBots(auths, modules)` - will run the given account in the auths list. ( this will ignore the `config.js` and only run the account in the given list )
+ * DoRunBots - `core.RunAllBots(auths, modules)` - will run the given accounts in the auths list. ( Ignoring the `config.js` )
 
 
- the `modules` parameter, you need to give it a list of modules. read the next section
+ The `modules` parameter: you need to push at least one module before running. Read the next section.
 
 
 ## Run Modules
-To select what module to run. you have to add then into a list in the `main.js` file
+To select what module to run. you have to add it into a list in the `main.js` file.
 
-You just add the filename in the `modules`. ( if the module in a sub folder. you have to add the subfolder name also)
+You just need to add the filename in the `modules`. ( if the module in a sub folder. you have to include the subfolder name separated by slash)
 
 eks:
 ```js
@@ -115,9 +115,9 @@ modules.push('GameRecommend_Add');
 modules.push('ActivateFreeGame');
 ```
 
-## Setting
-In the `main.js` you can set up setting on how it shoud be running.
-The default settings are show under here. ( can be foung in `lib/Setting.js`)
+## Settings
+In the `main.js` you can tweak settings the way how it should be running.
+The default settings are show below. ( Also can be foung in `lib/Setting.js`).
 ```js
 {
     AuthFieldNameUsername: "steam_user",
@@ -143,22 +143,22 @@ The default settings are show under here. ( can be foung in `lib/Setting.js`)
     }
 }
 ```
-There will be a wiki page telling, what each part means. 
+There will be a wiki page explaining each setting. 
 
 # Script
-The script are some event, that might save you some time. 
+The scripts are made to save you time and effort for setting accounts into config.
 
-If you do not use default settings, you have to add the setting in the files also. as it will use the settings.
+If you do not use default settings, you have to add the setting in the files.
 
- * `npm run SetSpecialAccountText` -> will add the property to each account, whit a index in it.
- * `npm run ConvertFromLineFormat [FilePath]` -> will add account from a text file with the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
+ * `npm run SetSpecialAccountText` -> will add the property to each account, with an index inside it.
+ * `npm run ConvertFromLineFormat [FilePath]` -> will add account(s) from a text file has the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
 
 # Wiki
-Read more in the wiki
+Read more in the wiki.
 
 # Web panel to contol the account
 I have started to create a web panel to handle the bots, 
-it will soon be able to use all the function that this script give.
+soon, it will be able to provide all the function that this script offer.
 https://github.com/quer/Steam-bot-Controller
 
 [steam-img]:  https://img.shields.io/badge/donate-Steam-lightgrey.svg?style=flat-square
