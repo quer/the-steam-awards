@@ -8,6 +8,10 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
+# Racing event ( current )
+The current event `Racing`, you can get a free Badge.
+Just run module `./modules/events/racing-2022` ( you can chouse to answer it all, or jut the one, to get the badge ) 
+I have also added the module in the Upgraded version
 
 # The steam events on multi account
 Just add more account in the config.
