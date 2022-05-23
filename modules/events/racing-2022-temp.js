@@ -3,7 +3,7 @@ var answerAll = true;
 
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     if(answerAll){
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             await OpenDoor(i);
         }
     }else{
