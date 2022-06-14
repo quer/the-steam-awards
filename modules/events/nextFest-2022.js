@@ -5,7 +5,7 @@ var runAtOnce = 30; // max 30
 
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     var demoAppIdList = fs.readFileSync(__dirname+'/nextFest-2022-demo-Appid.txt', {encoding:'utf8', flag:'r'});
-    demoAppIdList = demoAppIdList.split("\r\n")
+    demoAppIdList = demoAppIdList.split("\n")
 
     var clustedeList = [];
     var leftOff = demoToRun;
@@ -15,7 +15,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         for (let i = 0; i < runAtOnce; i++) {
             if(demoAppIdList.length > 0){
                 var appidString = demoAppIdList.shift();
-                var appid = parseInt(appidString, 10);
+                var appid = parseInt(appidString.trim(), 10);
                 //will activate the missing games, to the user
                 options.steamUser.requestFreeLicense(appid);
                 cluster.push({"game_id": appid });
