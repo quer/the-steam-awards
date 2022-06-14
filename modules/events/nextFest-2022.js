@@ -2,11 +2,15 @@ var fs = require('fs');
 console.log(__dirname);
 var demoToRun = 50; // can only active 50 games a hour. so if just for running once, no need to change this. 10 is enof to get the badge.  
 var runAtOnce = 30; // max 30 
-
+var offset = 0;
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     var demoAppIdList = fs.readFileSync(__dirname+'/nextFest-2022-demo-Appid.txt', {encoding:'utf8', flag:'r'});
     demoAppIdList = demoAppIdList.split("\n")
 
+    for (let i = 0; i < offset; i++) {
+        demoAppIdList.shift();
+    }
+    
     var clustedeList = [];
     var leftOff = demoToRun;
     //build cluster
