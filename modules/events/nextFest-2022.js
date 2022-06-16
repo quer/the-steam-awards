@@ -52,10 +52,11 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
 
 
 /*
-var apps= [];
-function loop2(start){
+var apps = [];
+function loop2(start, flavor){
     return new Promise(function(result){
-        var url = `https://store.steampowered.com/saleaction/ajaxgetsaledynamicappquery?cc=DK&l=english&clanAccountID=39049601&clanAnnouncementGID=3337742851854054341&flavor=trendingwishlisted&strFacetFilter=&start=${start}&count=50&tabuniqueid=13&return_capsules=true&origin=https://store.steampowered.com&bForceUseSaleTag=true&strTabFilter=&bRequestFacetCounts=true`;
+        var url = `https://store.steampowered.com/saleaction/ajaxgetsaledynamicappquery?clanAccountID=39049601&clanAnnouncementGID=3337742851854054341&flavor=${flavor}&start=${start}&count=50origin=https://store.steampowered.com&cc=us`;
+        //var url = `https://store.steampowered.com/saleaction/ajaxgetsaledynamicappquery?cc=DK&l=english&clanAccountID=39049601&clanAnnouncementGID=3337742851854054341&flavor=${flavor}&strFacetFilter=&start=${start}&count=50&tabuniqueid=13&return_capsules=true&origin=https://store.steampowered.com&bForceUseSaleTag=true&strTabFilter=&bRequestFacetCounts=true`;
         jQuery.getJSON( url, function( data ) {
             setTimeout(function(){
                 result(data)
@@ -64,21 +65,41 @@ function loop2(start){
     })
 }
 
-(async () => {
-    var loop = true;
-    var loopIndex = 0;
-    var solr_index = 0;
+function runFlavor(flavor) {
+    return new Promise(async function(result){
+        var loop = true;
+        var loopIndex = 0;
+        var solr_index = 0;
         while(loop){
-            var data = await loop2(solr_index);
+            var data = await loop2(solr_index, flavor);
             if(data && data.appids && data.appids.length > 0){
-                apps = apps.concat(data.appids);//.filter(function(itm){ return apps.indexOf(itm)==-1; }));
+                for (let i = 0; i < data.appids.length; i++) {
+                    const newAppID = data.appids[i];
+                    if(apps.indexOf(newAppID) == -1){
+                        apps.push(newAppID);
+                    }                    
+                }
                 solr_index = data.solr_index;
                 loopIndex += 1;
+                if(!data.possible_has_more){
+                    loop = false;
+                    result();
+                    return;
+                }
             }else{
                 loop = false;
+                result();
+                return;
             }
         }
-  
+    })
+}
+(async () => {
+    var flavors = ["newandtrending", "topwishlisted", "trendingwishlisted", "popularcomingsoon", "mostplayeddemo", "dailyactiveuserdemo", "playednowdemo", "recentlyreleased", "popularpurchased", "popularpurchaseddiscounted", "discounted", "price"];
+    for (let i = 0; i < flavors.length; i++) {
+        const flavor = flavors[i];
+        await runFlavor(flavor);
+    }
     console.log(apps)
 })();
 */
