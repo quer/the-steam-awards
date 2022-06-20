@@ -116,9 +116,9 @@ function loop3(appStringList){
 }
 
 var demoList = [];
+var cluster = [];
 (async () => {
     var loop = true;
-    var cluster = [];
     while(loop){
         var endString = "";
         for (let index = 0; index < 50; index++) {
@@ -148,3 +148,15 @@ var demoList = [];
     console.log(demoList)
 })();
 */
+/*
+make black list
+var list = jQuery(".gameListRow");
+var apps = [];
+for (let i = 0; i < list.length; i++) {
+    var item = jQuery(list[i]);
+    var appid = item.attr("id");
+    apps.push(appid.replace("game_", ""))
+}
+console.log(apps)
+*/
+

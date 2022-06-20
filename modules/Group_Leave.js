@@ -1,9 +1,7 @@
-var LeaveAllGroups = true; // if true, it will leave all groups joined. 
+var LeaveAllGroups = false; // if true, it will leave all groups joined. 
 //groupId's
 var GroupsToLeave = [
-    "103582791433470748"
 ]
-var timeBetweenEachRequest = 500; //0.5sec
 
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 
@@ -24,33 +22,27 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             options.logError("error Leaving group, and will be skipped, groupId: "+ groupId);
             options.logError(error)
         }
-        await Wait(timeBetweenEachRequest);
     }
     callback();
-}
-
-function LeaveGroup(RequestCommunity, SessionID, steamID, groupId) {
-    return new Promise(function (resolve, reject) {
-        RequestCommunity.post({
-            url: "https://steamcommunity.com/profiles/"+ steamID +"/home_process",
-            form:{
-                groupId: groupId,
-                sessionID: SessionID,
-                action: "leaveGroup"
-            }
-        }, function (error, response, body) {
-            if(error){
-                reject(error)
-                return;
-            }
-            resolve();
-            return;
         
-        });
-    })
-}
-function Wait(time) {
-    return new Promise((resolve) => {
-        setTimeout(() => resolve(), time)
-    });
+    function LeaveGroup(RequestCommunity, SessionID, steamID, groupId) {
+        return new Promise(function (resolve, reject) {
+            RequestCommunity.post({
+                url: "https://steamcommunity.com/profiles/"+ steamID +"/home_process",
+                form:{
+                    groupId: groupId,
+                    sessionID: SessionID,
+                    action: "leaveGroup"
+                }
+            }, function (error, response, body) {
+                if(error){
+                    reject(error)
+                    return;
+                }
+                resolve();
+                return;
+            
+            });
+        })
+    }
 }
