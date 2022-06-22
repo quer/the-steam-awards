@@ -8,14 +8,6 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
-# Next Fest event ( current )
-The current event `Next Fest`, you can get a free Badge, for plaing demo games from the event.
-
-Just run module `./modules/events/nextFest-2022`. and it will give the badge. If you want more, the badge add a counter on how many demo you have played. then you can run the module once a hour. where you just set the `offset` hier, and it will run the next part. just increase the number by 50 each time. 
-
-I have added the file `nextFest-2022-demo-Appid.txt` where all the appId for the demo, that is for the event. ( only 981, there is 1023, i cant find the last ). As you can only activate 50 apps each hour. you have to change the script a bit, and run each hour, to get the counter to the 981.
-
-I have also added the module in the Upgraded version ( `modules.push('events/nextFest-2022');` )
 
 # The steam events on multi account
 Just add more account in the config.
