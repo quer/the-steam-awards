@@ -9,7 +9,7 @@ Curreny working on a better core, to better handle multi account at once. and lo
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
 # Steam Summer sale 2022 Clorthax ( current )
-The current event `Steam Summer sale 2022`, you can get a free Badge, for completing the event.
+The current event `Steam Summer sale 2022`, you can get a free Badge, and a new profile page thema, for completing the event.
 
 Just run module `modules.push(require('./modules/events/SummerSale3000_2022'));`. and it will give the badge. i will do a call to steam endpoing, that it have been sorted. I will do it over and over, until you get the bagde. as the order of the links, can be different between each account. so it will just do all 10 and then do it over, until it can see that the bagde is in max level. but after 10 run, it will just stop, and it will tell you. Then just wait some time and try agirn. There is a check, so it only run account that is not max level
 
