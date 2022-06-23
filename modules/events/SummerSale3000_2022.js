@@ -24,7 +24,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             var loops = 0;
             while (!accountDone) {
                 
-                await OpenDoor0();
+                await OpenSpecifikDoor(0);
                 await delay(1000);
                 for (let i = 0; i < list.length; i++) {
                     const link = list[i];
@@ -43,10 +43,13 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                     }
                 }else {
                     accountDone = true;
+                    await OpenSpecifikDoor(11);
+
                     options.log("account now have max level");
                 }
             }
         } else {
+            await OpenSpecifikDoor(11);
             options.log("account allready have max level")
         }
 
@@ -56,7 +59,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     }
     callback();
 
-    function OpenDoor0() {
+    function OpenSpecifikDoor(door) {
         return new Promise(async function (resolve) {  
             var tokon = await getTokon();
             RequestStore.post({
@@ -64,7 +67,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                 form: {
                     "sessionid":      SessionID,
                     "authwgtoken":    tokon,
-                    "door_index":     0,
+                    "door_index":     door,
                     "clan_accountid": 41316928
                 }
             }, function (error, response, body){
