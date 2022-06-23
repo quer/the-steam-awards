@@ -118,19 +118,24 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             })
         })
     }
+    
     function StartPoint(steamID) {
-        return new Promise(function (resolve) {  
-            RequestStore.get({ url: 'https://steamcommunity.com/profiles/'+ steamID +'/badges/61' }, function (error, response, body){
+        return new Promise(function (resolve) {
+            var url = 'https://steamcommunity.com/profiles/'+ steamID +'/badges/61';  
+            RequestStore.get({ url: url }, function (error, response, body){
                 try {
-                    var $ = cheerio.load(body);
-                    var ss = $(".badge_info_description div");
-                    var xplevel = cheerio.load(ss[1]).text().trim().replace(" XP", "");
-                    var startLevel = (parseInt(xplevel) / 25);
-                    resolve(startLevel);    
+                    if(response.request.uri.href == url){
+                        var $ = cheerio.load(body);
+                        var ss = $(".badge_info_description div");
+                        var xplevel = cheerio.load(ss[1]).text().trim().replace(" XP", "");
+                        var startLevel = (parseInt(xplevel) / 25);
+                        resolve(startLevel);    
+                    }else{
+                        resolve(0);    
+                    }
                 } catch (error) {
                     resolve(0);    
                 }
-                
             });
         });
     }
