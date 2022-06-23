@@ -124,7 +124,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             var url = 'https://steamcommunity.com/profiles/'+ steamID +'/badges/61';  
             RequestStore.get({ url: url }, function (error, response, body){
                 try {
-                    if(response.request.uri.href == url){
+                    if(response.request.uri.href.split("/").reverse()[0] == '61'){
                         var $ = cheerio.load(body);
                         var ss = $(".badge_info_description div");
                         var xplevel = cheerio.load(ss[1]).text().trim().replace(" XP", "");
