@@ -3,7 +3,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
 	var log = options.log;
 	var logError = options.logError;
     try {
-        var apps = getQueue();
+        var apps = await getQueue();
         //create promise list
         var prom = [];
         for (let i = 0; i < apps.length; i++) {
@@ -49,7 +49,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             });
         })
     }
-    function queueApp(RequestStore, SessionID, app) {
+    function queueApp(app) {
         return new Promise(function (resolve, reject) {
             RequestStore.post({
                 url:'https://store.steampowered.com/app/60',
