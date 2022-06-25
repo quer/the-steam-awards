@@ -21,7 +21,7 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
             else
             {
                 if(shoudRetryedMissingItem){
-                    console.log(steamClient.steamID + " - " + options.UserName + ": might need " + itemNeeded + " items. will try to get it");
+                    options.log("might need " + itemNeeded + " items. will try to get it");
                     // we will run queue, one more time for each item that we need. ( as a second chance )
                     for (let i = 0; i < itemNeeded; i++) {
                         await queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options);
@@ -29,37 +29,37 @@ module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID
 
                     getNewItems(RequestCommunity, function (itemAfterSecondChance) {
                         if(itemAfterSecondChance == itemAfter + itemNeeded){
-                            console.log(steamClient.steamID + " - " + options.UserName + ": Got all items after second run");
+                            options.log("Got all items after second run");
                         }else{
-                            console.error(steamClient.steamID + " - " + options.UserName + ": Did not get all the expected item. and will be skiped.");
+                            options.logError("Did not get all the expected item. and will be skiped.");
                         }
                         callback();
                     })
                 }else{
-                    console.error(steamClient.steamID + " - " + options.UserName + ": Did not get all the expected item. and will be skiped.");
+                    options.logError("Did not get all the expected item. and will be skiped.");
                     callback();
                 }
             }
         })
     })
-}
-function queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options) {
-    return new Promise(function (resolve) {
-        var callback = function () {
-            resolve();
-        }
-        setTimeout(() => {
-            require('../queue')(steamClient, RequestCommunity, RequestStore, SessionID, options, callback);        
-        }, timeBetweenFullQueue);// 10 sec
-    })
+    function queueRun(steamClient, RequestCommunity, RequestStore, SessionID, options) {
+        return new Promise(function (resolve) {
+            var callback = function () {
+                resolve();
+            }
+            setTimeout(() => {
+                require('../queue')(steamClient, RequestCommunity, RequestStore, SessionID, options, callback);        
+            }, timeBetweenFullQueue);// 10 sec
+        })
+        
+    }
     
-}
-
-function getNewItems(RequestCommunity, callback) {
-    RequestCommunity.get('https://steamcommunity.com/actions/GetNotificationCounts', function (error, response, body) {
-        //console.log(body);    
-        var data = JSON.parse(body);
-        console.log("new items: "+ data.notifications["5"]);
-        callback(data.notifications["5"]);
-    })
+    function getNewItems(RequestCommunity, callback) {
+        RequestCommunity.get('https://steamcommunity.com/actions/GetNotificationCounts', function (error, response, body) {
+            //console.log(body);    
+            var data = JSON.parse(body);
+            options.log("new items: "+ data.notifications["5"]);
+            callback(data.notifications["5"]);
+        })
+    }
 }

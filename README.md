@@ -101,7 +101,7 @@ And then run `node main`
 There is a few ways to run this.
  * RunAllBots - `core.RunAllBots(modules)` - will run all account in `config.js`
  * RunIndexSpecificBot - `core.RunIndexSpecificBot([0, 1], modules)` - will run the specifig index in the `config.js` only
- * DoRunBots - `core.RunAllBots(auths, modules)` - will run the given accounts in the auths list. ( Ignoring the `config.js` )
+ * DoRunBots - `core.DoRunBots(auths, modules)` - will run the given accounts in the auths list. ( Ignoring the `config.js` )
 
 
  The `modules` parameter: you need to push at least one module before running. Read the next section.
@@ -152,6 +152,14 @@ The default settings are show below. ( Also can be foung in `lib/Setting.js`).
 }
 ```
 There will be a wiki page explaining each setting. 
+
+## Login modes
+There is 3 way to loging
+ * use username and password
+ * use username and password and 2fa
+ * use username and password and sentry file, once it have been loaded.
+
+ Read more on the wiki soon
 
 # Script
 The scripts are made to save you time and effort for setting accounts into config.
