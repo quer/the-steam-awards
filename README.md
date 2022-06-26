@@ -168,6 +168,7 @@ If you do not use default settings, you have to add the setting in the files.
 
  * `npm run SetSpecialAccountText` -> will add the property to each account, with an index inside it.
  * `npm run ConvertFromLineFormat [FilePath]` -> will add account(s) from a text file has the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
+ * `npm run Totp [index]` -> will show the username and password. and the generated totp key, to login. 
 
 # Wiki
 Read more in the wiki.
