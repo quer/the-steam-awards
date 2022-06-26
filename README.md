@@ -118,7 +118,7 @@ runBot(indexInConfig, function () {
 });
 ```
 # Wiki
-Read more in the wiki
+The wiki is being recreate, to fit the new Upgrade-core, so most will not fit this branch..
 
 # Web panel to contol the account
 I have started to create a web panel to handle the bots, 
