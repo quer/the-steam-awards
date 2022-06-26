@@ -8,7 +8,8 @@
     "start": "node main.js",
     "SetSpecialAccountText": "node .\\scripts\\SetSpecialAccountText.js",
     "ConvertFromLineFormat": "node .\\scripts\\ConvertFromLineFormat.js",
-    "AddSteamApiKeyToAllAccount": "node .\\scripts\\AddSteamApiKeyToAllAccount.js"
+    "AddSteamApiKeyToAllAccount": "node .\\scripts\\AddSteamApiKeyToAllAccount.js",
+    "Totp": "node .\\scripts\\totp.js"
   },
   "repository": {
     "type": "git",

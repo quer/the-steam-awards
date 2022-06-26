@@ -1,3 +1,4 @@
+var helper = require('../Edit Profile/chanceAccountHelper');
 /* base on https://github.com/Revadike/Misc-JavaScript-Projects/blob/master/Steam%20Store%20-%20Cheat%20Summar%20Sale%202022%20Badge.js */
 var list = [
     "https://store.steampowered.com/category/arcade_rhythm/?snr=1_614_615_clorthaxquest_1601",
@@ -49,7 +50,18 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                 }
             }
         } else {
-            await OpenSpecifikDoor(11);
+            var haveEventSpecialProfile = await EnsurehaveGotEventSpecialProfile();
+            if(!haveEventSpecialProfile){
+                await OpenSpecifikDoor(11);
+                haveEventSpecialProfile = await EnsurehaveGotEventSpecialProfile();
+                if(haveEventSpecialProfile){
+                    options.log("Now have Event Special Profile")
+                }else{
+                    options.logError("was not able to get the Event Special Profile")
+                }
+            }else{
+                options.log("have Event Special Profile")
+            }
             options.log("account allready have max level")
         }
 
@@ -58,10 +70,59 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
         
     }
     callback();
+    function EnsurehaveGotEventSpecialProfile() {
+        return new Promise(async function (resolve, reject) {
+            try {
+                var haveEventSpecialProfile = false;
+                
+                var access_token = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID); 
+                    
+                var ownedSpecialProfile = await GetOwnedSpecialProfile(access_token);
 
+                if(ownedSpecialProfile.length > 0){
+                    var foundList = ownedSpecialProfile.filter(x => x.appid = 2021850);
+                    if(foundList.length > 0){
+                        haveEventSpecialProfile = true;
+                        //options.log(foundList[0])
+                    }
+                }
+                resolve(ownedSpecialProfile);
+            } catch (error) {
+                options.logError(error)
+                resolve(0);
+            }
+        });
+    }
+    function GetOwnedSpecialProfile(access_token) {
+        return new Promise(function (resolve, reject) {
+            var url = `https://api.steampowered.com/IPlayerService/GetProfileItemsOwned/v1?access_token=${ access_token.ProfileEdit.webapi_token }&input_json=%7B%22language%22:%22english%22,%22filters%22:[]%7D`;
+            RequestStore.get({uri: url }, function(error, response, body) {
+                try {
+                    var bodyJson = JSON.parse(body);
+                    if(bodyJson && bodyJson.response){
+                        if(bodyJson.response.profile_modifiers){
+                            resolve(bodyJson.response.profile_modifiers)
+                            return;
+                        }else{
+                            //the account do not have any.
+                            resolve([])
+                            return;
+                        }
+                    }else{
+                        reject("Error getting account SpecialProfile\n" + body);
+                        return;                    
+                    }
+                } catch (error) {
+                    reject(error);
+                    return;
+                }
+    
+            });
+        });
+    }
     function OpenSpecifikDoor(door) {
         return new Promise(async function (resolve) {  
-            var tokon = await getTokon();
+            var tokon = await getEventTokon();
             RequestStore.post({
                 url:'https://store.steampowered.com/saleaction/ajaxopendoor', 
                 form: {
@@ -106,18 +167,24 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             })
         })
     }
-    function getTokon() {
+    var tokon = null;
+    function getEventTokon() {
         return new Promise(function (resolve, reject) {  
-            RequestStore.get('https://store.steampowered.com/sale/clorthax_quest', function (error, response, html) {
-                var $ = cheerio.load(html);
-                var authwgtoken = JSON.parse($("#application_config").attr("data-userinfo"));
-                if(authwgtoken == "" || !authwgtoken.authwgtoken){
-                    options.log("error no authwgtoken");
-                    reject();
-                }else{
-                    resolve(authwgtoken.authwgtoken);
-                }
-            })
+            if(tokon == null){
+                RequestStore.get('https://store.steampowered.com/sale/clorthax_quest', function (error, response, html) {
+                    var $ = cheerio.load(html);
+                    var authwgtoken = JSON.parse($("#application_config").attr("data-userinfo"));
+                    if(authwgtoken == "" || !authwgtoken.authwgtoken){
+                        options.log("error no authwgtoken");
+                        reject();
+                    }else{
+                        var tokon2 = authwgtoken.authwgtoken;
+                        resolve(tokon2);
+                    }
+                })
+            } else {
+                resolve(tokon);
+            }
         })
     }
     function StartPoint(steamID) {
