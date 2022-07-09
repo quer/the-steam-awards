@@ -2,14 +2,6 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-
-# Steam Summer sale 2022 ( current )
-The current event `Steam Summer sale 2022`, you can get a free Badge, and a new profile page theme, for completing the event, a free trading card each day.
-
-Just run module `events/SummerSale3000_2022`. and it will give the badge. i will do a call to steam endpoing, that it have been sorted. I will do it over and over, until you get the bagde. as the order of the links, can be different between each account. so it will just do all 10 and then do it over, until it can see that the bagde is in max level. but after 10 run, it will just stop, and it will tell you. Then just wait some time and try agirn. There is a check, so it only run account that is not max level
-
-For getting the trading card, you can run module `events/salequeue`, it will ensure you get the card, and keep retry, if it did not get it the first time. 
-
 # Work still in progress
 This branch is used to commit the changes i made to the core.
 
@@ -83,6 +75,7 @@ Events modules are stored in `modules/events`
  * Steam Winter Sale - 2020
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
  * steam winter sale - 2021 ( steamawards-2021 )
+ * Steam Summer sale - 2022 ( steam 3000 )
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )

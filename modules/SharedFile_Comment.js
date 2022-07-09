@@ -1,10 +1,10 @@
 var SharedFileToComment = [
     // next list is a example of how a comment can look ( all 4 must be set. )
     {
-        SharedFileID: 923012519,
+        sharedId: "923012519",
         ownerSteamID: "76561197990233572",
-        message: "Nice work",
-        appid: 753
+        appid: 753,
+        message: "Nice work"
     }
 ]
 
@@ -26,7 +26,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     function CommentSharedFile(RequestCommunity, SessionID, sharedfileObj) {
         return new Promise(function (resolve, reject ) {
             RequestCommunity.post({
-                url: "https://steamcommunity.com/comment/PublishedFile_Public/post/" + sharedfileObj.ownerSteamID + "/" + sharedfileObj.SharedFileID + "/",
+                url: "https://steamcommunity.com/comment/PublishedFile_Public/post/" + sharedfileObj.ownerSteamID + "/" + sharedfileObj.sharedId + "/",
                 form:{
                     sessionid: SessionID,
                     comment: sharedfileObj.message,
@@ -42,7 +42,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                 try {
                     var bodyJson = JSON.parse(body);
                     if(bodyJson.success){
-                        log("added comment. ", sharedfileObj);
+                        log("added comment. " + sharedfileObj.sharedId);
                         resolve();
                     }else{
                         throw new Error(body);
