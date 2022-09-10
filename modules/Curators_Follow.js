@@ -1,8 +1,5 @@
 var CuratorIds = [
-    33075774,
-    40954427
 ]
-var timeBetweenEachRequest = 2000; //2sec
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	var log = options.log;
 	var logError = options.logError;
@@ -14,7 +11,6 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             logError(options.accountPretty+" error Following Curator, and will be skipped, CuratorId: "+clanid);
             logError(error)
         }
-        await Wait(timeBetweenEachRequest);
     }
     callback();
     function FollowCurator(RequestStore, SessionID, clanid) {
@@ -43,11 +39,6 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                 reject();
             });
         })
-    }
-    function Wait(time) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(), time)
-        });
     }
 }
 

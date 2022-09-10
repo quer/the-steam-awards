@@ -1,9 +1,15 @@
-
+var safeMode = true;
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	var log = options.log;
 	var logError = options.logError;
     try {
+        var requestMethodeName = "post";
+        if(!safeMode){
+            requestMethodeName = "postNoneQueue";
+        }
+
         var apps = await getQueue();
+        options.log(apps[0])
         //create promise list
         var prom = [];
         for (let i = 0; i < apps.length; i++) {
@@ -27,7 +33,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
 
     function getQueue(loops = 0) {
         return new Promise(function (resolve, reject) {
-            RequestStore.post({
+            RequestStore[requestMethodeName]({
                 url:'https://store.steampowered.com/explore/generatenewdiscoveryqueue',
                 form:{
                     sessionid: SessionID,
@@ -51,7 +57,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     }
     function queueApp(app) {
         return new Promise(function (resolve, reject) {
-            RequestStore.post({
+            RequestStore[requestMethodeName]({
                 url:'https://store.steampowered.com/app/60',
                 form:{
                     appid_to_clear_from_queue: app,

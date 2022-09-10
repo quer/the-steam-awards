@@ -1,10 +1,12 @@
-var list = []; // List
+var AppList = [
+
+];
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	//TODO: this shoud be unasigned later
 	RequestStore.MakeNavCookie('1_4_4__118', 'https://store.steampowered.com/api/addtowishlist');
 	RequestStore.mature_content();
-	for (let i = 0; i < list.length; i++) {
-		const appid = list[i];
+	for (let i = 0; i < AppList.length; i++) {
+		const appid = AppList[i];
 		try {
 			await AddGame(RequestStore, SessionID, appid);
 		} catch (error) {

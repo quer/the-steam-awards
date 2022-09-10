@@ -1,9 +1,6 @@
 //this file look the same as "FollowCurators.js", but the request have a "follow: 0". 
 var CuratorIds = [
-    33075774,
-    40954427
 ]
-var timeBetweenEachRequest = 2000; //2sec
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	var logError = options.logError;
     for (let i = 0; i < CuratorIds.length; i++) {
@@ -14,7 +11,6 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
             logError(options.accountPretty+" error Following Curator, and will be skipped, CuratorId: "+clanid);
             logError(error)
         }
-        await Wait(timeBetweenEachRequest);
     }
     callback();
         
@@ -44,10 +40,5 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                 reject();
             });
         })
-    }
-    function Wait(time) {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(), time)
-        });
     }
 }

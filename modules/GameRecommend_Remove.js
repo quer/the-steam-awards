@@ -1,4 +1,4 @@
-var list = [730]
+var list = []
 
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){	
     var log = options.log;

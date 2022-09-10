@@ -1,3 +1,4 @@
+
 module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     //console.log(options.loop + " - start");
     RequestCommunity.get({uri: "https://steamcommunity.com/profiles/"+ steamClient.steamID +"/ajaxgroupinvite?select_primary=1&json=1"}, function (error, response, body) {

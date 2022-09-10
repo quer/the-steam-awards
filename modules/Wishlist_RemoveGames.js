@@ -1,6 +1,7 @@
-var AppList = [];
+var AppList = [
+
+];
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    options.log("Removing "+ AppList + " apps from wishlist");
     for (let i = 0; i < AppList.length; i++) {
         const appid = AppList[i];
         try {
