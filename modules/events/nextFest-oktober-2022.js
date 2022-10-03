@@ -14,6 +14,12 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
                         options.log("no more apps!");
                     }                    
                 }
+            }else{
+                var loop = true;
+                while (loop) {
+                    loop = await RunAQueue(authwgtoken);
+                }
+                options.log("done!")
             }
             callback();
         }
@@ -40,9 +46,13 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     function GetQueue(access_token) {
         return new Promise(function (resolve, reject) {
             RequestStore.get(`https://api.steampowered.com/IStoreService/GetDiscoveryQueue/v1?access_token=${access_token}&input_json={"queue_type":1,"country_code":"DK","rebuild_queue":true,"rebuild_queue_if_stale":true,"store_page_filter":{"sale_filter":{"sale_tagid":1235711},"store_filters":[]}}`, function (error, response, body) {
+            try {
                 var jsonobj = JSON.parse(body);
-                options.log(jsonobj);
                 resolve(jsonobj.response.appids);
+            } catch (error) {
+                options.log(body);
+                resolve([]);
+            }    
             });
         });
     }
