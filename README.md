@@ -8,15 +8,6 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
-# Next Fest event ( current )
-The current event `Next Fest`, you can get a free Badge, for doing the new discovery queue, that is on the `Next Fest` page.
-
-I have created module `events/nextFest-oktober-2022`. Just run it, and it will give you the level 6 badge. 
-
-NOTE this time i have only added it the `Upgrade-core` (Upgraded version) branch. so you will need to use that one.!
-
-If there shoud be any thing that do not work as expected, let me know!
-
 # The steam events on multi account
 Just add more account in the config.
 
