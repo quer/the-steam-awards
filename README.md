@@ -8,6 +8,15 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
+# Sims 4 free event ( current )
+The current event `Sims 4 free`, you can get a free Sticket, for doing a quiz, that is on the `sims 4 event` page.
+
+I have created module `events/sims4Sticker`. Just run it, and it will give the firest sticker ( can be changed in the file ) . 
+
+NOTE this time i have only added it the `Upgrade-core` (Upgraded version) branch. so you will need to use that one.!
+
+If there shoud be any thing that do not work as expected, let me know!
+
 # The steam events on multi account
 Just add more account in the config.
 
