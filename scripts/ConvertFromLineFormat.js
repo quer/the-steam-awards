@@ -9,8 +9,8 @@ const Settings = require('../lib/Settings');
 //change Settings here.
 
 var args = process.argv;
-if(args.length > 3){
-    var fileLink = args[3];
+if(args.length > 2){
+    var fileLink = args[2];
     try {
         if (fs.existsSync(fileLink)) {
             //file exists
@@ -24,30 +24,30 @@ if(args.length > 3){
                     if(existingAuth == null) // do not allready exist, then we add it
                     {
                         var auth = {}
-                        auth[settings.AuthFieldNameUsername] = loginInfo[0];
-                        auth[settings.AuthFieldNamePassword] = loginInfo[1];
+                        auth[Settings.AuthFieldNameUsername] = loginInfo[0];
+                        auth[Settings.AuthFieldNamePassword] = loginInfo[1];
                         if(loginInfo.length > 2){
-                            auth[settings.AuthFieldNamesharedSecret] = loginInfo[2];
+                            auth[Settings.AuthFieldNamesharedSecret] = loginInfo[2];
                             if(loginInfo.length > 3){
-                                auth[settings.AuthFieldSpecialAccountText] = loginInfo[3];
+                                auth[Settings.AuthFieldSpecialAccountText] = loginInfo[3];
                             }
                         }
                         config.push(auth);
                     }else{ //updated existing Account
-                        if(existingAuth[settings.AuthFieldNamePassword] != loginInfo[1]){
-                            existingAuth[settings.AuthFieldNamePassword] = loginInfo[1];
+                        if(existingAuth[Settings.AuthFieldNamePassword] != loginInfo[1]){
+                            existingAuth[Settings.AuthFieldNamePassword] = loginInfo[1];
                         }
                         if(loginInfo.length > 2){
-                            if(existingAuth[settings.AuthFieldNamesharedSecret] != loginInfo[2]){
-                                existingAuth[settings.AuthFieldNamesharedSecret] = loginInfo[2];
+                            if(existingAuth[Settings.AuthFieldNamesharedSecret] != loginInfo[2]){
+                                existingAuth[Settings.AuthFieldNamesharedSecret] = loginInfo[2];
                             }
                             if(loginInfo.length > 3){
-                                existingAuth[settings.AuthFieldSpecialAccountText] = loginInfo[3];
+                                existingAuth[Settings.AuthFieldSpecialAccountText] = loginInfo[3];
                             }
                         }
                     }
                     //save file
-                    var endString = `var config = [${ JSON.stringify(config, null, 4) }];\n`;
+                    var endString = `var config = ${ JSON.stringify(config, null, 4) };\n`;
                         endString += "module.exports = config;";
                     fs.writeFile('config.js', endString, err => {
                         if (err) {
