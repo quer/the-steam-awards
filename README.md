@@ -12,6 +12,7 @@ see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 The current event `Steam Award`, you can get a free Badge, for doing the award, by voting, gaming and making review.
 
 I have created module `events/steamawards-2022`. Just run it, and it will give you the badge, at the top level. 
+The module contains the ids of games, that can be banned in your region, just change to which are exactly available in your region.
 
 There is added a safe, where it will check, before and after it have runed, if it have got the badge. so if somefing do not work as expected. just run it agirn, and it will only run account that did not get it before. 
 
