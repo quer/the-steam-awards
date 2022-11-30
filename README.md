@@ -8,20 +8,6 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
-# Steam Award 2022 ( current )
-The current event `Steam Award`, you can get a free Badge, for doing the award, by voting, gaming and making review.
-
-I have created module `events/steamawards-2022`. Just run it, and it will give you the badge, at the top level. 
-The module contains the ids of games, that can be banned in your region, just change to which are exactly available in your region.
-
-There is added a safe, where it will check, before and after it have runed, if it have got the badge. so if somefing do not work as expected. just run it agirn, and it will only run account that did not get it before. 
-
-
-NOTE: this time i have only added it the `Upgrade-core` (Upgraded version) branch. so you will need to use that one.!
-And that the account must own `Team Fortress 2`, if not you need to go into the module, and set `subidToActive` to the subid of `Team Fortress 2`
-
-If there shoud be any thing that do not work as expected, let me know!
-
 # The steam events on multi account
 Just add more account in the config.
 
@@ -76,8 +62,10 @@ Events modules are stored in `modules/events`
  * the steam awards - 2020
  * Steam Winter Sale - 2020
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
+ * the steam awards - 2021
  * steam winter sale - 2021 ( steamawards-2021 )
  * Steam Summer Sale - 2022 ( Clorthax / steam 3000 )
+ * the steam awards - 2022
 
 # Setup
 Just run `npm install` in the root folder,
