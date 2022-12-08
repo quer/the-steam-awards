@@ -54,6 +54,7 @@ Just add more accounts in the config.
  * Follow Curators
  * UnFollow Curators
  * Evaluating Game Review
+ * view broadcast
 
 # Events
 Events modules are stored in `modules/events`
