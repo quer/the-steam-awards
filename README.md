@@ -8,44 +8,6 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
-# The Game Awards Steam Deck Giveaway 2022 ( current )
-Current you can register to win a steam deck, so i made a quick module, to register. It will also give you a sticker.
-
-I have created module `events/thegameawardssteamdeckdrop2022`. Just run it, and it will give you the badge, at the top level. 
-
-
-NOTE: this time i have only added it the `Upgrade-core` (Upgraded version) branch. so you will need to use that one.!
-
-If there shoud be any thing that do not work as expected, let me know!
-
-## Watching the steam, to be a part of the give a way.
-As it the first time steam do somefing like this. There is no way to tell, what thay look at, to tell he is watching. 
-
-as the stream is not just a socket, where we get the stream. but a lot of request whit the stream in. 
-
-But i added a module `broadcast_view` to `Upgrade-core` branch. Here it will do all the start step that the brower do. and do the `Broadcast Heartbeat` in interval. as the browser do. i have validated, that it do add the account as watching a broadcast. Note when the account stop the Heartbeat, or/and logout. it will stop watching.
-
-module settings:
-```js
-var BroadcastSteamId = '76561197990233572'; //  if this is "null", it will just pick a random streaming profile
-var onlyHereToTriggerWatching = true; //if true, you will get the part 'View a broadcast' in the 'Community bagde'
-var timeShoudWatchTheChannel = 60; // in sec
-```
-BroadcastSteamId; shoud be set the steam64 id of the stream.
-
-onlyHereToTriggerWatching; must be set to `false` else it will just stop, after activated the stream.
-
-timeShoudWatchTheChannel; in sec how log time to shoud watch, before going to next account part. 
-
-NOTE: you shoud not run all account at once. So maby just run all in a loop. make them run for like 2 min, in a cluster of 8. and then do that for all. and if it all ends. just start it agirn.
-
-ProTip: Run account in cluster. Do it the following way:
-```js
-// add this code the first 2 rows ( after the 2 const rows );
-settings.RunningMode.Mode = settings.Enums.RunningMode.Cluster;
-settings.RunningMode.ClusterSize = 8;
-```
-
 # The steam events on multi account
 Just add more account in the config.
 
