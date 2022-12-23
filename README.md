@@ -8,6 +8,19 @@ Curreny working on a better core, to better handle multi account at once. and lo
 
 see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
+# winter sale awards 2022 ( current )
+Current we can vote on games, in the winter award. And get a event card for each vote we do. 
+And run the queue to get one card each day.
+
+I have created event module `events/winter-sale-2022-award`. Just run it, and it will give all 11 card, by voting in each section. 
+
+NOTE: the event module `steamawards-2022` is NOT for this event.
+
+
+NOTE: this time i have only added it the `Upgrade-core` (Upgraded version) branch. so you will need to use that one.!
+
+If there shoud be any thing that do not work as expected, let me know!
+
 # The steam events on multi account
 Just add more account in the config.
 
