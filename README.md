@@ -10,9 +10,13 @@ see https://github.com/quer/the-steam-awards/tree/Upgrade-core for more info
 
 # winter sale awards 2022 ( current )
 Current we can vote on games, in the winter award. And get a event card for each vote we do. 
-And run the queue to get one card each day.
+And run the queue to get one card each day. and you can get a free sticker each day. 
 
 I have created event module `events/winter-sale-2022-award`. Just run it, and it will give all 11 card, by voting in each section. 
+
+Ude module `events/FreeDailySticker` to get the free daly sticker
+
+Use module `queue` to get the daly free card from the queue
 
 NOTE: the event module `steamawards-2022` is NOT for this event.
 
