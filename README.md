@@ -3,6 +3,12 @@
 [![Steam Profile][steam-account-img]][steam-account-url]
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
+
+# Migration from v1.0.0 to v2.0.0
+Now that this is version v2.0.0 you have download the project agirn, as there have been add a lot of change to the core system of the project.
+
+Just take a backup of the `config.js` and get the project agirn. read in the wiki how to use the new `main.js` as it made more clean and easy.
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
