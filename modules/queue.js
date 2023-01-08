@@ -1,4 +1,4 @@
-var safeMode = true;
+var safeMode = true; // do only work, if running in Queue mode
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	var log = options.log;
 	var logError = options.logError;

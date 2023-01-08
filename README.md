@@ -2,42 +2,28 @@
 [![Steam Donate][steam-img]][steam-url] 
 [![Steam Profile][steam-account-img]][steam-account-url]
 
-# Work still in progress
-This branch is used to commit the changes i made to the core.
+This project is to do multiple actions at once on Steam, whit multiple steam account
+# Read the wiki for details
+More details in the wiki, on how to setup, and use modules.
 
-More info later.. But see how clean the Main.js now.. ( 
-    and you can run in cluster mode, to run more unit at once, and anti spam for steam have been built in, so even if there is 10 account at once, it will ensure there is no more then one call per sec. even when running async on all the accounts..
-)
-
-## Added new features
- * Run in cluster mode. which allows you to run more account at once.
- * Added better loggins with enriched details.
- * Loggins can be saved now
- * * Can be saved to a single file, for each run.
- * * Can be splitted up to per each account, for each run. ( a log file for each account. )
- * Added an anti spam for steam. so even if running multiple accounts at once, it will only send one request to steam at a time.
- * * There is a Option to set how this should behave. default is talking 1 sec between requests. so it will calculate how long to hold the next request before fired. 
- * Added ability to run guard enabled accounts alongside free guard accounts. ( make sure to not add the "secret" file to auto login. )
-
-## Known issues
- * The console, will print only one account in some modules. This have something to do with async().
-
-
+The complete module list is in the wike. 
 # The steam events on multiple accounts
 Just add more accounts in the config.
 
-# Modules
+# Modules ( snippet )
+read about each module in the wiki, on how to use!
+
  * change profile settings
  * * change setting on the general edit page (Edit Profile / chanceAccountSettings_general)
- * * change profile avatar, from the games that it own, it will select a random one
- * * change profile background, will take a random one that the account own, can also remove the bg
- * * change mini profile, will take a random one that the account own
- * * change profile theme, will take a random one that the account own
- * * change profile favorite badge, will take a random one that the account own
- * * change profile favorite group, will take a random one that the account own
+ * * change profile avatar, from the games that it own
+ * * change profile background
+ * * change mini profile
+ * * change profile theme
+ * * change profile favorite badge
+ * * change profile favorite group
  * clear profile name alias
- * change profile image (will select a radom from `http://steamcommunity.com/actions/GameAvatars/`) ( might be outdated, use the other one )
- * vote and like a guide (just add id and appid in file)
+ * change profile image 
+ * vote and like a guide 
  * join group
  * LeaveGroup ( can also remove all groups from each account )
  * Comment in a Guide
@@ -45,16 +31,19 @@ Just add more accounts in the config.
  * comment on a profile
  * game Recommend
  * run queue
- * ActivateFreeGame ( will active a entered free game)
+ * ActivateFreeGame
  * remove all game from wishlist
- * Give Awared/Rewards ( GiveSteamAward.js )
- * Create badge (createBadge.js)
+ * Give Awared/Rewards 
+ * Create badge
  * Follow Games
  * Unfollow Games
  * Follow Curators
  * UnFollow Curators
  * Evaluating Game Review
  * view broadcast
+ * Group Announcement Comment Add
+ * Group Announcement Comment Delete
+ * Group Announcement Rate
 
 # Events
 Events modules are stored in `modules/events`
@@ -90,6 +79,8 @@ And if needed change the module file.
 
 And then run `node main`
 
+Read more in the Wiki
+
 # To use
 ## Running Modes
 There is a few ways to run this.
@@ -120,6 +111,7 @@ modules.push('ActivateFreeGame');
 ## Settings
 In the `main.js` you can tweak settings the way how it should be running.
 The default settings are show below. ( Also can be foung in `lib/Setting.js`).
+To understand what each setting do, read about it in the [Wiki by clicking here](https://github.com/quer/the-steam-awards/wiki/Configuration)
 ```js
 {
     AuthFieldNameUsername: "steam_user",
@@ -140,12 +132,13 @@ The default settings are show below. ( Also can be foung in `lib/Setting.js`).
         clusterSize: 4
     },
     Request: {
+        UseQueue: false,
         Time: 1000, // 1000 is 1 sec
         Mode: Enums.Request.MinTimeBetweenRequest
     }
 }
 ```
-There will be a wiki page explaining each setting. 
+
 
 ## Login modes
 There is 3 way to loging
@@ -153,7 +146,7 @@ There is 3 way to loging
  * use username and password and 2fa
  * use username and password and sentry file, once it have been loaded.
 
- Read more on the wiki soon
+ Read more on the [wiki](https://github.com/quer/the-steam-awards/wiki/Setting-up), for specific settings
 
 # Script
 The scripts are made to save you time and effort for setting accounts into config.
@@ -164,8 +157,7 @@ If you do not use default settings, you have to add the setting in the files.
  * `npm run ConvertFromLineFormat [FilePath]` -> will add account(s) from a text file has the format `username:password:sharedsecret:SpecialAccountText` (only username and password is mandatory)
  * `npm run Totp [index]` -> will show the username and password. and the generated totp key, to login. 
 
-# Wiki
-Read more in the wiki.
+ more in the [wiki](https://github.com/quer/the-steam-awards/wiki/Setting-up#running-mode)
 
 # Web panel to contol the account
 I have started to create a web panel to handle the bots, 
