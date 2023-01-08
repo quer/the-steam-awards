@@ -9,6 +9,8 @@ Now that this is version v2.0.0 you have download the project agirn, as there ha
 
 Just take a backup of the `config.js` and get the project agirn. read in the wiki how to use the new `main.js` as it made more clean and easy.
 
+Note, before you add a module by `queue.js`, now just remove the `.js`
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
