@@ -1,8 +1,6 @@
 //a list of all the steam account to add as friends
 var steamIds = ["xxx", "76561197990233572", "xxx"]
 
-var log = () => {};
-var logError = () => {};
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
 	var log = options.log;
 	var logError = options.logError;
