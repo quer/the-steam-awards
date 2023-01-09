@@ -1,6 +1,6 @@
 {
   "name": "the-steam-modules",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Modules for steam, to run scripts for multi account at once",
   "main": "main.js",
   "author": "Lasse Pedersen",
