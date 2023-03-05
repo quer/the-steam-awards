@@ -20,29 +20,29 @@ if(args.length > 2){
                 const login = loginRows[i];
                 const loginInfo = login.split(":")
                 if(loginInfo.length > 1){
-                    var existingAuth = FindExistingConfig(loginInfo[0]);
+                    var existingAuth = FindExistingConfig(Replace(loginInfo[0]));
                     if(existingAuth == null) // do not allready exist, then we add it
                     {
                         var auth = {}
-                        auth[Settings.AuthFieldNameUsername] = loginInfo[0];
-                        auth[Settings.AuthFieldNamePassword] = loginInfo[1];
+                        auth[Settings.AuthFieldNameUsername] = Replace(loginInfo[0]);
+                        auth[Settings.AuthFieldNamePassword] = Replace(loginInfo[1]);
                         if(loginInfo.length > 2){
-                            auth[Settings.AuthFieldNamesharedSecret] = loginInfo[2];
+                            auth[Settings.AuthFieldNamesharedSecret] = Replace(loginInfo[2]);
                             if(loginInfo.length > 3){
-                                auth[Settings.AuthFieldSpecialAccountText] = loginInfo[3];
+                                auth[Settings.AuthFieldSpecialAccountText] = Replace(loginInfo[3]);
                             }
                         }
                         config.push(auth);
                     }else{ //updated existing Account
-                        if(existingAuth[Settings.AuthFieldNamePassword] != loginInfo[1]){
-                            existingAuth[Settings.AuthFieldNamePassword] = loginInfo[1];
+                        if(existingAuth[Settings.AuthFieldNamePassword] != Replace(loginInfo[1])){
+                            existingAuth[Settings.AuthFieldNamePassword] = Replace(loginInfo[1]);
                         }
                         if(loginInfo.length > 2){
-                            if(existingAuth[Settings.AuthFieldNamesharedSecret] != loginInfo[2]){
-                                existingAuth[Settings.AuthFieldNamesharedSecret] = loginInfo[2];
+                            if(existingAuth[Settings.AuthFieldNamesharedSecret] != Replace(loginInfo[2])){
+                                existingAuth[Settings.AuthFieldNamesharedSecret] = Replace(loginInfo[2]);
                             }
                             if(loginInfo.length > 3){
-                                existingAuth[Settings.AuthFieldSpecialAccountText] = loginInfo[3];
+                                existingAuth[Settings.AuthFieldSpecialAccountText] = Replace(loginInfo[3]);
                             }
                         }
                     }
@@ -79,4 +79,7 @@ function FindExistingConfig(pUserName) {
         }
     }
     return null;
+}
+function Replace(text) {
+    return text.replace(/[\r\n]/gm, '');
 }
