@@ -3,11 +3,6 @@
 [![Steam Profile][steam-account-img]][steam-account-url]
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
-# Spring Sale 2023 ( current )
-Current you can get a free sticker each day.
-Use module `events/FreeDailySticker` to get the free daly sticker
-
-If there shoud be any thing that do not work as expected, let me know!
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
