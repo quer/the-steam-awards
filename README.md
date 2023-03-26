@@ -66,6 +66,7 @@ Events modules are stored in `modules/events`
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
  * steam winter sale - 2021 ( steamawards-2021 )
  * Steam Summer sale - 2022 ( steam 3000 )
+ * Spring Sale 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
