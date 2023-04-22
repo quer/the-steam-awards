@@ -3,6 +3,16 @@
 [![Steam Profile][steam-account-img]][steam-account-url]
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
+
+# puzzle-festioval 2023 ( current )
+In a few days, the steam puzzle-festival will start.  
+
+Here you will be able to get a free profile backgroud.
+
+Use module `events/FreeDailySticker` to get background. Steam currenly reused the way the free dalysticker, to this event, to get the reward. 
+
+Event Page: https://store.steampowered.com/sale/16212626125
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
