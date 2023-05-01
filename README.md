@@ -4,6 +4,13 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
+# redfall 2023 ( current )
+redfall launch is live. where you can get a free, chat sticker. 
+
+Use module `events/redfall-2023` to get a random chat sticker drop. ( if you want a specifik once, change the code to not use a random number ) 
+
+Event Page: https://store.steampowered.com/sale/redfall_launch
+
 # puzzle-festioval 2023 ( current )
 In a few days, the steam puzzle-festival will start.  
 
@@ -76,7 +83,10 @@ Events modules are stored in `modules/events`
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
  * steam winter sale - 2021 ( steamawards-2021 )
  * Steam Summer sale - 2022 ( steam 3000 )
+ * winter sale 2022 award
  * Spring Sale 2023
+ * puzzle-festioval 2023
+ * redfall 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
