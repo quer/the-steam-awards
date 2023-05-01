@@ -3,11 +3,16 @@
 [![Steam Profile][steam-account-img]][steam-account-url]
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
-# Spring Sale 2023 ( current )
-Current you can get a free sticker each day.
-Use module `events/FreeDailySticker` to get the free daly sticker
 
-If there shoud be any thing that do not work as expected, let me know!
+# puzzle-festioval 2023 ( current )
+In a few days, the steam puzzle-festival will start.  
+
+Here you will be able to get a free profile backgroud.
+
+Use module `events/FreeDailySticker` to get background. Steam currenly reused the way the free dalysticker, to this event, to get the reward. 
+
+Event Page: https://store.steampowered.com/sale/16212626125
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
@@ -71,6 +76,7 @@ Events modules are stored in `modules/events`
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
  * steam winter sale - 2021 ( steamawards-2021 )
  * Steam Summer sale - 2022 ( steam 3000 )
+ * Spring Sale 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
