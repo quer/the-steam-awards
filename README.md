@@ -4,17 +4,6 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
-# redfall 2023 ( current ) UPDATED
-redfall launch is live. where you can get a free, chat sticker, by answer some questions. But you can also get drops by watching the livesteam, for the game.  
-
-Use module `events/redfall-2023` to get a random chat sticker drop. ( if you want a specifik once, change the code to not use a random number ) 
-
-Use module `events/redfall-stream-2023.js` to get the drops from wathing the stream. It look like you have to watch it for 10 min, before getting the drop. The module will keep watching until the account get a bigger notification item number. So it will know when it done ( I a good ideer to run in cluster mode, to run multi account at once, to be faster done. )
-
-Event Page: https://store.steampowered.com/sale/redfall_launch
-
-Steam Page: https://steamcommunity.com/broadcast/watch/76561199029183645/
-
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
