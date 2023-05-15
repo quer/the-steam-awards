@@ -8,6 +8,15 @@ This project is to do multiple actions at once on Steam, whit multiple steam acc
 More details in the wiki, on how to setup, and use modules.
 
 The complete module list is in the wike. 
+# sports fest 2023 ( current )
+the steam sports fest have started.  
+
+Here you will be able to get a free chat sticker, each day.
+
+Use module `events/FreeDailySticker` to get the sticker. Steam currenly reused the way the free dalysticker work. For this event, to get the reward. 
+
+Event Page: https://store.steampowered.com/category/sports/
+
 # The steam events on multiple accounts
 Just add more accounts in the config.
 
@@ -71,6 +80,7 @@ Events modules are stored in `modules/events`
  * Spring Sale 2023
  * puzzle-festioval 2023
  * redfall 2023
+ * sports fest 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
