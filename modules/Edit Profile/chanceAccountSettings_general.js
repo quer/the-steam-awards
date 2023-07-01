@@ -7,7 +7,15 @@ var helper = require('./chanceAccountHelper')
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     console.log(steamClient.steamID);
     if(true){ // do you what to chance all running account, here you can just make a if, eks on steam id, or loginName
-        var accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
+        var accountInfo = null;
+        try {
+            accountInfo = await helper.GetAccountInfo(RequestCommunity, steamClient.steamID);
+        } catch (error) {
+            options.logError("something went wrong when getting account info!");
+            options.logError(error);
+            callback();
+            return;
+        }
         accountInfo = accountInfo.ProfileEdit;
         if(accountInfo == null){
             options.logError("something went wrong when getting account info!");

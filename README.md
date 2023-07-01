@@ -4,6 +4,19 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
+
+# Steam Summer sale ( current )
+The steam summer sale have started. Where you can get a `free trading card` each day, and a `free sticker` each day. And once get a free avatar on steam from Dying light curator page
+
+Got get the trading card and the free sticker run the following each day.
+ * module: `events/salequeue` to get the free card
+ * module: `events/FreeDailySticker` to get the free sticker
+
+and just once run module `events/openDoor`. and you will get the steam avatar ( the module have been change to the Dying light event) 
+https://store.steampowered.com/curator/33025758/sale/techlandsummer2023
+
+If i missed any events, please let me know. 
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
@@ -66,13 +79,14 @@ Events modules are stored in `modules/events`
  * the steam awards - 2020
  * Steam Winter Sale - 2020
  * Steam Summer Sale - 2021 ( forgeyourfate-summer-2021 )
- * steam winter sale - 2021 ( steamawards-2021 )
+ * Steam winter sale - 2021 ( steamawards-2021 )
  * Steam Summer sale - 2022 ( steam 3000 )
  * winter sale 2022 award
  * Spring Sale 2023
  * puzzle-festioval 2023
  * redfall 2023
  * sports fest 2023
+ * Steam Summer sale - 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
