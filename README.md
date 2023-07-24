@@ -4,19 +4,6 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
-
-# Steam Summer sale ( current )
-The steam summer sale have started. Where you can get a `free trading card` each day, and a `free sticker` each day. And once get a free avatar on steam from Dying light curator page
-
-Got get the trading card and the free sticker run the following each day.
- * module: `events/salequeue` to get the free card
- * module: `events/FreeDailySticker` to get the free sticker
-
-and just once run module `events/openDoor`. and you will get the steam avatar ( the module have been change to the Dying light event) 
-https://store.steampowered.com/curator/33025758/sale/techlandsummer2023
-
-If i missed any events, please let me know. 
-
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
