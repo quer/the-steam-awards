@@ -9,6 +9,26 @@ More details in the wiki, on how to setup, and use modules.
 
 The complete module list is in the wike. 
 
+# Current events. Free game and Stealth fest
+There is a game and some dlc free on steam.
+ * https://store.steampowered.com/app/249050/Dungeon_of_the_ENDLESS/
+ * https://store.steampowered.com/app/410940/Dungeon_of_the_ENDLESS__Death_Gamble_Update/
+ * https://store.steampowered.com/app/407210/Dungeon_of_the_ENDLESS__Organic_Matters_Update/
+ * https://store.steampowered.com/app/744930/Dungeon_of_the_ENDLESS__Digital_Artbook/
+
+I have updated the module `ActivateFreeGame`, so just run it, and it will give the game and dlc's
+
+And you can get a daly sticker, from 24 - 31 july in the Stealth fest. Just run the module `events/FreeDailySticker` each day to get it. 
+
+And you can request to test a game, `2504900`, just run module `requestplaytestaccess` to request access.
+
+Modules to run:
+```js
+modules.push('events/FreeDailySticker');
+modules.push('ActivateFreeGame');
+modules.push('requestplaytestaccess');
+```
+
 # The steam events on multiple accounts
 Just add more accounts in the config.
 
