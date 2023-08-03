@@ -1,5 +1,6 @@
 var cheerio = require('cheerio');
 var BroadcastSteamId = '76561199143003845'; //  if this is "null", it will just pick a random streaming profile ( value must be the steam64 ic of the streamer)
+var drops = 6;
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
     var itemsWhenStared = await getNewItems();
     options.log("start items " +itemsWhenStared);
@@ -25,7 +26,7 @@ module.exports = async function(steamClient, RequestCommunity, RequestStore, Ses
     intervalID = setInterval(async () => {
         await BroadcastHeartbeat(BroadcastSteamId, BroadcastID, ViewerToken);
         var nowItems = await getNewItems();
-        if(nowItems > itemsWhenStared){
+        if(nowItems >= itemsWhenStared + drops){
             clearInterval(intervalID);
             options.log("done now item: "+nowItems+" - ( start:" +itemsWhenStared + ")");
             
