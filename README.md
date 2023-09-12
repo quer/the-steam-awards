@@ -9,6 +9,14 @@ More details in the wiki, on how to setup, and use modules.
 
 The complete module list is in the wike. 
 
+# Current events. steam 20th anniversary
+at the event there is  some free goodies in the Points Shop
+* https://store.steampowered.com/points/shop/event/sale_steam20
+
+I have added a module to get all the free goodies. just run `events/steam20year`
+
+Did i miss any think, in the event. Just make a issue, or contack me.
+
 # The steam events on multiple accounts
 Just add more accounts in the config.
 
@@ -74,6 +82,7 @@ Events modules are stored in `modules/events`
  * redfall 2023
  * sports fest 2023
  * Steam Summer sale - 2023
+ * steam 20th anniversary - 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
