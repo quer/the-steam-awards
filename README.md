@@ -4,6 +4,11 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
+# Project current not working
+Steam have change how the login, to get cookies and sessionid. As all module are using this. nothing will work.
+
+Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
