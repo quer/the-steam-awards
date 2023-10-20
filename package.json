@@ -21,6 +21,7 @@
     "csgocoordinator": "^1.2.0",
     "request": "*",
     "steam": "*",
+    "steam-session": "^1.4.1",
     "steam-totp": "*",
     "steam-tradeoffers": "^3.2.1",
     "steam-web-api-key": "^0.0.4",
