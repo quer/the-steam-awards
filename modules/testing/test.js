@@ -1,17 +1,30 @@
 
-module.exports = function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    //console.log(options.loop + " - start");
-    RequestCommunity.get({uri: "https://steamcommunity.com/profiles/"+ steamClient.steamID +"/ajaxgroupinvite?select_primary=1&json=1"}, function (error, response, body) {
-        var amount = null;
-        try {
-            var jsonObj = JSON.parse(body);
-            amount = jsonObj.length;
-        } catch (error) {
-            
-        }
-        setTimeout(function () {
-            options.log("test group's:" + amount + "");
-            callback();
-        }, 2500);
-    });
-}
+var ach = require('../Edit Profile/chanceAccountHelper')
+module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
+    var ss = await ach.GetAccountInfo(RequestCommunity)
+    options.log(ss.ProfileEdit);
+    options.log(ss.ProfileBadges.FavoriteBadge);
+    
+    await JoinGroup("https://steamcommunity.com/groups/156as8464w3")
+    
+    callback();
+
+    function JoinGroup(groupUrl) {
+        return new Promise(function (resolve, reject) {
+            RequestCommunity.request.post({
+                url: groupUrl,
+                form:{
+                    sessionID: SessionID,
+                    action: "join"
+                },
+                json: true
+            }, function (error, response, body) {
+                if(error){
+                    reject(error);
+                    return
+                }
+                resolve();
+            });
+        })
+    }
+};
