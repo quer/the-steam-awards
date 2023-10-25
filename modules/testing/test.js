@@ -1,30 +1,29 @@
 
 var ach = require('../Edit Profile/chanceAccountHelper')
-module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
-    var ss = await ach.GetAccountInfo(RequestCommunity)
+module.exports = async function(steamConnection, _request, sessionID, options, callback){
+    var ss = await ach.GetAccountInfo(_request)
     options.log(ss.ProfileEdit);
     options.log(ss.ProfileBadges.FavoriteBadge);
     
-    await JoinGroup("https://steamcommunity.com/groups/156as8464w3")
-    
-    callback();
-
-    function JoinGroup(groupUrl) {
-        return new Promise(function (resolve, reject) {
-            RequestCommunity.request.post({
-                url: groupUrl,
-                form:{
-                    sessionID: SessionID,
-                    action: "join"
-                },
-                json: true
-            }, function (error, response, body) {
-                if(error){
-                    reject(error);
-                    return
-                }
-                resolve();
-            });
-        })
-    }
+    steamConnection.GetSteamUser()
+    .then(function (steamUser) {
+        steamUser.gamesPlayed([{ game_id: 730 }]);
+    })
+    .then(function () {
+        return new Promise((res) => setTimeout(() => res(), 10000));
+    })
+    .then(function () {
+        return steamConnection.GetSteamUser();
+    })
+    .then(function (steamUser) {
+        steamUser.gamesPlayed([{ game_id: 520 }]);
+    })
+    .then(function () {
+        return new Promise((res) => setTimeout(() => res(), 10000));
+    })
+    .then(callback)
+    .catch(function (e) {
+        options.log("error");
+        options.log(e);
+    })
 };
