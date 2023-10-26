@@ -17,13 +17,9 @@
   },
   "dependencies": {
     "bignumber.js": "^2.0.7",
-    "cheerio": "*",
-    "csgocoordinator": "^1.2.0",
+    "cheerio": "*", 
     "request": "*",
-    "steam": "*",
     "steam-totp": "*",
-    "steam-tradeoffers": "^3.2.1",
-    "steam-web-api-key": "^0.0.4",
-    "steam-weblogon": "*"
+    "steam-user": "^5.0.2"
   }
 }
