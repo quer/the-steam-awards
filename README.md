@@ -4,10 +4,20 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
-# Project current not working
-Steam have change how the login, to get cookies and sessionid. As all module are using this. nothing will work.
+# Status on project 
+Steam have change how the login, to get cookies and sessionid. I have change the login system to use [node-steam-user](https://github.com/DoctorMcKay/node-steam-user), I doent like the change, as it remove some controll. As i do ensure there is no way to pass the steam limits. But as it handle the login request, outside the request handler i have. it can for some reach the limit. This do only effect the `cluster` mode, when it running multi account at once. So just run a smaller amount at the time. 
+
+So you have to do `npm i`, to get the new node module. 
+
+!Note: Only 2fa works. if you uses a other flow, do fork this, or contact me, to get it added. 
+!Note: i have tested a handfull of the modules, to ensure it works are the changed. Not all is tested, so do report back if one do not work.
 
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
+
+# Steam Scream event
+Steam scream have just started. Where you can get a `free sticker` each day
+
+just run module: `events/FreeDailySticker` to get the free sticker.
 
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
