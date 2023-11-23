@@ -43,6 +43,7 @@ module.exports = async function (steamClient, RequestCommunity, RequestStore, Se
         while (reviewLoopTimes < 7) {
             var status = await EnsureWeAreDone();
             if(!status.list[3].completed){
+		        await removeMake(steamClient.steamID, appToPlay);
                 await Make(steamClient.steamID, appToPlay);
                 ++reviewLoopTimes;
             }else{
@@ -103,7 +104,7 @@ module.exports = async function (steamClient, RequestCommunity, RequestStore, Se
                     if (bagdeStatus.filter(x => x.completed == 0).length > 0) {
                         if (showMessage) {
                             //it did not complete all
-                            options.log(bagdeStatus.filter(x => x.completed == 0).length + " task done, out of 4")
+                            options.log(bagdeStatus.filter(x => x.completed == 1).length + " task done, out of 4")
                             options.log("tasks: (1:"+(bagdeStatus[0].completed? "done": "not done")+") (2:"+(bagdeStatus[1].completed? "done": "not done")+") (3:"+(bagdeStatus[2].completed? "done": "not done")+") (4:"+(bagdeStatus[3].completed? "done": "not done")+")")
                         }
                         resolve({list: bagdeStatus, status: false});
