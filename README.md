@@ -14,17 +14,6 @@ So you have to do `npm i`, to get the new node module.
 
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
 
-# Steam awards ( current live 2023 )
-The Steam Awards have just started. Where you can get a `free sticker` each day, and you get a badge for compleating the award event.
-
-I have added a new module, that will fully complete the event, and give the stage 4 of the badge.
-
-run module: `events/FreeDailySticker` to get the free sticker, it must be  runned each day
-
-run module: `events/steamawards-2023` once, and it will give you the stage 4 badge. 
-( there have been added safe stuff into it, so it will check if it need to be done. so shoud somefing happen, then just run it agirn. and it will skip, account that is allready done )
-
-
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
@@ -96,6 +85,7 @@ Events modules are stored in `modules/events`
  * sports fest 2023
  * Steam Summer sale - 2023
  * steam 20th anniversary - 2023
+ * the steam awards - 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )
