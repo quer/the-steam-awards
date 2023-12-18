@@ -4,6 +4,7 @@
 
 This project is to do multiple actions at once on Steam, whit multiple steam account
 
+
 # Status on project 
 Steam have change how the login, to get cookies and sessionid. I have change the login system to use [node-steam-user](https://github.com/DoctorMcKay/node-steam-user), I doent like the change, as it remove some controll. As i do ensure there is no way to pass the steam limits. But as it handle the login request, outside the request handler i have. it can for some reach the limit. This do only effect the `cluster` mode, when it running multi account at once. So just run a smaller amount at the time. 
 
@@ -14,15 +15,10 @@ So you have to do `npm i`, to get the new node module.
 
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
 
-# Steam awards ( current live 2023 )
-The Steam Awards have just started. Where you can get a `free sticker` each day, and you get a badge for compleating the award event.
+# replay 2023 bagde
+Agirn this year, you get a badge for generating the Replay page. 
 
-I have added a new module, that will fully complete the event, and give the stage 4 of the badge.
-
-run module: `events/FreeDailySticker` to get the free sticker, it must be  runned each day
-
-run module: `events/steamawards-2023` once, and it will give you the stage 4 badge. 
-( there have been added safe stuff into it, so it will check if it need to be done. so shoud somefing happen, then just run it agirn. and it will skip, account that is allready done )
+Just run the `events/replay-2023`
 
 
 # Read the wiki for details
