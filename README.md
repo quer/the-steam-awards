@@ -15,11 +15,11 @@ So you have to do `npm i`, to get the new node module.
 
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
 
+
 # replay 2023 bagde
 Agirn this year, you get a badge for generating the Replay page. 
 
 Just run the `events/replay-2023`
-
 
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
@@ -92,6 +92,7 @@ Events modules are stored in `modules/events`
  * sports fest 2023
  * Steam Summer sale - 2023
  * steam 20th anniversary - 2023
+ * the steam awards - 2023
 
 # Setup
 Just run `npm install` in the root folder. ( make sure to not use the audit fix, it will break everything )

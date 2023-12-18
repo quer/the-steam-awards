@@ -43,6 +43,7 @@ module.exports = async function (steamClient, RequestCommunity, RequestStore, Se
         while (reviewLoopTimes < 7) {
             var status = await EnsureWeAreDone();
             if(!status.list[3].completed){
+		        await removeMake(steamClient.steamID, appToPlay);
                 await Make(steamClient.steamID, appToPlay);
                 ++reviewLoopTimes;
             }else{
@@ -59,7 +60,6 @@ module.exports = async function (steamClient, RequestCommunity, RequestStore, Se
         return new Promise(function (resolve) {
             RequestStore.get({
                 url: 'https://api.steampowered.com/ISteamAwardsService/Nominate/v1?access_token='+token+'&origin=https:%2F%2Fstore.steampowered.com&input_json=%7B%22category_id%22:'+voteid+',%22nominated_id%22:'+nominatedid+',%22source%22:'+source+'%7D',
-                // https://api.steampowered.com/ISteamAwardsService/Nominate/v1?access_token=6b18af65e9f4d74871370b6ae3eaa5fb&origin=https:%2F%2Fstore.steampowered.com&input_json=%7B%22category_id%22:100,%22nominated_id%22:2215130,%22source%22:0%7D
                 headers: {
                     'Origin': 'https://store.steampowered.com',
                     'Accept': '*/*',
@@ -104,7 +104,7 @@ module.exports = async function (steamClient, RequestCommunity, RequestStore, Se
                     if (bagdeStatus.filter(x => x.completed == 0).length > 0) {
                         if (showMessage) {
                             //it did not complete all
-                            options.log(bagdeStatus.filter(x => x.completed == 0).length + " task done, out of 4")
+                            options.log(bagdeStatus.filter(x => x.completed == 1).length + " task done, out of 4")
                             options.log("tasks: (1:"+(bagdeStatus[0].completed? "done": "not done")+") (2:"+(bagdeStatus[1].completed? "done": "not done")+") (3:"+(bagdeStatus[2].completed? "done": "not done")+") (4:"+(bagdeStatus[3].completed? "done": "not done")+")")
                         }
                         resolve({list: bagdeStatus, status: false});
@@ -142,7 +142,6 @@ module.exports = async function (steamClient, RequestCommunity, RequestStore, Se
                 url: url,
                 form: form
             }, async function (error, response, body) {
-                //console.log(error);
                 var ss = JSON.parse(body)
                 if(!ss.success){
                     if(ss.strError.includes("You need to have used this product for at least 5 minutes befor")){
