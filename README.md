@@ -16,13 +16,14 @@ So you have to do `npm i`, to get the new node module.
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
 
 # steam winter sale 2023
-This year, there is just the same old events. Whit the queue to get a free card, and steam award.
+This year, there is just the same old events. Whit the queue to get a free card, and steam award and free daly sticker.
 Agirn this year, thay change the logic behind voting for the award. So i have added a module for this year! 
 
 If there is anything i missed, let me know
 
 Just run:
  * the `events/winter-sale-2023-award` module, I have added a safe in, so if it tell that a account did not finish it, then just run it agirn. And it will only run for account missing some of the awards.
+ * the `events/FreeDailySticker` module, IT will get the free sticker. just run it each day. 
  * the `events/salequeue` module, each day, to get a free trading card. 
  * * NOTE: if you have many account you might want to run, whit a delay between each running mode. I have added a new setting called `RunningMode.DelayBetweenAccountModes`  where the value is in mulisec. so each 1000 = 1 sec
     here is a example, of the main.js:!
