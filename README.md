@@ -15,39 +15,6 @@ So you have to do `npm i`, to get the new node module.
 
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
 
-# steam winter sale 2023
-This year, there is just the same old events. Whit the queue to get a free card, and steam award and free daly sticker.
-Agirn this year, thay change the logic behind voting for the award. So i have added a module for this year! 
-
-If there is anything i missed, let me know
-
-Just run:
- * the `events/winter-sale-2023-award` module, I have added a safe in, so if it tell that a account did not finish it, then just run it agirn. And it will only run for account missing some of the awards.
- * the `events/FreeDailySticker` module, IT will get the free sticker. just run it each day. 
- * the `events/salequeue` module, each day, to get a free trading card. 
- * * NOTE: if you have many account you might want to run, whit a delay between each running mode. I have added a new setting called `RunningMode.DelayBetweenAccountModes`  where the value is in mulisec. so each 1000 = 1 sec
-    here is a example, of the main.js:!
- ```js
- const settings = require('./lib/Settings');
-const core = require('./lib/Core');
-settings.RunningMode.DelayBetweenAccountModes= 2000; // 2sec
-var modules = [];
-modules.push('events/winter-sale-2023-award');
-core.RunAllBots(modules)
-.then(function () {
-}).catch(function (error) {
-	core.logError("Somefing happend!");
-	core.logError(error);
-}).finally(function () {
-	process.exit();
-})
- ```
-
-# replay 2023 bagde
-Agirn this year, you get a badge for generating the Replay page. 
-
-Just run the `events/replay-2023`
-
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
