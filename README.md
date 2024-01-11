@@ -15,6 +15,9 @@ So you have to do `npm i`, to get the new node module.
 
 Im an looking into it, read more in issue : https://github.com/quer/the-steam-awards/issues/70
 
+# free store claim
+run module `pointsShop/RedeemPoints` to get the 3 free claims
+
 # Read the wiki for details
 More details in the wiki, on how to setup, and use modules.
 
