@@ -1,8 +1,8 @@
 var cheerio = require('cheerio');
 var listToRedeem = [
-    260626,
-    260627,
-    260628
+    262245,
+    262246,
+    262247
 ]
 
 module.exports = async function(steamClient, RequestCommunity, RequestStore, SessionID, options, callback){
